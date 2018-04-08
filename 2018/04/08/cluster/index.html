@@ -79,13 +79,29 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Brayden-Lee 博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="【前言】Lustre和hadoop的hdfs等文件系统运行在集群上的，熟练掌握这些文件系统的一个好的方法就是自己进行实际的操练。在自己只有一台PC机的前提下，如何搭建一个能运行这样文件系统的集群呢？我们虽然没有足够多的机器，但是利用实验室电脑的良好性能，可以通过VMWare软件来搭建多个虚拟机，从而组成一个小型的集群。本文就来一步一步的介绍如何搭建一个能互相通信的小型集群。 【计算机基本信息】 【">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用一台PC机搭建一个能互相通信的小型集群">
+<meta property="og:url" content="http://yoursite.com/2018/04/08/cluster/index.html">
 <meta property="og:site_name" content="Brayden-Lee 博客">
+<meta property="og:description" content="【前言】Lustre和hadoop的hdfs等文件系统运行在集群上的，熟练掌握这些文件系统的一个好的方法就是自己进行实际的操练。在自己只有一台PC机的前提下，如何搭建一个能运行这样文件系统的集群呢？我们虽然没有足够多的机器，但是利用实验室电脑的良好性能，可以通过VMWare软件来搭建多个虚拟机，从而组成一个小型的集群。本文就来一步一步的介绍如何搭建一个能互相通信的小型集群。 【计算机基本信息】 【">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.imgur.com/GLeSkRm.png">
+<meta property="og:image" content="https://i.imgur.com/5TUQPg1.png">
+<meta property="og:image" content="https://i.imgur.com/GaGMcLq.png">
+<meta property="og:image" content="https://i.imgur.com/FAXvTys.png">
+<meta property="og:image" content="https://i.imgur.com/xuCYe9K.png">
+<meta property="og:image" content="https://i.imgur.com/xnfMCLW.png">
+<meta property="og:image" content="https://i.imgur.com/g3UjEb2.png">
+<meta property="og:image" content="https://i.imgur.com/rSMXHLc.png">
+<meta property="og:image" content="https://i.imgur.com/48wrkZm.png">
+<meta property="og:image" content="https://i.imgur.com/kDDM0dv.png">
+<meta property="og:image" content="https://i.imgur.com/pEqyc0d.png">
+<meta property="og:updated_time" content="2018-04-08T02:15:09.959Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Brayden-Lee 博客">
+<meta name="twitter:title" content="利用一台PC机搭建一个能互相通信的小型集群">
+<meta name="twitter:description" content="【前言】Lustre和hadoop的hdfs等文件系统运行在集群上的，熟练掌握这些文件系统的一个好的方法就是自己进行实际的操练。在自己只有一台PC机的前提下，如何搭建一个能运行这样文件系统的集群呢？我们虽然没有足够多的机器，但是利用实验室电脑的良好性能，可以通过VMWare软件来搭建多个虚拟机，从而组成一个小型的集群。本文就来一步一步的介绍如何搭建一个能互相通信的小型集群。 【计算机基本信息】 【">
+<meta name="twitter:image" content="https://i.imgur.com/GLeSkRm.png">
 
 
 
@@ -115,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/08/cluster/"/>
 
 
 
 
 
-  <title>Brayden-Lee 博客</title>
+  <title>利用一台PC机搭建一个能互相通信的小型集群 | Brayden-Lee 博客</title>
   
 
 
@@ -140,8 +156,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -214,9 +229,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -246,9 +261,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/08/cluster/" itemprop="url">利用一台PC机搭建一个能互相通信的小型集群</a></h1>
+          <h1 class="post-title" itemprop="name headline">利用一台PC机搭建一个能互相通信的小型集群</h1>
         
 
         <div class="post-meta">
@@ -298,9 +311,7 @@
       
 
       
-        
-          
-            <h2 id="【前言】"><a href="#【前言】" class="headerlink" title="【前言】"></a>【前言】</h2><p>Lustre和hadoop的hdfs等文件系统运行在集群上的，熟练掌握这些文件系统的一个好的方法就是自己进行实际的操练。在自己只有一台PC机的前提下，如何搭建一个能运行这样文件系统的集群呢？我们虽然没有足够多的机器，但是利用实验室电脑的良好性能，可以通过VMWare软件来搭建多个虚拟机，从而组成一个小型的集群。本文就来一步一步的介绍如何搭建一个能互相通信的小型集群。</p>
+        <h2 id="【前言】"><a href="#【前言】" class="headerlink" title="【前言】"></a>【前言】</h2><p>Lustre和hadoop的hdfs等文件系统运行在集群上的，熟练掌握这些文件系统的一个好的方法就是自己进行实际的操练。在自己只有一台PC机的前提下，如何搭建一个能运行这样文件系统的集群呢？我们虽然没有足够多的机器，但是利用实验室电脑的良好性能，可以通过VMWare软件来搭建多个虚拟机，从而组成一个小型的集群。本文就来一步一步的介绍如何搭建一个能互相通信的小型集群。</p>
 <h2 id="【计算机基本信息】"><a href="#【计算机基本信息】" class="headerlink" title="【计算机基本信息】"></a>【计算机基本信息】</h2><p><img src="https://i.imgur.com/GLeSkRm.png" alt=""></p>
 <h2 id="【软件准备】-PS：软件版本不作限制，操作步骤基本一致"><a href="#【软件准备】-PS：软件版本不作限制，操作步骤基本一致" class="headerlink" title="【软件准备】[PS：软件版本不作限制，操作步骤基本一致]"></a>【软件准备】[PS：软件版本不作限制，操作步骤基本一致]</h2><pre><code>下载并安装：VMWare 和 CentOS镜像。[下面给出下载地址]
 VMWare 12 :http://sw.bos.baidu.com/sw-search-sp/software/a08321b624453/VMware_workstation_full_12.5.2.exe
@@ -349,8 +360,6 @@ n0远程登录到n1 [linux 下 ssh命令]
 <h2 id="【VMWare-Tools安装】"><a href="#【VMWare-Tools安装】" class="headerlink" title="【VMWare Tools安装】"></a>【VMWare Tools安装】</h2><p>虚拟机—-》重装VMWare Tools,此时会下载到linux的的一个目录中，不能在这个目录中直接解压，需要拷贝到其他目录进行解压才可以。操作如截图所示。[虚拟机底部会有安装步骤的提示]<br><img src="https://i.imgur.com/pEqyc0d.png" alt=""></p>
 <p>然后执行[root@n0 vmware-tools-distrib]# ./vmware-install.pl，一路回车即可安装完成。</p>
 
-          
-        
       
     </div>
     
@@ -367,157 +376,28 @@ n0远程登录到n1 [linux 下 ssh命令]
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/mpi/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Brayden-Lee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Brayden-Lee 博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/08/mpi/" itemprop="url">MPIRUN命令手册</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-08T09:17:54+08:00">
-                2018-04-08
-              </time>
+              <a href="/2018/04/08/mpi/" rel="next" title="MPIRUN命令手册">
+                <i class="fa fa-chevron-left"></i> MPIRUN命令手册
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h2 id="并行框架用openmpi或者mpich，这里以openmpi为例"><a href="#并行框架用openmpi或者mpich，这里以openmpi为例" class="headerlink" title="并行框架用openmpi或者mpich，这里以openmpi为例"></a>并行框架用openmpi或者mpich，这里以openmpi为例</h2><h3 id="【环境安装】"><a href="#【环境安装】" class="headerlink" title="【环境安装】"></a>【环境安装】</h3><pre><code>1、下载openmpi-xx-xx包，比如openmpi-1.10.3.tar.gz
-2、解压 tar -zxvf openmpi-1.10.3.tar.gz
-3、./configure --prefix=/usr/software/openmpi
-4、make &amp;&amp; make install
-5、在.bashrc里加入环境变量
-    MPI_HOME=/usr/software/openmpi
-    export PATH=$MPI_HOME/bin:$PATH
-    export LD_LIBRARY_PATH=$MPI_HOME/lib:$LD_LIBRARY_PATH
-6、source ~/.bashrc
-安装完成！
-</code></pre><h3 id="【执行mpirun】"><a href="#【执行mpirun】" class="headerlink" title="【执行mpirun】"></a>【执行mpirun】</h3><pre><code>单节点多线程模式（以天河上节点为例）
-mpirun --allow-run-as-root -np 4 exec.sh
-</code></pre><blockquote>
-<p>说明：root用户需要加–allow-run-as-root；此处表示单节点上运行4个进程。</p>
-</blockquote>
-<h3 id="多节点多线程模式（比如在N1节点上运行该程序）"><a href="#多节点多线程模式（比如在N1节点上运行该程序）" class="headerlink" title="多节点多线程模式（比如在N1节点上运行该程序）"></a>多节点多线程模式（比如在N1节点上运行该程序）</h3><pre><code>mpirun --allow-run-as-root -np 4 --mca btl_tcp_if_include enp8s0f1 --mca orte_base_help_aggregate 0 --map-by node --hostfile host exec.sh
-</code></pre><h3 id="运行流程图"><a href="#运行流程图" class="headerlink" title="运行流程图"></a>运行流程图</h3><p><img src="https://i.imgur.com/nnvmfiB.png" alt=""></p>
-<blockquote>
-<p>说明：</p>
-</blockquote>
-<ul>
-<li>天河节点上需要加 –mca btl_tcp_if_include enp8s0f1 –mca orte_base_help_aggregate 0这些参数（根据报出的问题知晓的）</li>
-<li>btl_tcp_if_include表示节点间通信的网卡。</li>
-<li>注意：多节点上运行时需要进行linux主机上ssh免密设置，详见多节点免密配置</li>
-<li>–map-by node 表示按host中设置的主机轮询的分配这 -np个线程。</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -527,138 +407,11 @@ mpirun --allow-run-as-root -np 4 exec.sh
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/03/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Brayden-Lee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Brayden-Lee 博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/03/hello-world/" itemprop="url">GUIDELINE</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-03T19:56:39+08:00">
-                2018-04-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
@@ -666,6 +419,10 @@ mpirun --allow-run-as-root -np 4 exec.sh
 
 
           
+
+  
+
+
 
         </div>
         
@@ -686,8 +443,17 @@ mpirun --allow-run-as-root -np 4 exec.sh
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -729,6 +495,22 @@ mpirun --allow-run-as-root -np 4 exec.sh
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#【前言】"><span class="nav-number">1.</span> <span class="nav-text">【前言】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#【计算机基本信息】"><span class="nav-number">2.</span> <span class="nav-text">【计算机基本信息】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#【软件准备】-PS：软件版本不作限制，操作步骤基本一致"><span class="nav-number">3.</span> <span class="nav-text">【软件准备】[PS：软件版本不作限制，操作步骤基本一致]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#【安装之前提醒】"><span class="nav-number">4.</span> <span class="nav-text">【安装之前提醒】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#【虚拟机之间的局域网搭建】"><span class="nav-number">5.</span> <span class="nav-text">【虚拟机之间的局域网搭建】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#【设置虚拟机和主机间的文件（夹）共享】"><span class="nav-number">6.</span> <span class="nav-text">【设置虚拟机和主机间的文件（夹）共享】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#【VMWare-Tools安装】"><span class="nav-number">7.</span> <span class="nav-text">【VMWare Tools安装】</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -862,6 +644,10 @@ mpirun --allow-run-as-root -np 4 exec.sh
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
