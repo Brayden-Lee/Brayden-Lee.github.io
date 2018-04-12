@@ -356,11 +356,7 @@ cd /root/rpmbuild/RPMS/x86_64
 mkdir /slurm/slurm-rpms
 cp *.rpm /slurm/slurm-rpms  [*rpm文件为源码包，实际上就是对这些包进行安装]
 yum --nogpgcheck localinstall *.rpm -y
-</code></pre><h1 id="6、配置slurm"><a href="#6、配置slurm" class="headerlink" title="6、配置slurm"></a><span id="6">6、配置slurm</span></h1><p><a href="http://slurm.schedmd.com/configurator.easy.html" target="_blank" rel="noopener">http://slurm.schedmd.com/configurator.easy.html</a><br>此链接可以在线生成slurm.conf的基本配置，后续只要在这上面进行修改即可；</p>
-<pre><code>* 在/etc/slurm下新建slurm.conf，将上述配置参数写入该文件即可；
-*- 将此slurm.conf文件上传到所有的节点上；
-* 可以使用scp命令进行传输；
-</code></pre><p>#########</p>
+</code></pre><h1 id="6、配置slurm"><a href="#6、配置slurm" class="headerlink" title="6、配置slurm"></a><span id="6">6、配置slurm</span></h1><p><a href="http://slurm.schedmd.com/configurator.easy.html" target="_blank" rel="noopener">http://slurm.schedmd.com/configurator.easy.html</a><br>此链接可以在线生成slurm.conf的基本配置，后续只要在这上面进行修改即可；1）在/etc/slurm下新建slurm.conf，将上述配置参数写入该文件即可；2）将此slurm.conf文件上传到所有的节点上；3）可以使用scp命令进行传输；接着进行如下步骤：</p>
 <pre><code># 控制节点上的配置
 mkdir /var/spool/slurmctld
 chown slurm: /var/spool/slurmctld
