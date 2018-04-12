@@ -79,19 +79,17 @@
 
 
 
-<meta name="description" content="并行框架用openmpi或者mpich，这里以openmpi为例【环境安装】1、下载openmpi-xx-xx包，比如openmpi-1.10.3.tar.gz 2、解压 tar -zxvf openmpi-1.10.3.tar.gz 3、./configure --prefix=/usr/software/openmpi 4、make &amp;amp;&amp;amp; make install 5、在.ba">
+<meta name="description" content="删除失败的安装； 安装MariaDB（数据库）； 创建用户； 安装Munge； 安装Slurm； 配置Slurm； 使用Slurm； 本文以天河上的64个节点为例进行说明：     节点为cn15872-cn15935, IP段为：10.182.170/171.{1..32}  1、删除失败的安装记录yum remove mariadb-server mariadb-devel -y yum r">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MPIRUN命令手册">
-<meta property="og:url" content="http://yoursite.com/2018/04/08/mpi/index.html">
+<meta property="og:title" content="Slurm集群管理软件的安装">
+<meta property="og:url" content="http://yoursite.com/2018/04/08/slurm/index.html">
 <meta property="og:site_name" content="Brayden-Lee 博客">
-<meta property="og:description" content="并行框架用openmpi或者mpich，这里以openmpi为例【环境安装】1、下载openmpi-xx-xx包，比如openmpi-1.10.3.tar.gz 2、解压 tar -zxvf openmpi-1.10.3.tar.gz 3、./configure --prefix=/usr/software/openmpi 4、make &amp;amp;&amp;amp; make install 5、在.ba">
+<meta property="og:description" content="删除失败的安装； 安装MariaDB（数据库）； 创建用户； 安装Munge； 安装Slurm； 配置Slurm； 使用Slurm； 本文以天河上的64个节点为例进行说明：     节点为cn15872-cn15935, IP段为：10.182.170/171.{1..32}  1、删除失败的安装记录yum remove mariadb-server mariadb-devel -y yum r">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://i.imgur.com/nnvmfiB.png">
-<meta property="og:updated_time" content="2018-04-08T01:36:06.430Z">
+<meta property="og:updated_time" content="2018-04-12T08:31:11.596Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MPIRUN命令手册">
-<meta name="twitter:description" content="并行框架用openmpi或者mpich，这里以openmpi为例【环境安装】1、下载openmpi-xx-xx包，比如openmpi-1.10.3.tar.gz 2、解压 tar -zxvf openmpi-1.10.3.tar.gz 3、./configure --prefix=/usr/software/openmpi 4、make &amp;amp;&amp;amp; make install 5、在.ba">
-<meta name="twitter:image" content="https://i.imgur.com/nnvmfiB.png">
+<meta name="twitter:title" content="Slurm集群管理软件的安装">
+<meta name="twitter:description" content="删除失败的安装； 安装MariaDB（数据库）； 创建用户； 安装Munge； 安装Slurm； 配置Slurm； 使用Slurm； 本文以天河上的64个节点为例进行说明：     节点为cn15872-cn15935, IP段为：10.182.170/171.{1..32}  1、删除失败的安装记录yum remove mariadb-server mariadb-devel -y yum r">
 
 
 
@@ -121,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/08/mpi/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/08/slurm/"/>
 
 
 
 
 
-  <title>MPIRUN命令手册 | Brayden-Lee 博客</title>
+  <title>Slurm集群管理软件的安装 | Brayden-Lee 博客</title>
   
 
 
@@ -234,7 +232,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/mpi/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/slurm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Brayden-Lee">
@@ -251,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">MPIRUN命令手册</h1>
+          <h1 class="post-title" itemprop="name headline">Slurm集群管理软件的安装</h1>
         
 
         <div class="post-meta">
@@ -263,7 +261,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-08T09:17:54+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-08T16:10:38+08:00">
                 2018-04-08
               </time>
             
@@ -301,32 +299,84 @@
       
 
       
-        <h2 id="并行框架用openmpi或者mpich，这里以openmpi为例"><a href="#并行框架用openmpi或者mpich，这里以openmpi为例" class="headerlink" title="并行框架用openmpi或者mpich，这里以openmpi为例"></a>并行框架用openmpi或者mpich，这里以openmpi为例</h2><h3 id="【环境安装】"><a href="#【环境安装】" class="headerlink" title="【环境安装】"></a>【环境安装】</h3><pre><code>1、下载openmpi-xx-xx包，比如openmpi-1.10.3.tar.gz
-2、解压 tar -zxvf openmpi-1.10.3.tar.gz
-3、./configure --prefix=/usr/software/openmpi
-4、make &amp;&amp; make install
-5、在.bashrc里加入环境变量
-    MPI_HOME=/usr/software/openmpi
-    export PATH=$MPI_HOME/bin:$PATH
-    export LD_LIBRARY_PATH=$MPI_HOME/lib:$LD_LIBRARY_PATH
-6、source ~/.bashrc
-安装完成！
-</code></pre><h3 id="【执行mpirun】"><a href="#【执行mpirun】" class="headerlink" title="【执行mpirun】"></a>【执行mpirun】</h3><pre><code>单节点多线程模式（以天河上节点为例）
-mpirun --allow-run-as-root -np 4 exec.sh
-</code></pre><blockquote>
-<p>说明：root用户需要加–allow-run-as-root；此处表示单节点上运行4个进程。</p>
+        <ul>
+<li><a href="#1">删除失败的安装</a>；</li>
+<li><a href="#2">安装MariaDB（数据库）</a>；</li>
+<li><a href="#3">创建用户</a>；</li>
+<li><a href="#4">安装Munge</a>；</li>
+<li><a href="#5">安装Slurm</a>；</li>
+<li><a href="#6">配置Slurm</a>；</li>
+<li><a href="#7">使用Slurm</a>；<blockquote>
+<p>本文以天河上的64个节点为例进行说明：</p>
 </blockquote>
-<h3 id="多节点多线程模式（比如在N1节点上运行该程序）"><a href="#多节点多线程模式（比如在N1节点上运行该程序）" class="headerlink" title="多节点多线程模式（比如在N1节点上运行该程序）"></a>多节点多线程模式（比如在N1节点上运行该程序）</h3><pre><code>mpirun --allow-run-as-root -np 4 --mca btl_tcp_if_include enp8s0f1 --mca orte_base_help_aggregate 0 --map-by node --hostfile host exec.sh
-</code></pre><h3 id="运行流程图"><a href="#运行流程图" class="headerlink" title="运行流程图"></a>运行流程图</h3><p><img src="https://i.imgur.com/nnvmfiB.png" alt=""></p>
-<blockquote>
-<p>说明：</p>
-</blockquote>
-<ul>
-<li>天河节点上需要加 –mca btl_tcp_if_include enp8s0f1 –mca orte_base_help_aggregate 0这些参数（根据报出的问题知晓的）</li>
-<li>btl_tcp_if_include表示节点间通信的网卡。</li>
-<li>注意：多节点上运行时需要进行linux主机上ssh免密设置，详见多节点免密配置</li>
-<li>–map-by node 表示按host中设置的主机轮询的分配这 -np个线程。</li>
+</li>
 </ul>
+<blockquote>
+<p>节点为cn15872-cn15935, IP段为：10.182.170/171.{1..32}</p>
+</blockquote>
+<h1 id="1、删除失败的安装记录"><a href="#1、删除失败的安装记录" class="headerlink" title="1、删除失败的安装记录"></a><span id="1">1、删除失败的安装记录</span></h1><pre><code>yum remove mariadb-server mariadb-devel -y
+yum remove slurm munge munge-libs munge-devel -y
+userdel -r slurm
+userdel -r munge
+[pkill 可以根据进程名杀死某个进程]
+</code></pre><h1 id="2、安装数据库"><a href="#2、安装数据库" class="headerlink" title="2、安装数据库"></a><span id="2">2、安装数据库</span></h1><pre><code>yum install mariadb-server mariadb-devel -y
+</code></pre><blockquote>
+<p>说明：-y选项可以在安装的过程中遇到[Y/n]这种可以自动选Y</p>
+</blockquote>
+<h1 id="3、创建用户"><a href="#3、创建用户" class="headerlink" title="3、创建用户"></a><span id="3">3、创建用户</span></h1><pre><code>export MUNGEUSER=980
+groupadd -g $MUNGEUSER munge
+useradd  -m -c &quot;MUNGE Uid &apos;N&apos; Gid Emporium&quot; -d /var/lib/munge -u $MUNGEUSER -g munge  -s /sbin/nologin munge
+export SLURMUSER=981
+groupadd -g $SLURMUSER slurm
+useradd  -m -c &quot;SLURM workload manager&quot; -d /var/lib/slurm -u $SLURMUSER -g slurm  -s /bin/bash slurm
+</code></pre><h1 id="4、安装munge"><a href="#4、安装munge" class="headerlink" title="4、安装munge"></a><span id="4">4、安装munge</span></h1><pre><code>yum install epel-release -y
+yum install munge munge-libs munge-devel -y
+</code></pre><p>安装rng-tools来产生munge需要的key（key文件可以为任意大于32字节的文件）</p>
+<pre><code>[配置munge.key]
+yum install rng-tools -y
+/usr/sbin/create-munge-key -r
+dd if=/dev/urandom bs=1 count=1024 &gt; /etc/munge/munge.key
+chown munge: /etc/munge/munge.key
+chmod 400 /etc/munge/munge.key
+
+[munge后续配置]
+chown -R munge: /etc/munge/ /var/log/munge/
+chmod 0700 /etc/munge/ /var/log/munge/
+systemctl enable munge
+systemctl start munge
+</code></pre><h1 id="5、安装slurm"><a href="#5、安装slurm" class="headerlink" title="5、安装slurm"></a><span id="5">5、安装slurm</span></h1><pre><code>yum reinstall pam.x86_64 -y
+yum install openssl openssl-devel pam-devel numactl numactl-devel hwloc hwloc-devel lua lua-devel readline-devel rrdtool-devel ncurses-devel perl-ExtUtils-MakeMaker man2html libibmad libibumad -y
+yum install rpm-build
+mkdir /slurm
+cd /slurm
+wget https://download.schedmd.com/slurm/slurm-17.11.5.tar.bz2
+rpmbuild -ta slurm-17.11.5.tar.bz2
+cd /root/rpmbuild/RPMS/x86_64
+mkdir /slurm/slurm-rpms
+cp *.rpm /slurm/slurm-rpms  [*rpm文件为源码包，实际上就是对这些包进行安装]
+yum --nogpgcheck localinstall *.rpm -y
+</code></pre><h1 id="6、配置slurm"><a href="#6、配置slurm" class="headerlink" title="6、配置slurm"></a><span id="6">6、配置slurm</span></h1><p><a href="http://slurm.schedmd.com/configurator.easy.html" target="_blank" rel="noopener">http://slurm.schedmd.com/configurator.easy.html</a><br>此链接可以在线生成slurm.conf的基本配置，后续只要在这上面进行修改即可；</p>
+<ul>
+<li>在/etc/slurm下新建slurm.conf，将上述配置参数写入该文件即可；</li>
+<li>将此slurm.conf文件上传到所有的节点上；</li>
+<li><p>可以使用scp命令进行传输；<br>#</p>
+<h1 id="控制节点上的配置"><a href="#控制节点上的配置" class="headerlink" title="控制节点上的配置"></a>控制节点上的配置</h1><p>  mkdir /var/spool/slurmctld<br>  chown slurm: /var/spool/slurmctld<br>  chmod 755 /var/spool/slurmctld<br>  touch /var/log/slurmctld.log<br>  chown slurm: /var/log/slurmctld.log<br>  touch /var/log/slurm_jobacct.log /var/log/slurm_jobcomp.log<br>  chown slurm: /var/log/slurm_jobacct.log /var/log/slurm_jobcomp.log</p>
+<h1 id="所有slurmd进程运行节点上的配置"><a href="#所有slurmd进程运行节点上的配置" class="headerlink" title="所有slurmd进程运行节点上的配置"></a>所有slurmd进程运行节点上的配置</h1><p>  mkdir /var/spool/slurmd<br>  chown slurm: /var/spool/slurmd<br>  chmod 755 /var/spool/slurmd<br>  touch /var/log/slurmd.log<br>  chown slurm: /var/log/slurmd.log</p>
+</li>
+</ul>
+<h2 id="启动slurmd进程"><a href="#启动slurmd进程" class="headerlink" title="启动slurmd进程"></a>启动slurmd进程</h2><pre><code>systemctl enable slurmd.service
+systemctl start slurmd.service
+systemctl status slurmd.service
+</code></pre><h2 id="启动slurmctld进程"><a href="#启动slurmctld进程" class="headerlink" title="启动slurmctld进程"></a>启动slurmctld进程</h2><pre><code>systemctl enable slurmctld.service
+systemctl start slurmctld.service
+systemctl status slurmctld.service
+</code></pre><h1 id="7、使用slurm"><a href="#7、使用slurm" class="headerlink" title="7、使用slurm"></a><span id="7">7、使用slurm</span></h1><pre><code>scontrol show nodes  # 显示所有节点；
+srun -N5 hostname  # 5个节点上运行hostname；
+sinfo # 查看节点信息；
+……
+</code></pre><blockquote>
+<p>安装参考： <a href="https://www.slothparadise.com/how-to-install-slurm-on-centos-7-cluster/" target="_blank" rel="noopener">https://www.slothparadise.com/how-to-install-slurm-on-centos-7-cluster/</a></p>
+</blockquote>
 
       
     </div>
@@ -351,8 +401,8 @@ mpirun --allow-run-as-root -np 4 exec.sh
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/03/hello-world/" rel="next" title="GUIDELINE">
-                <i class="fa fa-chevron-left"></i> GUIDELINE
+              <a href="/2018/04/08/cluster/" rel="next" title="利用一台PC机搭建一个能互相通信的小型集群">
+                <i class="fa fa-chevron-left"></i> 利用一台PC机搭建一个能互相通信的小型集群
               </a>
             
           </div>
@@ -360,10 +410,6 @@ mpirun --allow-run-as-root -np 4 exec.sh
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/08/cluster/" rel="prev" title="利用一台PC机搭建一个能互相通信的小型集群">
-                利用一台PC机搭建一个能互相通信的小型集群 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -477,7 +523,7 @@ mpirun --allow-run-as-root -np 4 exec.sh
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#并行框架用openmpi或者mpich，这里以openmpi为例"><span class="nav-number">1.</span> <span class="nav-text">并行框架用openmpi或者mpich，这里以openmpi为例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#【环境安装】"><span class="nav-number">1.1.</span> <span class="nav-text">【环境安装】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#【执行mpirun】"><span class="nav-number">1.2.</span> <span class="nav-text">【执行mpirun】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多节点多线程模式（比如在N1节点上运行该程序）"><span class="nav-number">1.3.</span> <span class="nav-text">多节点多线程模式（比如在N1节点上运行该程序）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行流程图"><span class="nav-number">1.4.</span> <span class="nav-text">运行流程图</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1、删除失败的安装记录"><span class="nav-number">1.</span> <span class="nav-text">1、删除失败的安装记录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、安装数据库"><span class="nav-number">2.</span> <span class="nav-text">2、安装数据库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3、创建用户"><span class="nav-number">3.</span> <span class="nav-text">3、创建用户</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4、安装munge"><span class="nav-number">4.</span> <span class="nav-text">4、安装munge</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5、安装slurm"><span class="nav-number">5.</span> <span class="nav-text">5、安装slurm</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6、配置slurm"><span class="nav-number">6.</span> <span class="nav-text">6、配置slurm</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#控制节点上的配置"><span class="nav-number">7.</span> <span class="nav-text">控制节点上的配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#所有slurmd进程运行节点上的配置"><span class="nav-number">8.</span> <span class="nav-text">所有slurmd进程运行节点上的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#启动slurmd进程"><span class="nav-number">8.1.</span> <span class="nav-text">启动slurmd进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动slurmctld进程"><span class="nav-number">8.2.</span> <span class="nav-text">启动slurmctld进程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7、使用slurm"><span class="nav-number">9.</span> <span class="nav-text">7、使用slurm</span></a></li></ol></div>
             
 
           </div>
