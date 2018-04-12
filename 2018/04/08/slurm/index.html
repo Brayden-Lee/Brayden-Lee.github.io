@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Brayden-Lee 博客">
 <meta property="og:description" content="删除失败的安装； 安装MariaDB（数据库）； 创建用户； 安装Munge； 安装Slurm； 配置Slurm； 使用Slurm； 本文以天河上的64个节点为例进行说明：     节点为cn15872-cn15935, IP段为：10.182.170/171.{1..32}  1、删除失败的安装记录yum remove mariadb-server mariadb-devel -y yum r">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-12T08:47:00.649Z">
+<meta property="og:updated_time" content="2018-04-12T08:48:55.961Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Slurm集群管理软件的安装">
 <meta name="twitter:description" content="删除失败的安装； 安装MariaDB（数据库）； 创建用户； 安装Munge； 安装Slurm； 配置Slurm； 使用Slurm； 本文以天河上的64个节点为例进行说明：     节点为cn15872-cn15935, IP段为：10.182.170/171.{1..32}  1、删除失败的安装记录yum remove mariadb-server mariadb-devel -y yum r">
@@ -356,15 +356,26 @@ mkdir /slurm/slurm-rpms
 cp *.rpm /slurm/slurm-rpms  [*rpm文件为源码包，实际上就是对这些包进行安装]
 yum --nogpgcheck localinstall *.rpm -y
 </code></pre><h1 id="6、配置slurm"><a href="#6、配置slurm" class="headerlink" title="6、配置slurm"></a><span id="6">6、配置slurm</span></h1><p><a href="http://slurm.schedmd.com/configurator.easy.html" target="_blank" rel="noopener">http://slurm.schedmd.com/configurator.easy.html</a><br>此链接可以在线生成slurm.conf的基本配置，后续只要在这上面进行修改即可；</p>
-<ul>
-<li>在/etc/slurm下新建slurm.conf，将上述配置参数写入该文件即可；</li>
-<li>将此slurm.conf文件上传到所有的节点上；</li>
-<li><p>可以使用scp命令进行传输；<br>#########</p>
-<h1 id="控制节点上的配置"><a href="#控制节点上的配置" class="headerlink" title="控制节点上的配置"></a>控制节点上的配置</h1><p>  mkdir /var/spool/slurmctld<br>  chown slurm: /var/spool/slurmctld<br>  chmod 755 /var/spool/slurmctld<br>  touch /var/log/slurmctld.log<br>  chown slurm: /var/log/slurmctld.log<br>  touch /var/log/slurm_jobacct.log /var/log/slurm_jobcomp.log<br>  chown slurm: /var/log/slurm_jobacct.log /var/log/slurm_jobcomp.log</p>
-<h1 id="所有slurmd进程运行节点上的配置"><a href="#所有slurmd进程运行节点上的配置" class="headerlink" title="所有slurmd进程运行节点上的配置"></a>所有slurmd进程运行节点上的配置</h1><p>  mkdir /var/spool/slurmd<br>  chown slurm: /var/spool/slurmd<br>  chmod 755 /var/spool/slurmd<br>  touch /var/log/slurmd.log<br>  chown slurm: /var/log/slurmd.log</p>
-</li>
-</ul>
-<h4 id="启动slurmd进程"><a href="#启动slurmd进程" class="headerlink" title="启动slurmd进程"></a>启动slurmd进程</h4><pre><code>systemctl enable slurmd.service
+<pre><code>* 在/etc/slurm下新建slurm.conf，将上述配置参数写入该文件即可；
+*- 将此slurm.conf文件上传到所有的节点上；
+* 可以使用scp命令进行传输；
+</code></pre><p>#########</p>
+<pre><code># 控制节点上的配置
+mkdir /var/spool/slurmctld
+chown slurm: /var/spool/slurmctld
+chmod 755 /var/spool/slurmctld
+touch /var/log/slurmctld.log
+chown slurm: /var/log/slurmctld.log
+touch /var/log/slurm_jobacct.log /var/log/slurm_jobcomp.log
+chown slurm: /var/log/slurm_jobacct.log /var/log/slurm_jobcomp.log
+
+# 所有slurmd进程运行节点上的配置
+mkdir /var/spool/slurmd
+chown slurm: /var/spool/slurmd
+chmod 755 /var/spool/slurmd
+touch /var/log/slurmd.log
+chown slurm: /var/log/slurmd.log
+</code></pre><h4 id="启动slurmd进程"><a href="#启动slurmd进程" class="headerlink" title="启动slurmd进程"></a>启动slurmd进程</h4><pre><code>systemctl enable slurmd.service
 systemctl start slurmd.service
 systemctl status slurmd.service
 </code></pre><h4 id="启动slurmctld进程"><a href="#启动slurmctld进程" class="headerlink" title="启动slurmctld进程"></a>启动slurmctld进程</h4><pre><code>systemctl enable slurmctld.service
@@ -523,7 +534,7 @@ sinfo # 查看节点信息；
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1、删除失败的安装记录"><span class="nav-number">1.</span> <span class="nav-text">1、删除失败的安装记录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、安装数据库"><span class="nav-number">2.</span> <span class="nav-text">2、安装数据库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3、创建用户"><span class="nav-number">3.</span> <span class="nav-text">3、创建用户</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4、安装munge"><span class="nav-number">4.</span> <span class="nav-text">4、安装munge</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5、安装slurm"><span class="nav-number">5.</span> <span class="nav-text">5、安装slurm</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6、配置slurm"><span class="nav-number">6.</span> <span class="nav-text">6、配置slurm</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#控制节点上的配置"><span class="nav-number">7.</span> <span class="nav-text">控制节点上的配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#所有slurmd进程运行节点上的配置"><span class="nav-number">8.</span> <span class="nav-text">所有slurmd进程运行节点上的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#启动slurmd进程"><span class="nav-number">8.0.0.1.</span> <span class="nav-text">启动slurmd进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动slurmctld进程"><span class="nav-number">8.0.0.2.</span> <span class="nav-text">启动slurmctld进程</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7、使用slurm"><span class="nav-number">9.</span> <span class="nav-text">7、使用slurm</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1、删除失败的安装记录"><span class="nav-number">1.</span> <span class="nav-text">1、删除失败的安装记录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、安装数据库"><span class="nav-number">2.</span> <span class="nav-text">2、安装数据库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3、创建用户"><span class="nav-number">3.</span> <span class="nav-text">3、创建用户</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4、安装munge"><span class="nav-number">4.</span> <span class="nav-text">4、安装munge</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5、安装slurm"><span class="nav-number">5.</span> <span class="nav-text">5、安装slurm</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6、配置slurm"><span class="nav-number">6.</span> <span class="nav-text">6、配置slurm</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#启动slurmd进程"><span class="nav-number">6.0.0.1.</span> <span class="nav-text">启动slurmd进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动slurmctld进程"><span class="nav-number">6.0.0.2.</span> <span class="nav-text">启动slurmctld进程</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7、使用slurm"><span class="nav-number">7.</span> <span class="nav-text">7、使用slurm</span></a></li></ol></div>
             
 
           </div>

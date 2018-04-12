@@ -357,15 +357,26 @@ mkdir /slurm/slurm-rpms
 cp *.rpm /slurm/slurm-rpms  [*rpm文件为源码包，实际上就是对这些包进行安装]
 yum --nogpgcheck localinstall *.rpm -y
 </code></pre><h1 id="6、配置slurm"><a href="#6、配置slurm" class="headerlink" title="6、配置slurm"></a><span id="6">6、配置slurm</span></h1><p><a href="http://slurm.schedmd.com/configurator.easy.html" target="_blank" rel="noopener">http://slurm.schedmd.com/configurator.easy.html</a><br>此链接可以在线生成slurm.conf的基本配置，后续只要在这上面进行修改即可；</p>
-<ul>
-<li>在/etc/slurm下新建slurm.conf，将上述配置参数写入该文件即可；</li>
-<li>将此slurm.conf文件上传到所有的节点上；</li>
-<li><p>可以使用scp命令进行传输；<br>#########</p>
-<h1 id="控制节点上的配置"><a href="#控制节点上的配置" class="headerlink" title="控制节点上的配置"></a>控制节点上的配置</h1><p>  mkdir /var/spool/slurmctld<br>  chown slurm: /var/spool/slurmctld<br>  chmod 755 /var/spool/slurmctld<br>  touch /var/log/slurmctld.log<br>  chown slurm: /var/log/slurmctld.log<br>  touch /var/log/slurm_jobacct.log /var/log/slurm_jobcomp.log<br>  chown slurm: /var/log/slurm_jobacct.log /var/log/slurm_jobcomp.log</p>
-<h1 id="所有slurmd进程运行节点上的配置"><a href="#所有slurmd进程运行节点上的配置" class="headerlink" title="所有slurmd进程运行节点上的配置"></a>所有slurmd进程运行节点上的配置</h1><p>  mkdir /var/spool/slurmd<br>  chown slurm: /var/spool/slurmd<br>  chmod 755 /var/spool/slurmd<br>  touch /var/log/slurmd.log<br>  chown slurm: /var/log/slurmd.log</p>
-</li>
-</ul>
-<h4 id="启动slurmd进程"><a href="#启动slurmd进程" class="headerlink" title="启动slurmd进程"></a>启动slurmd进程</h4><pre><code>systemctl enable slurmd.service
+<pre><code>* 在/etc/slurm下新建slurm.conf，将上述配置参数写入该文件即可；
+*- 将此slurm.conf文件上传到所有的节点上；
+* 可以使用scp命令进行传输；
+</code></pre><p>#########</p>
+<pre><code># 控制节点上的配置
+mkdir /var/spool/slurmctld
+chown slurm: /var/spool/slurmctld
+chmod 755 /var/spool/slurmctld
+touch /var/log/slurmctld.log
+chown slurm: /var/log/slurmctld.log
+touch /var/log/slurm_jobacct.log /var/log/slurm_jobcomp.log
+chown slurm: /var/log/slurm_jobacct.log /var/log/slurm_jobcomp.log
+
+# 所有slurmd进程运行节点上的配置
+mkdir /var/spool/slurmd
+chown slurm: /var/spool/slurmd
+chmod 755 /var/spool/slurmd
+touch /var/log/slurmd.log
+chown slurm: /var/log/slurmd.log
+</code></pre><h4 id="启动slurmd进程"><a href="#启动slurmd进程" class="headerlink" title="启动slurmd进程"></a>启动slurmd进程</h4><pre><code>systemctl enable slurmd.service
 systemctl start slurmd.service
 systemctl status slurmd.service
 </code></pre><h4 id="启动slurmctld进程"><a href="#启动slurmctld进程" class="headerlink" title="启动slurmctld进程"></a>启动slurmctld进程</h4><pre><code>systemctl enable slurmctld.service
