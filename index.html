@@ -300,13 +300,14 @@
       
         
           
-            <p>###cmake所需依赖表示<br>    -D 参数<br>    -D XX_INCLUDE_DIR [此处设置所需包的头文件目录]<br>    -D XX_LIBRARY [此处设置所需动态链接库.so文件的路径]</p>
-<blockquote>
+            <h3 id="cmake所需依赖表示"><a href="#cmake所需依赖表示" class="headerlink" title="cmake所需依赖表示"></a>cmake所需依赖表示</h3><pre><code>-D 参数
+-D XX_INCLUDE_DIR [此处设置所需包的头文件目录]
+-D XX_LIBRARY [此处设置所需动态链接库.so文件的路径]
+</code></pre><blockquote>
 <p>缺何种依赖可以根据所报错误来进行判断  </p>
 </blockquote>
-<p>###如下是一个完整的cmake编译命令：</p>
-<p><img src="https://i.imgur.com/kJJTSg4.png" alt=""></p>
-<p>###cmake编译举例<br><img src="https://i.imgur.com/uijh1XP.png" alt=""></p>
+<h3 id="如下是一个完整的cmake编译命令："><a href="#如下是一个完整的cmake编译命令：" class="headerlink" title="如下是一个完整的cmake编译命令："></a>如下是一个完整的cmake编译命令：</h3><p><img src="https://i.imgur.com/kJJTSg4.png" alt=""></p>
+<h3 id="cmake编译举例"><a href="#cmake编译举例" class="headerlink" title="cmake编译举例"></a>cmake编译举例</h3><p><img src="https://i.imgur.com/uijh1XP.png" alt=""></p>
 <pre><code>上图的cmake编译报错：VALGRIND_INCLUDE_DIR variables are used in this project, but they are set to NOTFOUND.
 我们此时需要valgrind,若已经安装了valgrind，则可以通过**whereis valgrind** (which valgrind查找命令位置)来查找valgrind的安装目录；
 我们的安装目录为：/usr/software/valgrind，所以可设置 VALGRIND_INCLUDE_DIR=&quot;/usr/software/valgrind/include/&quot;。所以最终安装命令为：
