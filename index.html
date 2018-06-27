@@ -307,11 +307,11 @@
     1. mkdir /mnt/debugfs  
     2. mount -t debugfs nodev /mnt/debugfs  
     3. cd /mnt/debugfs/tracing    
-关闭ftrace跟踪 ： echo 0 &gt; tracing\_on  [最新的ftrace没有tracing\_enable文件]  
-清空ring buffer ： echo nop &gt; current\_tracer  
-设置跟踪类型 ： echo function\_graph &gt; current\_tracer  
-设置跟踪的函数 ： echo do\_sys\_open &gt; set\_graph\_function  
-开启ftrace跟踪 : echo 1 &gt; tracing\_on
+关闭ftrace跟踪 ： echo 0 &gt; tracing_on  [最新的ftrace没有tracing_enable文件]  
+清空ring buffer ： echo nop &gt; current_tracer  
+设置跟踪类型 ： echo function_graph &gt; current_tracer  
+设置跟踪的函数 ： echo do_sys_open &gt; set_graph_function  
+开启ftrace跟踪 : echo 1 &gt; tracing_on
 </code></pre><p>之后运行涉及到文件的open操作的执行过程，trace文件中就会有跟踪的函数结果。</p>
 <h3 id="其他性能追踪工具ltrace-strace"><a href="#其他性能追踪工具ltrace-strace" class="headerlink" title="其他性能追踪工具ltrace, strace"></a>其他性能追踪工具ltrace, strace</h3><p><img src="https://i.imgur.com/jSUamGV.png" alt=""></p>
 

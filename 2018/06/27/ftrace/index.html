@@ -87,7 +87,7 @@
 <meta property="og:description" content="涉及的ftrace文件说明 available_filter_functions  包含所有可以追踪的系统调用available_tracers 包含所有的追踪类型 （常用的是function_graph）current_tracer  当前正在追踪的类型set_graph_function  设置要进行追踪的系统调用tracing_on  开启(1)/关闭(0)跟踪过程trace 保存跟踪过程打">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://i.imgur.com/jSUamGV.png">
-<meta property="og:updated_time" content="2018-06-27T10:59:04.258Z">
+<meta property="og:updated_time" content="2018-06-27T11:08:57.918Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ftrace跟踪open系统调用过程">
 <meta name="twitter:description" content="涉及的ftrace文件说明 available_filter_functions  包含所有可以追踪的系统调用available_tracers 包含所有的追踪类型 （常用的是function_graph）current_tracer  当前正在追踪的类型set_graph_function  设置要进行追踪的系统调用tracing_on  开启(1)/关闭(0)跟踪过程trace 保存跟踪过程打">
@@ -308,11 +308,11 @@
     1. mkdir /mnt/debugfs  
     2. mount -t debugfs nodev /mnt/debugfs  
     3. cd /mnt/debugfs/tracing    
-关闭ftrace跟踪 ： echo 0 &gt; tracing\_on  [最新的ftrace没有tracing\_enable文件]  
-清空ring buffer ： echo nop &gt; current\_tracer  
-设置跟踪类型 ： echo function\_graph &gt; current\_tracer  
-设置跟踪的函数 ： echo do\_sys\_open &gt; set\_graph\_function  
-开启ftrace跟踪 : echo 1 &gt; tracing\_on
+关闭ftrace跟踪 ： echo 0 &gt; tracing_on  [最新的ftrace没有tracing_enable文件]  
+清空ring buffer ： echo nop &gt; current_tracer  
+设置跟踪类型 ： echo function_graph &gt; current_tracer  
+设置跟踪的函数 ： echo do_sys_open &gt; set_graph_function  
+开启ftrace跟踪 : echo 1 &gt; tracing_on
 </code></pre><p>之后运行涉及到文件的open操作的执行过程，trace文件中就会有跟踪的函数结果。</p>
 <h3 id="其他性能追踪工具ltrace-strace"><a href="#其他性能追踪工具ltrace-strace" class="headerlink" title="其他性能追踪工具ltrace, strace"></a>其他性能追踪工具ltrace, strace</h3><p><img src="https://i.imgur.com/jSUamGV.png" alt=""></p>
 
