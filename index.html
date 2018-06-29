@@ -229,6 +229,150 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/28/betrfs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Brayden-Lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brayden-Lee 博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/28/betrfs/" itemprop="url">Untitled</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-28T16:52:17+08:00">
+                2018-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <hr>
+<h2 id="title-Betrfs-相关知识点"><a href="#title-Betrfs-相关知识点" class="headerlink" title="title:Betrfs 相关知识点"></a>title:<a href="http://www.betrfs.org/" target="_blank" rel="noopener">Betrfs</a> 相关知识点</h2><h3 id="Betrfs特点"><a href="#Betrfs特点" class="headerlink" title="Betrfs特点"></a>Betrfs特点</h3><pre><code>1. 内核文件系统
+2. 层次： VFS ---&gt; BetrFS ---&gt; B^e Tree ---&gt; ext4;
+3. 底层为TokuDB;
+</code></pre><h3 id="Betrfs安装内核版本"><a href="#Betrfs安装内核版本" class="headerlink" title="Betrfs安装内核版本"></a>Betrfs安装内核版本</h3><pre><code>由于代码限制，betrfs目前只能安装在linux-3.11.10这个内核版本之上；[具体限制见官网]
+</code></pre><h3 id="Betrfs安装"><a href="#Betrfs安装" class="headerlink" title="Betrfs安装"></a>Betrfs安装</h3><hr>
+<h4 id="1-内核准备"><a href="#1-内核准备" class="headerlink" title="1. 内核准备"></a>1. 内核准备</h4><pre><code>mkdir betrfs
+cd betrfs
+wget https://www.kernel.org/pub/linux/kernel/v3.x/linux-3.11.10.tar.gz
+tar -xvf linux-3.11.10.tar.gz
+cd linux-3.11.10
+cp ../pthread_union_check.py ./
+patch -p1 &lt; ../linux-3.11.10.diff
+make menuconfig
+(找到CONFIG_TRANSPARENT_HUGEPAGE_ALWAYS相关的配置项，设置为madvise,并选择为exclude)
+./pthread_union_check.py
+make
+make modules
+make modules_install
+make install
+</code></pre><h4 id="2-TokuDB-编译"><a href="#2-TokuDB-编译" class="headerlink" title="2. TokuDB 编译"></a>2. TokuDB 编译</h4><pre><code>mkdir build  # in the top-level directory of the betrfs repository
+cd build
+cmake --build . --target install
+</code></pre><h4 id="3-编译Betrfs源码"><a href="#3-编译Betrfs源码" class="headerlink" title="3. 编译Betrfs源码"></a>3. 编译Betrfs源码</h4><pre><code>cd filesystem/
+make
+</code></pre><h4 id="4-挂载文件系统"><a href="#4-挂载文件系统" class="headerlink" title="4. 挂载文件系统"></a>4. 挂载文件系统</h4>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/27/ftrace/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1300,7 +1444,7 @@ mpirun --allow-run-as-root -np 4 exec.sh
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
