@@ -79,20 +79,19 @@
 
 
 
-<meta name="description" content="cmake所需依赖表示-D 参数 -D XX_INCLUDE_DIR [此处设置所需包的头文件目录] -D XX_LIBRARY [此处设置所需动态链接库.so文件的路径]  缺何种依赖可以根据所报错误来进行判断    如下是一个完整的cmake编译命令： cmake编译举例 上图的cmake编译报错：VALGRIND_INCLUDE_DIR variables are used in this">
+<meta name="description" content="blktrace 介绍blktrace 是针对linux内核中块设备I/O层的跟踪工具，是由Linux内核块设备层维护者开发的。下图是一个I/O的流通图：  可见，使用这个工具，我们可以获取I/O请求队列的各种详细情况，包括进行读写的进程名称，进程号，执行时间，读写的物理块号，读写的块大小等等。  2.6.23后的内核版本都会集成bltrace，如果没有，则安装blktrace后采用类似与ftra">
 <meta property="og:type" content="article">
-<meta property="og:title" content="cmake编译参数错误">
-<meta property="og:url" content="http://yoursite.com/2018/06/13/cmake/index.html">
+<meta property="og:title" content="Blktrace 介绍及使用">
+<meta property="og:url" content="http://yoursite.com/2018/10/10/blktrace/index.html">
 <meta property="og:site_name" content="Brayden-Lee 博客">
-<meta property="og:description" content="cmake所需依赖表示-D 参数 -D XX_INCLUDE_DIR [此处设置所需包的头文件目录] -D XX_LIBRARY [此处设置所需动态链接库.so文件的路径]  缺何种依赖可以根据所报错误来进行判断    如下是一个完整的cmake编译命令： cmake编译举例 上图的cmake编译报错：VALGRIND_INCLUDE_DIR variables are used in this">
+<meta property="og:description" content="blktrace 介绍blktrace 是针对linux内核中块设备I/O层的跟踪工具，是由Linux内核块设备层维护者开发的。下图是一个I/O的流通图：  可见，使用这个工具，我们可以获取I/O请求队列的各种详细情况，包括进行读写的进程名称，进程号，执行时间，读写的物理块号，读写的块大小等等。  2.6.23后的内核版本都会集成bltrace，如果没有，则安装blktrace后采用类似与ftra">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://i.imgur.com/kJJTSg4.png">
-<meta property="og:image" content="https://i.imgur.com/uijh1XP.png">
-<meta property="og:updated_time" content="2018-06-13T08:35:18.553Z">
+<meta property="og:image" content="https://i.imgur.com/CxQVyiF.png">
+<meta property="og:updated_time" content="2018-10-10T02:17:11.661Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="cmake编译参数错误">
-<meta name="twitter:description" content="cmake所需依赖表示-D 参数 -D XX_INCLUDE_DIR [此处设置所需包的头文件目录] -D XX_LIBRARY [此处设置所需动态链接库.so文件的路径]  缺何种依赖可以根据所报错误来进行判断    如下是一个完整的cmake编译命令： cmake编译举例 上图的cmake编译报错：VALGRIND_INCLUDE_DIR variables are used in this">
-<meta name="twitter:image" content="https://i.imgur.com/kJJTSg4.png">
+<meta name="twitter:title" content="Blktrace 介绍及使用">
+<meta name="twitter:description" content="blktrace 介绍blktrace 是针对linux内核中块设备I/O层的跟踪工具，是由Linux内核块设备层维护者开发的。下图是一个I/O的流通图：  可见，使用这个工具，我们可以获取I/O请求队列的各种详细情况，包括进行读写的进程名称，进程号，执行时间，读写的物理块号，读写的块大小等等。  2.6.23后的内核版本都会集成bltrace，如果没有，则安装blktrace后采用类似与ftra">
+<meta name="twitter:image" content="https://i.imgur.com/CxQVyiF.png">
 
 
 
@@ -122,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/06/13/cmake/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/10/10/blktrace/"/>
 
 
 
 
 
-  <title>cmake编译参数错误 | Brayden-Lee 博客</title>
+  <title>Blktrace 介绍及使用 | Brayden-Lee 博客</title>
   
 
 
@@ -235,7 +234,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/13/cmake/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/10/blktrace/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Brayden-Lee">
@@ -252,7 +251,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">cmake编译参数错误</h1>
+          <h1 class="post-title" itemprop="name headline">Blktrace 介绍及使用</h1>
         
 
         <div class="post-meta">
@@ -264,8 +263,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-13T16:12:27+08:00">
-                2018-06-13
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-10T09:59:34+08:00">
+                2018-10-10
               </time>
             
 
@@ -302,22 +301,27 @@
       
 
       
-        <h3 id="cmake所需依赖表示"><a href="#cmake所需依赖表示" class="headerlink" title="cmake所需依赖表示"></a>cmake所需依赖表示</h3><pre><code>-D 参数
--D XX_INCLUDE_DIR [此处设置所需包的头文件目录]
--D XX_LIBRARY [此处设置所需动态链接库.so文件的路径]
-</code></pre><blockquote>
-<p>缺何种依赖可以根据所报错误来进行判断  </p>
+        <h3 id="blktrace-介绍"><a href="#blktrace-介绍" class="headerlink" title="blktrace 介绍"></a>blktrace 介绍</h3><p>blktrace 是针对linux内核中块设备I/O层的跟踪工具，是由Linux内核块设备层维护者开发的。下图是一个I/O的流通图：</p>
+<p><img src="https://i.imgur.com/CxQVyiF.png" alt=""></p>
+<p>可见，使用这个工具，我们可以获取I/O请求队列的各种详细情况，包括进行读写的进程名称，进程号，执行时间，读写的物理块号，读写的块大小等等。</p>
+<blockquote>
+<p>2.6.23后的内核版本都会集成bltrace，如果没有，则安装blktrace后采用类似与ftrace相同的方式挂载debugfs即可！</p>
 </blockquote>
-<h3 id="如下是一个完整的cmake编译命令："><a href="#如下是一个完整的cmake编译命令：" class="headerlink" title="如下是一个完整的cmake编译命令："></a>如下是一个完整的cmake编译命令：</h3><p><img src="https://i.imgur.com/kJJTSg4.png" alt=""></p>
-<h3 id="cmake编译举例"><a href="#cmake编译举例" class="headerlink" title="cmake编译举例"></a>cmake编译举例</h3><p><img src="https://i.imgur.com/uijh1XP.png" alt=""></p>
-<pre><code>上图的cmake编译报错：VALGRIND_INCLUDE_DIR variables are used in this project, but they are set to NOTFOUND.
-我们此时需要valgrind,若已经安装了valgrind，则可以通过**whereis valgrind** (which valgrind查找命令位置)来查找valgrind的安装目录；
-我们的安装目录为：/usr/software/valgrind，所以可设置 VALGRIND_INCLUDE_DIR=&quot;/usr/software/valgrind/include/&quot;。所以最终安装命令为：
+<h3 id="bltrace-使用"><a href="#bltrace-使用" class="headerlink" title="bltrace 使用"></a>bltrace 使用</h3><pre><code>blktrace -d /dev/sda -o -
+</code></pre><blockquote>
+<p>-d 表示device<br>-o 表示输出  </p>
+<ul>
+<li>表示输出到标准输出（直接显示在屏幕）<br>产生结果为sda.blktrace.xx ,xx表示cpu 的id，里面的内容需要用blkparse来看  </li>
+</ul>
+</blockquote>
+<pre><code>blkparse -i trace -o trace.txt
+</code></pre><blockquote>
+<p>-i 输入（trace.blktrace.xx…）<br>-o 输出  </p>
+</blockquote>
+<h3 id="输出内容分析"><a href="#输出内容分析" class="headerlink" title="输出内容分析"></a>输出内容分析</h3><blockquote>
+<p>见：<a href="http://linuxperf.com/?p=161" target="_blank" rel="noopener">http://linuxperf.com/?p=161</a>  </p>
+</blockquote>
 
-cmake -D CMAKE_BUILD_TYPE=$TYPE -D USE_BDB=OFF -D USE_TDB=ON -D BUILD_TESTING=OFF \
--D VALGRIND_INCLUDE_DIR=&quot;/usr/software/valgrind/include/&quot; -D CMAKE_INSTALL_PREFIX=../ft-install/ \
--D BUILD_FOR_LINUX_KERNEL_MODULE=ON ..
-</code></pre>
       
     </div>
     
@@ -341,8 +345,8 @@ cmake -D CMAKE_BUILD_TYPE=$TYPE -D USE_BDB=OFF -D USE_TDB=ON -D BUILD_TESTING=OF
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/22/linux_develop/" rel="next" title="">
-                <i class="fa fa-chevron-left"></i> 
+              <a href="/2018/06/28/betrfs/" rel="next" title="Betrfs相关知识点">
+                <i class="fa fa-chevron-left"></i> Betrfs相关知识点
               </a>
             
           </div>
@@ -350,10 +354,6 @@ cmake -D CMAKE_BUILD_TYPE=$TYPE -D USE_BDB=OFF -D USE_TDB=ON -D BUILD_TESTING=OF
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/06/27/ftrace/" rel="prev" title="Ftrace跟踪open系统调用过程">
-                Ftrace跟踪open系统调用过程 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -467,7 +467,7 @@ cmake -D CMAKE_BUILD_TYPE=$TYPE -D USE_BDB=OFF -D USE_TDB=ON -D BUILD_TESTING=OF
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#cmake所需依赖表示"><span class="nav-number">1.</span> <span class="nav-text">cmake所需依赖表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如下是一个完整的cmake编译命令："><span class="nav-number">2.</span> <span class="nav-text">如下是一个完整的cmake编译命令：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cmake编译举例"><span class="nav-number">3.</span> <span class="nav-text">cmake编译举例</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#blktrace-介绍"><span class="nav-number">1.</span> <span class="nav-text">blktrace 介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bltrace-使用"><span class="nav-number">2.</span> <span class="nav-text">bltrace 使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输出内容分析"><span class="nav-number">3.</span> <span class="nav-text">输出内容分析</span></a></li></ol></div>
             
 
           </div>
