@@ -87,7 +87,7 @@
 <meta property="og:description" content="blktrace 介绍blktrace 是针对linux内核中块设备I/O层的跟踪工具，是由Linux内核块设备层维护者开发的。下图是一个I/O的流通图：  可见，使用这个工具，我们可以获取I/O请求队列的各种详细情况，包括进行读写的进程名称，进程号，执行时间，读写的物理块号，读写的块大小等等。  2.6.23后的内核版本都会集成bltrace，如果没有，则安装blktrace后采用类似与ftra">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://i.imgur.com/CxQVyiF.png">
-<meta property="og:updated_time" content="2018-10-10T02:31:50.208Z">
+<meta property="og:updated_time" content="2018-10-10T02:32:55.252Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Blktrace 介绍及使用">
 <meta name="twitter:description" content="blktrace 介绍blktrace 是针对linux内核中块设备I/O层的跟踪工具，是由Linux内核块设备层维护者开发的。下图是一个I/O的流通图：  可见，使用这个工具，我们可以获取I/O请求队列的各种详细情况，包括进行读写的进程名称，进程号，执行时间，读写的物理块号，读写的块大小等等。  2.6.23后的内核版本都会集成bltrace，如果没有，则安装blktrace后采用类似与ftra">
@@ -309,7 +309,10 @@
 </blockquote>
 <h3 id="bltrace-使用"><a href="#bltrace-使用" class="headerlink" title="bltrace 使用"></a>bltrace 使用</h3><pre><code>blktrace -d /dev/sda -o -
 </code></pre><blockquote>
-<p>-d 表示device<br>-o 表示输出<br>- 表示输出到标准输出（直接显示在屏幕）<br>产生结果为sda.blktrace.xx ,xx表示cpu 的id，里面的内容需要用blkparse来看  </p>
+<p>-d 表示device<br>-o 表示输出  </p>
+<ul>
+<li>表示输出到标准输出（直接显示在屏幕）<br>产生结果为sda.blktrace.xx ,xx表示cpu 的id，里面的内容需要用blkparse来看  </li>
+</ul>
 </blockquote>
 <pre><code>blkparse -i trace -o trace.txt
 </code></pre><blockquote>
