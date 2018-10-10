@@ -308,10 +308,7 @@
 </blockquote>
 <h3 id="bltrace-使用"><a href="#bltrace-使用" class="headerlink" title="bltrace 使用"></a>bltrace 使用</h3><pre><code>blktrace -d /dev/sda -o -
 </code></pre><blockquote>
-<p>-d 表示device<br>-o 表示输出  </p>
-<ul>
-<li>表示输出到标准输出（直接显示在屏幕）<br>产生结果为sda.blktrace.xx ,xx表示cpu 的id，里面的内容需要用blkparse来看  </li>
-</ul>
+<p>-d 表示device<br>-o 表示输出<br>- 表示输出到标准输出（直接显示在屏幕）<br>产生结果为sda.blktrace.xx ,xx表示cpu 的id，里面的内容需要用blkparse来看  </p>
 </blockquote>
 <pre><code>blkparse -i trace -o trace.txt
 </code></pre><blockquote>
