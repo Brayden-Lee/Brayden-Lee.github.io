@@ -79,20 +79,17 @@
 
 
 
-<meta name="description" content="cmake所需依赖表示-D 参数 -D XX_INCLUDE_DIR [此处设置所需包的头文件目录] -D XX_LIBRARY [此处设置所需动态链接库.so文件的路径]  缺何种依赖可以根据所报错误来进行判断    如下是一个完整的cmake编译命令： cmake编译举例 上图的cmake编译报错：VALGRIND_INCLUDE_DIR variables are used in this">
+<meta name="description" content="命令行调用matlab -nodesktop -nosplash -r &amp;quot;codename&amp;quot;    此命令linux下调用matlab程序的命令，因此可以使用 C 语言的系统调用函数system()或者exec()来进行调用  对于matlab软件的安装，如果没有root权限，安装程序需要使用编译安装的方式进行软件的安装；  利用MCR (Matlab Compiler Run">
 <meta property="og:type" content="article">
-<meta property="og:title" content="cmake编译参数错误">
-<meta property="og:url" content="http://yoursite.com/2018/06/13/cmake/index.html">
+<meta property="og:title" content="C语言里面调用matlab程序">
+<meta property="og:url" content="http://yoursite.com/2018/10/16/matlab-to-c/index.html">
 <meta property="og:site_name" content="Brayden-Lee 博客">
-<meta property="og:description" content="cmake所需依赖表示-D 参数 -D XX_INCLUDE_DIR [此处设置所需包的头文件目录] -D XX_LIBRARY [此处设置所需动态链接库.so文件的路径]  缺何种依赖可以根据所报错误来进行判断    如下是一个完整的cmake编译命令： cmake编译举例 上图的cmake编译报错：VALGRIND_INCLUDE_DIR variables are used in this">
+<meta property="og:description" content="命令行调用matlab -nodesktop -nosplash -r &amp;quot;codename&amp;quot;    此命令linux下调用matlab程序的命令，因此可以使用 C 语言的系统调用函数system()或者exec()来进行调用  对于matlab软件的安装，如果没有root权限，安装程序需要使用编译安装的方式进行软件的安装；  利用MCR (Matlab Compiler Run">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://i.imgur.com/kJJTSg4.png">
-<meta property="og:image" content="https://i.imgur.com/uijh1XP.png">
-<meta property="og:updated_time" content="2018-06-13T08:35:18.553Z">
+<meta property="og:updated_time" content="2018-10-16T01:35:22.260Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="cmake编译参数错误">
-<meta name="twitter:description" content="cmake所需依赖表示-D 参数 -D XX_INCLUDE_DIR [此处设置所需包的头文件目录] -D XX_LIBRARY [此处设置所需动态链接库.so文件的路径]  缺何种依赖可以根据所报错误来进行判断    如下是一个完整的cmake编译命令： cmake编译举例 上图的cmake编译报错：VALGRIND_INCLUDE_DIR variables are used in this">
-<meta name="twitter:image" content="https://i.imgur.com/kJJTSg4.png">
+<meta name="twitter:title" content="C语言里面调用matlab程序">
+<meta name="twitter:description" content="命令行调用matlab -nodesktop -nosplash -r &amp;quot;codename&amp;quot;    此命令linux下调用matlab程序的命令，因此可以使用 C 语言的系统调用函数system()或者exec()来进行调用  对于matlab软件的安装，如果没有root权限，安装程序需要使用编译安装的方式进行软件的安装；  利用MCR (Matlab Compiler Run">
 
 
 
@@ -122,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/06/13/cmake/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/10/16/matlab-to-c/"/>
 
 
 
 
 
-  <title>cmake编译参数错误 | Brayden-Lee 博客</title>
+  <title>C语言里面调用matlab程序 | Brayden-Lee 博客</title>
   
 
 
@@ -235,7 +232,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/13/cmake/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/16/matlab-to-c/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Brayden-Lee">
@@ -252,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">cmake编译参数错误</h1>
+          <h1 class="post-title" itemprop="name headline">C语言里面调用matlab程序</h1>
         
 
         <div class="post-meta">
@@ -264,8 +261,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-13T16:12:27+08:00">
-                2018-06-13
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-16T09:15:33+08:00">
+                2018-10-16
               </time>
             
 
@@ -302,21 +299,25 @@
       
 
       
-        <h3 id="cmake所需依赖表示"><a href="#cmake所需依赖表示" class="headerlink" title="cmake所需依赖表示"></a>cmake所需依赖表示</h3><pre><code>-D 参数
--D XX_INCLUDE_DIR [此处设置所需包的头文件目录]
--D XX_LIBRARY [此处设置所需动态链接库.so文件的路径]
-</code></pre><blockquote>
-<p>缺何种依赖可以根据所报错误来进行判断  </p>
+        <h3 id="命令行调用"><a href="#命令行调用" class="headerlink" title="命令行调用"></a>命令行调用</h3><pre><code>matlab -nodesktop -nosplash -r &quot;codename&quot;   
+</code></pre><p>此命令linux下调用matlab程序的命令，因此可以使用 C 语言的系统调用函数system()或者exec()来进行调用</p>
+<blockquote>
+<p>对于matlab软件的安装，如果没有root权限，安装程序需要使用编译安装的方式进行软件的安装；</p>
 </blockquote>
-<h3 id="如下是一个完整的cmake编译命令："><a href="#如下是一个完整的cmake编译命令：" class="headerlink" title="如下是一个完整的cmake编译命令："></a>如下是一个完整的cmake编译命令：</h3><p><img src="https://i.imgur.com/kJJTSg4.png" alt=""></p>
-<h3 id="cmake编译举例"><a href="#cmake编译举例" class="headerlink" title="cmake编译举例"></a>cmake编译举例</h3><p><img src="https://i.imgur.com/uijh1XP.png" alt=""></p>
-<pre><code>上图的cmake编译报错：VALGRIND_INCLUDE_DIR variables are used in this project, but they are set to NOTFOUND.
-我们此时需要valgrind,若已经安装了valgrind，则可以通过**whereis valgrind** (which valgrind查找命令位置)来查找valgrind的安装目录；
-我们的安装目录为：/usr/software/valgrind，所以可设置 VALGRIND_INCLUDE_DIR=&quot;/usr/software/valgrind/include/&quot;。所以最终安装命令为：
-
-cmake -D CMAKE_BUILD_TYPE=$TYPE -D USE_BDB=OFF -D USE_TDB=ON -D BUILD_TESTING=OFF \
--D VALGRIND_INCLUDE_DIR=&quot;/usr/software/valgrind/include/&quot; -D CMAKE_INSTALL_PREFIX=../ft-install/ \
--D BUILD_FOR_LINUX_KERNEL_MODULE=ON ..
+<h3 id="利用MCR-Matlab-Compiler-Runtime-来编写可移植的C语言调用matlab的程序"><a href="#利用MCR-Matlab-Compiler-Runtime-来编写可移植的C语言调用matlab的程序" class="headerlink" title="利用MCR (Matlab Compiler Runtime)来编写可移植的C语言调用matlab的程序"></a>利用MCR (Matlab Compiler Runtime)来编写可移植的C语言调用matlab的程序</h3><blockquote>
+<p>这种方法只需要使用者安装MCR包实现matlab软件想要的功能，可以实现matlab程序在其他未安装的matlab软件上的运行  </p>
+</blockquote>
+<pre><code>下载地址： https://www.mathworks.com/products/compiler/matlab-runtime.html
+</code></pre><p>######此处介绍一下通用的软件安装方式 ———— 编译安装<br>    解压：unzip MCR_R2016a_glnxa64_installer.zip<br>    编译：./install -mode silent -agreeToLicense yes -destinationFolder &lt;folder : /home/tools/matlab (matlab目录要存在)&gt;</p>
+<blockquote>
+<p>-agreeToLicense yes这个选项必须有，其他的则根据自己的环境进行选择 （–help可以查看有哪些可用选项） </p>
+</blockquote>
+<pre><code>安装： make &amp;&amp; make install
+</code></pre><p>######运行示例<br>    首先按照matlab程序的编写方式编写了matlab程序： init.m<br>    Linux 平台使用MCR编译该程序：  mcc -mv init.m</p>
+<blockquote>
+<p>经过mcc编译之后会产生两个运行文件 init和run_init.sh，这两个程序都可以运行init.m的功能    </p>
+</blockquote>
+<pre><code>运行： ./run_init.sh /home/tools/mcr_2017b/v93
 </code></pre>
       
     </div>
@@ -341,8 +342,8 @@ cmake -D CMAKE_BUILD_TYPE=$TYPE -D USE_BDB=OFF -D USE_TDB=ON -D BUILD_TESTING=OF
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/22/linux_develop/" rel="next" title="">
-                <i class="fa fa-chevron-left"></i> 
+              <a href="/2018/10/10/blktrace/" rel="next" title="Blktrace 介绍及使用">
+                <i class="fa fa-chevron-left"></i> Blktrace 介绍及使用
               </a>
             
           </div>
@@ -350,10 +351,6 @@ cmake -D CMAKE_BUILD_TYPE=$TYPE -D USE_BDB=OFF -D USE_TDB=ON -D BUILD_TESTING=OF
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/06/27/ftrace/" rel="prev" title="Ftrace跟踪open系统调用过程">
-                Ftrace跟踪open系统调用过程 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -467,7 +464,7 @@ cmake -D CMAKE_BUILD_TYPE=$TYPE -D USE_BDB=OFF -D USE_TDB=ON -D BUILD_TESTING=OF
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#cmake所需依赖表示"><span class="nav-number">1.</span> <span class="nav-text">cmake所需依赖表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如下是一个完整的cmake编译命令："><span class="nav-number">2.</span> <span class="nav-text">如下是一个完整的cmake编译命令：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cmake编译举例"><span class="nav-number">3.</span> <span class="nav-text">cmake编译举例</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#命令行调用"><span class="nav-number">1.</span> <span class="nav-text">命令行调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用MCR-Matlab-Compiler-Runtime-来编写可移植的C语言调用matlab的程序"><span class="nav-number">2.</span> <span class="nav-text">利用MCR (Matlab Compiler Runtime)来编写可移植的C语言调用matlab的程序</span></a></li></ol></div>
             
 
           </div>
