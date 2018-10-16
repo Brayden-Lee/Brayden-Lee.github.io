@@ -309,12 +309,12 @@
 <p>这种方法只需要使用者安装MCR包实现matlab软件想要的功能，可以实现matlab程序在其他未安装的matlab软件上的运行  </p>
 </blockquote>
 <pre><code>下载地址： https://www.mathworks.com/products/compiler/matlab-runtime.html
-</code></pre><p>####此处介绍一下通用的软件安装方式 ———— 编译安装<br>    解压：unzip MCR_R2016a_glnxa64_installer.zip<br>    编译：./install -mode silent -agreeToLicense yes -destinationFolder &lt;folder : /home/tools/matlab (matlab目录要存在)&gt;</p>
+</code></pre><p>###此处介绍一下通用的软件安装方式 ———— 编译安装<br>    解压：unzip MCR_R2016a_glnxa64_installer.zip<br>    编译：./install -mode silent -agreeToLicense yes -destinationFolder &lt;folder : /home/tools/matlab (matlab目录要存在)&gt;</p>
 <blockquote>
 <p>-agreeToLicense yes这个选项必须有，其他的则根据自己的环境进行选择 （–help可以查看有哪些可用选项） </p>
 </blockquote>
 <pre><code>安装： make &amp;&amp; make install
-</code></pre><p>####运行示例<br>    首先按照matlab程序的编写方式编写了matlab程序： init.m<br>    Linux 平台使用MCR编译该程序：  mcc -mv init.m</p>
+</code></pre><p>###运行示例<br>    首先按照matlab程序的编写方式编写了matlab程序： init.m<br>    Linux 平台使用MCR编译该程序：  mcc -mv init.m</p>
 <blockquote>
 <p>经过mcc编译之后会产生两个运行文件 init和run_init.sh，这两个程序都可以运行init.m的功能    </p>
 </blockquote>
