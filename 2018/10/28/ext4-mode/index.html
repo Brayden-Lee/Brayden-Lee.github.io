@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="Ext4 文件系统的三种模式（mode） ext4支持3种DATA模式，用来区分journal的行为    ###data = journal在将data写入文件系统前，必须等待metadata和data的journal已经落盘，性能最差；当调用fsync时，文件系统的操作包含：fsync(data journal)-&amp;gt;fsync(metadata journal)-&amp;gt;fsync(d">
+<meta name="description" content="ext4支持3种DATA模式，用来区分journal的行为    ###data = journal在将data写入文件系统前，必须等待metadata和data的journal已经落盘，性能最差；当调用fsync时，文件系统的操作包含：fsync(data journal)-&amp;gt;fsync(metadata journal)-&amp;gt;fsync(data)-&amp;gt;fsync(metada">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Brayden-Lee 博客">
+<meta property="og:title" content="Ext4 文件系统的三种模式（mode）">
 <meta property="og:url" content="http://yoursite.com/2018/10/28/ext4-mode/index.html">
 <meta property="og:site_name" content="Brayden-Lee 博客">
-<meta property="og:description" content="Ext4 文件系统的三种模式（mode） ext4支持3种DATA模式，用来区分journal的行为    ###data = journal在将data写入文件系统前，必须等待metadata和data的journal已经落盘，性能最差；当调用fsync时，文件系统的操作包含：fsync(data journal)-&amp;gt;fsync(metadata journal)-&amp;gt;fsync(d">
+<meta property="og:description" content="ext4支持3种DATA模式，用来区分journal的行为    ###data = journal在将data写入文件系统前，必须等待metadata和data的journal已经落盘，性能最差；当调用fsync时，文件系统的操作包含：fsync(data journal)-&amp;gt;fsync(metadata journal)-&amp;gt;fsync(data)-&amp;gt;fsync(metada">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-28T06:48:32.717Z">
+<meta property="og:updated_time" content="2018-10-28T06:54:24.793Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Brayden-Lee 博客">
-<meta name="twitter:description" content="Ext4 文件系统的三种模式（mode） ext4支持3种DATA模式，用来区分journal的行为    ###data = journal在将data写入文件系统前，必须等待metadata和data的journal已经落盘，性能最差；当调用fsync时，文件系统的操作包含：fsync(data journal)-&amp;gt;fsync(metadata journal)-&amp;gt;fsync(d">
+<meta name="twitter:title" content="Ext4 文件系统的三种模式（mode）">
+<meta name="twitter:description" content="ext4支持3种DATA模式，用来区分journal的行为    ###data = journal在将data写入文件系统前，必须等待metadata和data的journal已经落盘，性能最差；当调用fsync时，文件系统的操作包含：fsync(data journal)-&amp;gt;fsync(metadata journal)-&amp;gt;fsync(data)-&amp;gt;fsync(metada">
 
 
 
@@ -125,7 +125,7 @@
 
 
 
-  <title> | Brayden-Lee 博客</title>
+  <title>Ext4 文件系统的三种模式（mode） | Brayden-Lee 博客</title>
   
 
 
@@ -249,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">Ext4 文件系统的三种模式（mode）</h1>
         
 
         <div class="post-meta">
@@ -299,8 +299,7 @@
       
 
       
-        <hr>
-<h2 id="Ext4-文件系统的三种模式（mode）"><a href="#Ext4-文件系统的三种模式（mode）" class="headerlink" title="Ext4 文件系统的三种模式（mode）"></a>Ext4 文件系统的三种模式（mode）</h2><blockquote>
+        <blockquote>
 <p>ext4支持3种DATA模式，用来区分journal的行为  </p>
 </blockquote>
 <p>###data = journal<br>在将data写入文件系统前，必须等待metadata和data的journal已经落盘，性能最差；<br>当调用fsync时，文件系统的操作包含：fsync(data journal)-&gt;fsync(metadata journal)-&gt;fsync(data)-&gt;fsync(metadata)</p>
@@ -412,17 +411,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -464,22 +454,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ext4-文件系统的三种模式（mode）"><span class="nav-number">1.</span> <span class="nav-text">Ext4 文件系统的三种模式（mode）</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

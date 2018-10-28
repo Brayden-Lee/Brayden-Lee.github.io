@@ -248,7 +248,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/10/28/ext4-mode/" itemprop="url">Untitled</a></h1>
+                <a class="post-title-link" href="/2018/10/28/ext4-mode/" itemprop="url">Ext4 文件系统的三种模式（mode）</a></h1>
         
 
         <div class="post-meta">
@@ -300,8 +300,7 @@
       
         
           
-            <hr>
-<h2 id="Ext4-文件系统的三种模式（mode）"><a href="#Ext4-文件系统的三种模式（mode）" class="headerlink" title="Ext4 文件系统的三种模式（mode）"></a>Ext4 文件系统的三种模式（mode）</h2><blockquote>
+            <blockquote>
 <p>ext4支持3种DATA模式，用来区分journal的行为  </p>
 </blockquote>
 <p>###data = journal<br>在将data写入文件系统前，必须等待metadata和data的journal已经落盘，性能最差；<br>当调用fsync时，文件系统的操作包含：fsync(data journal)-&gt;fsync(metadata journal)-&gt;fsync(data)-&gt;fsync(metadata)</p>
