@@ -229,6 +229,154 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/28/ext4-mode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Brayden-Lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brayden-Lee 博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/28/ext4-mode/" itemprop="url">Untitled</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-28T11:01:47+08:00">
+                2018-10-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <hr>
+<h2 id="Ext4-文件系统的三种模式（mode）"><a href="#Ext4-文件系统的三种模式（mode）" class="headerlink" title="Ext4 文件系统的三种模式（mode）"></a>Ext4 文件系统的三种模式（mode）</h2><blockquote>
+<p>ext4支持3种DATA模式，用来区分journal的行为  </p>
+</blockquote>
+<p>###data = journal<br>在将data写入文件系统前，必须等待metadata和data的journal已经落盘，性能最差；<br>当调用fsync时，文件系统的操作包含：fsync(data journal)-&gt;fsync(metadata journal)-&gt;fsync(data)-&gt;fsync(metadata)</p>
+<p>###data = ordered<br>此模式不记录data的journal,只记录metadata的journal，但是在写metadata的journal前必须保证data已经落盘；<br>当调用fsync时，文件系统的操作包含：fsync(metadata journal)-&gt;fsync(data)(确保data先落盘)-&gt;fsync(metadata)</p>
+<p>###data = writeback<br>不记录data journal，仅记录metadata journal，并且可以不保证data比metadata先落盘；<br>当调用fsync时，文件系统的操作包含：fsync(metadata journal)-&gt;fsync(metadata)</p>
+<blockquote>
+<p>metadata的操作在单个ext4文件系统中是串行的，所以某个用户的metadata操作堵塞的话，会影响所有人操作同一个文件系统的metadata，即使writeback模式下也是如此；</p>
+</blockquote>
+<p>###系统缓存相关的几个内核参数介绍</p>
+<blockquote>
+<p>/proc/sys/vm/dirty_background_ratio  </p>
+</blockquote>
+<p>该文件表示脏数据到达系统整体的内存的百分比，此时触发pdflush进程把脏数据写回磁盘;当用户调用write时，如果发现系统中的脏数据大于这个阈值(或dirty_background_bytes),会触发pdflush进程去写脏数据，但是用户的write调用会立即返回，无需等待。pdfl刷脏页的标准是让脏页降低到该阈值以下;        </p>
+<blockquote>
+<p>/proc/sys/vm/dirty_expire_centisecs    </p>
+</blockquote>
+<p>该文件表示如果脏数据在内存中驻留的时间超过该值，pdflush进程在下一次将把这些数据写回磁盘;     </p>
+<blockquote>
+<p>/proc/sys/vm/dirty_ratio</p>
+</blockquote>
+<p>该文件表示如果进程产生的脏数据到达系统整体内存的百分比，此时用户进程自行把脏数据写回磁盘;当用户调用write时，如果发现系统中的脏数据大于这个阈值(或dirty_bytes),需要自己把脏数据刷回磁盘，降低到这个阈值以下才会返回;    </p>
+<blockquote>
+<p>/proc/sys/vm/dirty_writeback_centisecs</p>
+</blockquote>
+<p>该文件表示pdflush进程的唤醒间隔，周期性把超过dirty_expire_centisecs时间的脏数据写回磁盘;    </p>
+<p>###系统一般在下面三种情况下回写dirty页<br>1）定时方式：定时回写是基于这样的原则:/proc/sys/vm/dirty_writeback_centisecs的值表示多长时间会启动回写线程,由这个定时器启动的回写线程只回写在内存中为dirty时间超过(/proc/sys/vm/dirty_expire_centisecs / 100)秒的页(这个值默认是3000,也就是30秒),一般情况下dirty_writeback_centisecs的值是500,也就是5秒,所以默认情况下系统会5秒钟启动一次回写线程,把dirty时间超过30秒的页回写,要注意的是,这种方式启动的回写线程只回写超时的dirty页，不会回写没超时的dirty页,可以通过修改/proc中的这两个值，细节查看内核函数wb_kupdate。<br>2）内存不足的时候： 这时并不将所有的dirty页写到磁盘,而是每次写大概1024个页面,直到空闲页面满足需求为止。<br>3） 写操作时发现脏页超过一定比例:当脏页占系统内存的比例超过/proc/sys/vm/dirty_background_ratio 的时候,write系统调用会唤醒pdflush回写dirty page,直到脏页比例低于/proc/sys/vm/dirty_background_ratio,但write系统调用不会被阻塞,立即返回。当脏页占系统内存的比例超/proc/sys/vm/dirty_ratio的时候, write系统调用会被被阻塞,主动回写dirty page,直到脏页比例低于/proc/sys/vm/dirty_ratio。    </p>
+<p>###[参考]<br><a href="https://yq.aliyun.com/articles/15241#" target="_blank" rel="noopener">https://yq.aliyun.com/articles/15241#</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/16/matlab-to-c/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1547,137 +1695,13 @@ mpirun --allow-run-as-root -np 4 exec.sh
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/03/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Brayden-Lee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Brayden-Lee 博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/03/hello-world/" itemprop="url">GUIDELINE</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-03T19:56:39+08:00">
-                2018-04-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -1721,7 +1745,7 @@ mpirun --allow-run-as-root -np 4 exec.sh
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
