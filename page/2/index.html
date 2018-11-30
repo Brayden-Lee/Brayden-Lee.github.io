@@ -229,6 +229,173 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/cluster/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Brayden-Lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brayden-Lee 博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/08/cluster/" itemprop="url">利用一台PC机搭建一个能互相通信的小型集群</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-08T09:57:43+08:00">
+                2018-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="【前言】"><a href="#【前言】" class="headerlink" title="【前言】"></a>【前言】</h2><p>Lustre和hadoop的hdfs等文件系统运行在集群上的，熟练掌握这些文件系统的一个好的方法就是自己进行实际的操练。在自己只有一台PC机的前提下，如何搭建一个能运行这样文件系统的集群呢？我们虽然没有足够多的机器，但是利用实验室电脑的良好性能，可以通过VMWare软件来搭建多个虚拟机，从而组成一个小型的集群。本文就来一步一步的介绍如何搭建一个能互相通信的小型集群。</p>
+<h2 id="【计算机基本信息】"><a href="#【计算机基本信息】" class="headerlink" title="【计算机基本信息】"></a>【计算机基本信息】</h2><p><img src="https://i.imgur.com/GLeSkRm.png" alt=""></p>
+<h2 id="【软件准备】-PS：软件版本不作限制，操作步骤基本一致"><a href="#【软件准备】-PS：软件版本不作限制，操作步骤基本一致" class="headerlink" title="【软件准备】[PS：软件版本不作限制，操作步骤基本一致]"></a>【软件准备】[PS：软件版本不作限制，操作步骤基本一致]</h2><pre><code>下载并安装：VMWare 和 CentOS镜像。[下面给出下载地址]
+VMWare 12 :http://sw.bos.baidu.com/sw-search-sp/software/a08321b624453/VMware_workstation_full_12.5.2.exe
+VMware Workstation 12序列号: 5A02H-AU243-TZJ49-GTC7K-3C61N
+
+CentOS 7 : thunder://QUFodHRwOi8vbGludXgueGl0b25neHoubmV0OjgwOC8yMDE2MDMvQ2VudE9TLTcuMC0xNDA2LXg4Nl82NC1EVkQuaXNvWlo=
+(亲测迅雷下载比较快,自己也可以去寻找其他下载链接）
+</code></pre><h2 id="【安装之前提醒】"><a href="#【安装之前提醒】" class="headerlink" title="【安装之前提醒】"></a>【安装之前提醒】</h2><p>尽量准备一个空间大的磁盘来安装这些东西，不然也有可能等集群都运行起来时会很卡。如下图我在一个七百多G（已经够大）的磁盘里把VMware和虚拟机文件都安装在一起，为以后集群的运行准备足够大的空间。<br><img src="https://i.imgur.com/5TUQPg1.png" alt=""></p>
+<p>##【虚拟机安装】<br>接下来就是安装虚拟机的过程了，此过程基本都是下一步即可。在其中根据自己的偏好设置磁盘或内存大小、cpu个数等等（一般都默认，因为后面不够可以改）。根据自己想搭建几个节点的集群安装几个虚拟机，建议不要安装太多，因为虚拟机一多，同时运行时就会非常的卡。下面就以创建4个虚拟机来完成后续操作。虚拟机的安装过程在此省略。<br>以下是我的配置（基本都是持续下一步，因为后面都可以改）</p>
+<p><img src="https://i.imgur.com/GaGMcLq.png" alt=""></p>
+<h2 id="【虚拟机之间的局域网搭建】"><a href="#【虚拟机之间的局域网搭建】" class="headerlink" title="【虚拟机之间的局域网搭建】"></a>【虚拟机之间的局域网搭建】</h2><pre><code>为了方便，自己修改了主机名和登录名过程为n0,n1,n2,n3；此过程只需更改 /etc/hostname 和 /etc/passwd文件中相应字段即可，重启后生效。
+拿n0机器举例说明: 
+    需要依次编辑三个文件来改变机器的ip（固定）  [网络连接方式设置为NAT]
+    /etc/sysconfig/network-scripts/ifcfg-网卡名
+    /etc/sysconfig/network
+    /etc/resolv.conf
+    NAT模式需要使用虚拟网卡VMNet8，查看PC机上的对应的IP为192.168.188.1 (DOS 下运行 ipconfig /all)
+</code></pre><p><img src="https://i.imgur.com/FAXvTys.png" alt=""></p>
+<blockquote>
+<p>因为掩码为255.255.255.0，所以ip分配为192.168.188.XXX才可以利用VMnet8虚拟网卡。于是准备给四台虚拟机分配IP，分配策略：</p>
+</blockquote>
+<pre><code>192.168.188.40    n0 
+192.168.188.41    n1 
+192.168.188.42    n2 
+192.168.188.43    n3
+</code></pre><blockquote>
+<p>以下就进行设置</p>
+</blockquote>
+<pre><code>[root@n0 etc]# vi /etc/sysconfig/network-scripts/ifcfg-eno16777736
+</code></pre><p><img src="https://i.imgur.com/xuCYe9K.png" alt=""></p>
+<pre><code>[root@n0 etc]# vi /etc/networks
+</code></pre><p><img src="https://i.imgur.com/xnfMCLW.png" alt=""></p>
+<pre><code>[root@n0 etc]# vi /etc/resolv.conf
+</code></pre><p><img src="https://i.imgur.com/g3UjEb2.png" alt=""></p>
+<pre><code>之后都要重启电脑才能生效。
+
+局域网中机器相互通信：
+n0远程登录到n1 [linux 下 ssh命令]
+</code></pre><p><img src="https://i.imgur.com/rSMXHLc.png" alt=""></p>
+<pre><code>如果一直这样输入ip会显得非常麻烦，为此需要编辑host文件（类似Windows下的host）
+[root@n0 etc]# vi /etc/hosts
+</code></pre><p><img src="https://i.imgur.com/48wrkZm.png" alt=""></p>
+<pre><code>机器上都做此配置后就可以直接在任意机器上用[root@n0 etc]# ssh n1进行远程登录了。此时，一个互联的小型集群基本搭建完成。
+</code></pre><h2 id="【设置虚拟机和主机间的文件（夹）共享】"><a href="#【设置虚拟机和主机间的文件（夹）共享】" class="headerlink" title="【设置虚拟机和主机间的文件（夹）共享】"></a>【设置虚拟机和主机间的文件（夹）共享】</h2><p>为了方便Windows与虚拟机之间能互传文件，有很多种方法进行配置，如samba等等。以下也介绍一种最简单也最常见的的方法。首先设置Windows上共享文件夹位置（虚拟机设置），然后按照图中来进行配置。<br><img src="https://i.imgur.com/kDDM0dv.png" alt=""></p>
+<p>对于CentOS7需要安装VMWare Tools才可以在Linux中的/mnt/hgfs下能找到共享的文件夹。（亲测centos7之前的系统好像可以不用重装VMWare Tools，只要设置共享文件夹，Linux中就能使用）</p>
+<h2 id="【VMWare-Tools安装】"><a href="#【VMWare-Tools安装】" class="headerlink" title="【VMWare Tools安装】"></a>【VMWare Tools安装】</h2><p>虚拟机—-》重装VMWare Tools,此时会下载到linux的的一个目录中，不能在这个目录中直接解压，需要拷贝到其他目录进行解压才可以。操作如截图所示。[虚拟机底部会有安装步骤的提示]<br><img src="https://i.imgur.com/pEqyc0d.png" alt=""></p>
+<p>然后执行[root@n0 vmware-tools-distrib]# ./vmware-install.pl，一路回车即可安装完成。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/mpi/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -539,7 +706,7 @@ mpirun --allow-run-as-root -np 4 exec.sh
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

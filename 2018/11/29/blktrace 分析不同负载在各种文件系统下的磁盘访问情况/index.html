@@ -79,17 +79,35 @@
 
 
 
-<meta name="description" content="删除失败的安装； 安装MariaDB（数据库）； 创建用户； 安装Munge； 安装Slurm； 配置Slurm； 使用Slurm； 本文以天河上的64个节点为例进行说明：     节点为cn15872-cn15935, IP段为：10.182.170/171.{1..32}  1、删除失败的安装记录yum remove mariadb-server mariadb-devel -y yum r">
+<meta name="description" content="title:blktrace 分析不同负载在各种文件系统下的磁盘访问情况###组会汇报 2018.11.1">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Slurm集群管理软件的安装">
-<meta property="og:url" content="http://yoursite.com/2018/04/08/slurm/index.html">
+<meta property="og:title" content="Brayden-Lee 博客">
+<meta property="og:url" content="http://yoursite.com/2018/11/29/blktrace 分析不同负载在各种文件系统下的磁盘访问情况/index.html">
 <meta property="og:site_name" content="Brayden-Lee 博客">
-<meta property="og:description" content="删除失败的安装； 安装MariaDB（数据库）； 创建用户； 安装Munge； 安装Slurm； 配置Slurm； 使用Slurm； 本文以天河上的64个节点为例进行说明：     节点为cn15872-cn15935, IP段为：10.182.170/171.{1..32}  1、删除失败的安装记录yum remove mariadb-server mariadb-devel -y yum r">
+<meta property="og:description" content="title:blktrace 分析不同负载在各种文件系统下的磁盘访问情况###组会汇报 2018.11.1">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-12T08:52:00.063Z">
+<meta property="og:image" content="https://i.imgur.com/U8G2n2l.jpg">
+<meta property="og:image" content="https://i.imgur.com/ZrxYAV5.jpg">
+<meta property="og:image" content="https://i.imgur.com/fwvWAT5.jpg">
+<meta property="og:image" content="https://i.imgur.com/6PzaM0E.jpg">
+<meta property="og:image" content="https://i.imgur.com/jlingR4.jpg">
+<meta property="og:image" content="https://i.imgur.com/JB0FcJI.jpg">
+<meta property="og:image" content="https://i.imgur.com/koNDM9U.jpg">
+<meta property="og:image" content="https://i.imgur.com/M08w1d2.jpg">
+<meta property="og:image" content="https://i.imgur.com/niPyKZ8.jpg">
+<meta property="og:image" content="https://i.imgur.com/w4yo09v.jpg">
+<meta property="og:image" content="https://i.imgur.com/lL86UCi.jpg">
+<meta property="og:image" content="https://i.imgur.com/TJe9KgS.jpg">
+<meta property="og:image" content="https://i.imgur.com/ouRb1rc.jpg">
+<meta property="og:image" content="https://i.imgur.com/snwzoHZ.jpg">
+<meta property="og:image" content="https://i.imgur.com/TGrc4KJ.jpg">
+<meta property="og:image" content="https://i.imgur.com/Sbdewcn.jpg">
+<meta property="og:image" content="https://i.imgur.com/uYzoVSS.jpg">
+<meta property="og:updated_time" content="2018-11-30T01:58:11.667Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Slurm集群管理软件的安装">
-<meta name="twitter:description" content="删除失败的安装； 安装MariaDB（数据库）； 创建用户； 安装Munge； 安装Slurm； 配置Slurm； 使用Slurm； 本文以天河上的64个节点为例进行说明：     节点为cn15872-cn15935, IP段为：10.182.170/171.{1..32}  1、删除失败的安装记录yum remove mariadb-server mariadb-devel -y yum r">
+<meta name="twitter:title" content="Brayden-Lee 博客">
+<meta name="twitter:description" content="title:blktrace 分析不同负载在各种文件系统下的磁盘访问情况###组会汇报 2018.11.1">
+<meta name="twitter:image" content="https://i.imgur.com/U8G2n2l.jpg">
 
 
 
@@ -119,13 +137,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/08/slurm/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/11/29/blktrace 分析不同负载在各种文件系统下的磁盘访问情况/"/>
 
 
 
 
 
-  <title>Slurm集群管理软件的安装 | Brayden-Lee 博客</title>
+  <title> | Brayden-Lee 博客</title>
   
 
 
@@ -232,7 +250,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/slurm/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/29/blktrace 分析不同负载在各种文件系统下的磁盘访问情况/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Brayden-Lee">
@@ -249,7 +267,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Slurm集群管理软件的安装</h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -261,8 +279,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-08T16:10:38+08:00">
-                2018-04-08
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-29T15:29:32+08:00">
+                2018-11-29
               </time>
             
 
@@ -299,91 +317,40 @@
       
 
       
-        <ul>
-<li><a href="#1">删除失败的安装</a>；</li>
-<li><a href="#2">安装MariaDB（数据库）</a>；</li>
-<li><a href="#3">创建用户</a>；</li>
-<li><a href="#4">安装Munge</a>；</li>
-<li><a href="#5">安装Slurm</a>；</li>
-<li><a href="#6">配置Slurm</a>；</li>
-<li><a href="#7">使用Slurm</a>；<blockquote>
-<p>本文以天河上的64个节点为例进行说明：</p>
-</blockquote>
-</li>
-</ul>
-<blockquote>
-<p>节点为cn15872-cn15935, IP段为：10.182.170/171.{1..32}</p>
-</blockquote>
-<h1 id="1、删除失败的安装记录"><a href="#1、删除失败的安装记录" class="headerlink" title="1、删除失败的安装记录"></a><span id="1">1、删除失败的安装记录</span></h1><pre><code>yum remove mariadb-server mariadb-devel -y
-yum remove slurm munge munge-libs munge-devel -y
-userdel -r slurm
-userdel -r munge
-[pkill 可以根据进程名杀死某个进程]
-</code></pre><h1 id="2、安装数据库"><a href="#2、安装数据库" class="headerlink" title="2、安装数据库"></a><span id="2">2、安装数据库</span></h1><pre><code>yum install mariadb-server mariadb-devel -y
-</code></pre><blockquote>
-<p>说明：-y选项可以在安装的过程中遇到[Y/n]这种可以自动选Y</p>
-</blockquote>
-<h1 id="3、创建用户"><a href="#3、创建用户" class="headerlink" title="3、创建用户"></a><span id="3">3、创建用户</span></h1><pre><code>export MUNGEUSER=980
-groupadd -g $MUNGEUSER munge
-useradd  -m -c &quot;MUNGE Uid &apos;N&apos; Gid Emporium&quot; -d /var/lib/munge -u $MUNGEUSER -g munge  -s /sbin/nologin munge
-export SLURMUSER=981
-groupadd -g $SLURMUSER slurm
-useradd  -m -c &quot;SLURM workload manager&quot; -d /var/lib/slurm -u $SLURMUSER -g slurm  -s /bin/bash slurm
-</code></pre><h1 id="4、安装munge"><a href="#4、安装munge" class="headerlink" title="4、安装munge"></a><span id="4">4、安装munge</span></h1><pre><code>yum install epel-release -y
-yum install munge munge-libs munge-devel -y
-</code></pre><p>安装rng-tools来产生munge需要的key（key文件可以为任意大于32字节的文件）</p>
-<pre><code>[配置munge.key]
-yum install rng-tools -y
-/usr/sbin/create-munge-key -r
-dd if=/dev/urandom bs=1 count=1024 &gt; /etc/munge/munge.key
-chown munge: /etc/munge/munge.key
-chmod 400 /etc/munge/munge.key
-
-[munge后续配置]
-chown -R munge: /etc/munge/ /var/log/munge/
-chmod 0700 /etc/munge/ /var/log/munge/
-systemctl enable munge
-systemctl start munge
-</code></pre><h1 id="5、安装slurm"><a href="#5、安装slurm" class="headerlink" title="5、安装slurm"></a><span id="5">5、安装slurm</span></h1><pre><code>yum reinstall pam.x86_64 -y
-yum install openssl openssl-devel pam-devel numactl numactl-devel hwloc hwloc-devel lua lua-devel readline-devel rrdtool-devel ncurses-devel perl-ExtUtils-MakeMaker man2html libibmad libibumad -y
-yum install rpm-build
-mkdir /slurm
-cd /slurm
-wget https://download.schedmd.com/slurm/slurm-17.11.5.tar.bz2
-rpmbuild -ta slurm-17.11.5.tar.bz2
-cd /root/rpmbuild/RPMS/x86_64
-mkdir /slurm/slurm-rpms
-cp *.rpm /slurm/slurm-rpms  [*rpm文件为源码包，实际上就是对这些包进行安装]
-yum --nogpgcheck localinstall *.rpm -y
-</code></pre><h1 id="6、配置slurm"><a href="#6、配置slurm" class="headerlink" title="6、配置slurm"></a><span id="6">6、配置slurm</span></h1><p><a href="http://slurm.schedmd.com/configurator.easy.html" target="_blank" rel="noopener">http://slurm.schedmd.com/configurator.easy.html</a><br>此链接可以在线生成slurm.conf的基本配置，后续只要在这上面进行修改即可；1）在/etc/slurm下新建slurm.conf，将上述配置参数写入该文件即可；2）将此slurm.conf文件上传到所有的节点上；3）可以使用scp命令进行传输；接着进行如下步骤：</p>
-<pre><code># 控制节点上的配置
-mkdir /var/spool/slurmctld
-chown slurm: /var/spool/slurmctld
-chmod 755 /var/spool/slurmctld
-touch /var/log/slurmctld.log
-chown slurm: /var/log/slurmctld.log
-touch /var/log/slurm_jobacct.log /var/log/slurm_jobcomp.log
-chown slurm: /var/log/slurm_jobacct.log /var/log/slurm_jobcomp.log
-
-# 所有slurmd进程运行节点上的配置
-mkdir /var/spool/slurmd
-chown slurm: /var/spool/slurmd
-chmod 755 /var/spool/slurmd
-touch /var/log/slurmd.log
-chown slurm: /var/log/slurmd.log
-</code></pre><h4 id="启动slurmd进程"><a href="#启动slurmd进程" class="headerlink" title="启动slurmd进程"></a>启动slurmd进程</h4><pre><code>systemctl enable slurmd.service
-systemctl start slurmd.service
-systemctl status slurmd.service
-</code></pre><h4 id="启动slurmctld进程"><a href="#启动slurmctld进程" class="headerlink" title="启动slurmctld进程"></a>启动slurmctld进程</h4><pre><code>systemctl enable slurmctld.service
-systemctl start slurmctld.service
-systemctl status slurmctld.service
-</code></pre><h1 id="7、使用slurm"><a href="#7、使用slurm" class="headerlink" title="7、使用slurm"></a><span id="7">7、使用slurm</span></h1><pre><code>scontrol show nodes  # 显示所有节点；
-srun -N5 hostname  # 5个节点上运行hostname；
-sinfo # 查看节点信息；
-……
-</code></pre><blockquote>
-<p>安装参考： <a href="https://www.slothparadise.com/how-to-install-slurm-on-centos-7-cluster/" target="_blank" rel="noopener">https://www.slothparadise.com/how-to-install-slurm-on-centos-7-cluster/</a></p>
-</blockquote>
+        <hr>
+<h2 id="title-blktrace-分析不同负载在各种文件系统下的磁盘访问情况"><a href="#title-blktrace-分析不同负载在各种文件系统下的磁盘访问情况" class="headerlink" title="title:blktrace 分析不同负载在各种文件系统下的磁盘访问情况"></a>title:blktrace 分析不同负载在各种文件系统下的磁盘访问情况</h2><p>###组会汇报 2018.11.1<br><img src="https://i.imgur.com/U8G2n2l.jpg" alt=""></p>
+<hr>
+<p><img src="https://i.imgur.com/ZrxYAV5.jpg" alt=""></p>
+<hr>
+<p><img src="https://i.imgur.com/fwvWAT5.jpg" alt=""></p>
+<hr>
+<p><img src="https://i.imgur.com/6PzaM0E.jpg" alt=""></p>
+<hr>
+<p><img src="https://i.imgur.com/jlingR4.jpg" alt=""></p>
+<hr>
+<p><img src="https://i.imgur.com/JB0FcJI.jpg" alt=""></p>
+<hr>
+<p><img src="https://i.imgur.com/koNDM9U.jpg" alt=""></p>
+<hr>
+<p><img src="https://i.imgur.com/M08w1d2.jpg" alt=""></p>
+<hr>
+<p><img src="https://i.imgur.com/niPyKZ8.jpg" alt=""></p>
+<hr>
+<p><img src="https://i.imgur.com/w4yo09v.jpg" alt=""></p>
+<hr>
+<p><img src="https://i.imgur.com/lL86UCi.jpg" alt=""></p>
+<hr>
+<p><img src="https://i.imgur.com/TJe9KgS.jpg" alt=""></p>
+<hr>
+<p><img src="https://i.imgur.com/ouRb1rc.jpg" alt=""></p>
+<hr>
+<p><img src="https://i.imgur.com/snwzoHZ.jpg" alt=""></p>
+<hr>
+<p><img src="https://i.imgur.com/TGrc4KJ.jpg" alt=""></p>
+<hr>
+<p><img src="https://i.imgur.com/Sbdewcn.jpg" alt=""></p>
+<hr>
+<p><img src="https://i.imgur.com/uYzoVSS.jpg" alt=""></p>
 
       
     </div>
@@ -408,8 +375,8 @@ sinfo # 查看节点信息；
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/08/cluster/" rel="next" title="利用一台PC机搭建一个能互相通信的小型集群">
-                <i class="fa fa-chevron-left"></i> 利用一台PC机搭建一个能互相通信的小型集群
+              <a href="/2018/11/02/linux-server-proxy/" rel="next" title="linux服务器上设置网络代理">
+                <i class="fa fa-chevron-left"></i> linux服务器上设置网络代理
               </a>
             
           </div>
@@ -417,10 +384,6 @@ sinfo # 查看节点信息；
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/22/linux_develop/" rel="prev" title="">
-                 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -534,7 +497,7 @@ sinfo # 查看节点信息；
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1、删除失败的安装记录"><span class="nav-number">1.</span> <span class="nav-text">1、删除失败的安装记录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、安装数据库"><span class="nav-number">2.</span> <span class="nav-text">2、安装数据库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3、创建用户"><span class="nav-number">3.</span> <span class="nav-text">3、创建用户</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4、安装munge"><span class="nav-number">4.</span> <span class="nav-text">4、安装munge</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5、安装slurm"><span class="nav-number">5.</span> <span class="nav-text">5、安装slurm</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6、配置slurm"><span class="nav-number">6.</span> <span class="nav-text">6、配置slurm</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#启动slurmd进程"><span class="nav-number">6.0.0.1.</span> <span class="nav-text">启动slurmd进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动slurmctld进程"><span class="nav-number">6.0.0.2.</span> <span class="nav-text">启动slurmctld进程</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7、使用slurm"><span class="nav-number">7.</span> <span class="nav-text">7、使用slurm</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#title-blktrace-分析不同负载在各种文件系统下的磁盘访问情况"><span class="nav-number">1.</span> <span class="nav-text">title:blktrace 分析不同负载在各种文件系统下的磁盘访问情况</span></a></li></ol></div>
             
 
           </div>
