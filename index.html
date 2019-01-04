@@ -1349,6 +1349,7 @@ mount -t ftfs /dev/loop0 mnt
 <p>曾经在grub.cfg对应的内核版本下加入了nomodeset来禁用视频特性仍不起效；  </p>
 </blockquote>
 <p><strong>最后分析得出原因</strong>：由于在安装Ubuntu 13.10的时候由于更新源有些页面失效，就用国内的源替换了旧的，随后执行了apt-get upgrade;实际上apt-get upgrade会触发update-grub；从而会破坏镜像；<br><strong>解决方法</strong>：将Ubuntu 14.04的源替换旧的源，这样就不会出现失效的链接；随后执行apt-get update操作来更新一下；之后进入正常的编译流程即可；</p>
+<h3 id="附件下载"><a href="#附件下载" class="headerlink" title="附件下载"></a>附件下载</h3><p><a href="https://github.com/Brayden-Lee/attachment/blob/master/sources.list" target="_blank" rel="noopener">https://github.com/Brayden-Lee/attachment/blob/master/sources.list</a></p>
 
           
         
