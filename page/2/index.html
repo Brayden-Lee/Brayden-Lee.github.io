@@ -229,6 +229,139 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/27/ftrace/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hb-lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hb-lee 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/27/ftrace/" itemprop="url">Ftrace跟踪open系统调用过程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-27T18:59:37+08:00">
+                2018-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="涉及的ftrace文件说明"><a href="#涉及的ftrace文件说明" class="headerlink" title="涉及的ftrace文件说明"></a>涉及的ftrace文件说明</h3><blockquote>
+<p>available_filter_functions  包含所有可以追踪的系统调用<br>available_tracers 包含所有的追踪类型 （常用的是function_graph）<br>current_tracer  当前正在追踪的类型<br>set_graph_function  设置要进行追踪的系统调用<br>tracing_on  开启(1)/关闭(0)跟踪过程<br>trace 保存跟踪过程打印的输出</p>
+</blockquote>
+<h3 id="ftrace-for-track-the-open-system-call"><a href="#ftrace-for-track-the-open-system-call" class="headerlink" title="ftrace for track the open system call"></a>ftrace for track the open system call</h3><pre><code>挂载debugfs  
+    1. mkdir /mnt/debugfs  
+    2. mount -t debugfs nodev /mnt/debugfs  
+    3. cd /mnt/debugfs/tracing    
+关闭ftrace跟踪 ： echo 0 &gt; tracing_on  [最新的ftrace没有tracing_enable文件]  
+清空ring buffer ： echo nop &gt; current_tracer  
+设置跟踪类型 ： echo function_graph &gt; current_tracer  
+设置跟踪的函数 ： echo do_sys_open &gt; set_graph_function  
+开启ftrace跟踪 : echo 1 &gt; tracing_on
+</code></pre><p>之后运行涉及到文件的open操作的执行过程，trace文件中就会有跟踪的函数结果。</p>
+<h3 id="其他性能追踪工具ltrace-strace"><a href="#其他性能追踪工具ltrace-strace" class="headerlink" title="其他性能追踪工具ltrace, strace"></a>其他性能追踪工具ltrace, strace</h3><p><img src="https://i.imgur.com/jSUamGV.png" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/13/cmake/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1171,7 +1304,7 @@ mpirun --allow-run-as-root -np 4 exec.sh
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

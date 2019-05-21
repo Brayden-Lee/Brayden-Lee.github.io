@@ -79,27 +79,17 @@
 
 
 
-<meta name="description" content="总结">
+<meta name="description" content="Gramfs简介gramfs的分布式实现 依赖的库及下载地址glog    [https://github.com/hb-lee/attachment/glog-0.3.3.tar.gz] gflag    [https://github.com/gflags/gflags] kyotocabinet    [https://github.com/hb-lee/attachment/kyotoca">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RAID一些研究 (RAID on SSD)">
-<meta property="og:url" content="http://yoursite.com/2019/03/11/RAID 一些研究/index.html">
+<meta property="og:title" content="Gramfs安装指南">
+<meta property="og:url" content="http://yoursite.com/2019/05/21/Gramfs安装/index.html">
 <meta property="og:site_name" content="hb-lee 的博客">
-<meta property="og:description" content="总结">
+<meta property="og:description" content="Gramfs简介gramfs的分布式实现 依赖的库及下载地址glog    [https://github.com/hb-lee/attachment/glog-0.3.3.tar.gz] gflag    [https://github.com/gflags/gflags] kyotocabinet    [https://github.com/hb-lee/attachment/kyotoca">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://i.imgur.com/ER2q13U.jpg">
-<meta property="og:image" content="https://i.imgur.com/p5luCu8.jpg">
-<meta property="og:image" content="https://i.imgur.com/xT3yZGl.jpg">
-<meta property="og:image" content="https://i.imgur.com/oY20K6r.jpg">
-<meta property="og:image" content="https://i.imgur.com/cFht1WG.jpg">
-<meta property="og:image" content="https://i.imgur.com/5w5t0We.jpg">
-<meta property="og:image" content="https://i.imgur.com/YCSyJs8.jpg">
-<meta property="og:image" content="https://i.imgur.com/UIucS46.jpg">
-<meta property="og:image" content="https://i.imgur.com/MrfyYNV.jpg">
-<meta property="og:updated_time" content="2019-03-11T06:30:45.739Z">
+<meta property="og:updated_time" content="2019-05-21T06:59:10.048Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RAID一些研究 (RAID on SSD)">
-<meta name="twitter:description" content="总结">
-<meta name="twitter:image" content="https://i.imgur.com/ER2q13U.jpg">
+<meta name="twitter:title" content="Gramfs安装指南">
+<meta name="twitter:description" content="Gramfs简介gramfs的分布式实现 依赖的库及下载地址glog    [https://github.com/hb-lee/attachment/glog-0.3.3.tar.gz] gflag    [https://github.com/gflags/gflags] kyotocabinet    [https://github.com/hb-lee/attachment/kyotoca">
 
 
 
@@ -129,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/11/RAID 一些研究/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/05/21/Gramfs安装/"/>
 
 
 
 
 
-  <title>RAID一些研究 (RAID on SSD) | hb-lee 的博客</title>
+  <title>Gramfs安装指南 | hb-lee 的博客</title>
   
 
 
@@ -242,7 +232,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/11/RAID 一些研究/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/21/Gramfs安装/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hb-lee">
@@ -259,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">RAID一些研究 (RAID on SSD)</h1>
+          <h1 class="post-title" itemprop="name headline">Gramfs安装指南</h1>
         
 
         <div class="post-meta">
@@ -271,8 +261,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-11T14:26:53+08:00">
-                2019-03-11
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-21T14:31:28+08:00">
+                2019-05-21
               </time>
             
 
@@ -309,15 +299,90 @@
       
 
       
-        <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><img src="https://i.imgur.com/ER2q13U.jpg" alt=""></p>
-<p><img src="https://i.imgur.com/p5luCu8.jpg" alt=""></p>
-<p><img src="https://i.imgur.com/xT3yZGl.jpg" alt=""></p>
-<p><img src="https://i.imgur.com/oY20K6r.jpg" alt=""></p>
-<p><img src="https://i.imgur.com/cFht1WG.jpg" alt=""></p>
-<p><img src="https://i.imgur.com/5w5t0We.jpg" alt=""></p>
-<p><img src="https://i.imgur.com/YCSyJs8.jpg" alt=""></p>
-<p><img src="https://i.imgur.com/UIucS46.jpg" alt=""></p>
-<p><img src="https://i.imgur.com/MrfyYNV.jpg" alt=""></p>
+        <h3 id="Gramfs简介"><a href="#Gramfs简介" class="headerlink" title="Gramfs简介"></a>Gramfs简介</h3><p>gramfs的分布式实现</p>
+<h3 id="依赖的库及下载地址"><a href="#依赖的库及下载地址" class="headerlink" title="依赖的库及下载地址"></a>依赖的库及下载地址</h3><pre><code>glog    [https://github.com/hb-lee/attachment/glog-0.3.3.tar.gz]
+gflag    [https://github.com/gflags/gflags]
+kyotocabinet    [https://github.com/hb-lee/attachment/kyotocabinet-1.2.77.tar.gz]
+boost_system    [https://github.com/hb-lee/attachment/boost_1_53_0.tar.gz]
+boost_serialization    [https://github.com/hb-lee/attachment/boost_1_53_0.tar.gz]
+thrift    [https://github.com/hb-lee/attachment/thrift-0.12.0.tar.gz]
+</code></pre><h3 id="cmake安装"><a href="#cmake安装" class="headerlink" title="cmake安装"></a>cmake安装</h3><pre><code>wget https://cmake.org/files/v3.14/cmake-3.14.0.tar.gz
+tar -xvf cmake-3.14.0.tar.gz
+cd cmake-3.14.0.tar.gz
+./configure
+make &amp;&amp; make install
+cd -
+</code></pre><h3 id="glog安装"><a href="#glog安装" class="headerlink" title="glog安装"></a>glog安装</h3><pre><code>tar -xvf glog-0.3.3.tar.gz
+cd glog-0.3.3.tar.gz
+./configure
+make &amp;&amp; make install
+cd -
+</code></pre><h3 id="gflag安装"><a href="#gflag安装" class="headerlink" title="gflag安装"></a>gflag安装</h3><pre><code>git clone https://github.com/gflags/gflags
+cd gflags
+cmake .
+make -j 24
+make install
+cd -
+</code></pre><h3 id="kyotocabinet安装"><a href="#kyotocabinet安装" class="headerlink" title="kyotocabinet安装"></a>kyotocabinet安装</h3><pre><code>tar xvf kyotocabinet-1.2.77.tar.gz
+cd kyotocabinet-1.2.77
+./configure
+make &amp;&amp; make install
+cd -
+</code></pre><h3 id="thrift安装"><a href="#thrift安装" class="headerlink" title="thrift安装"></a>thrift安装</h3><pre><code>yum -y groupinstall &quot;Development Tools&quot;
+sudo yum -y install libevent-devel zlib-devel openssl-devel
+</code></pre><blockquote>
+<p>openssl-devel若出现依赖导致安装不了，可以用源码包进行安装(提供包openssl-1.1.1b.tar.gz)</p>
+</blockquote>
+<pre><code>wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz
+tar xvf autoconf-2.69.tar.gz
+./configure --prefix=/usr
+make
+sudo make install
+cd ..
+
+wget http://ftp.gnu.org/gnu/automake/automake-1.14.tar.gz
+tar xvf automake-1.14.tar.gz
+cd automake-1.14
+./configure --prefix=/usr
+make
+sudo make install
+cd ..
+
+wget http://ftp.gnu.org/gnu/bison/bison-2.5.1.tar.gz
+tar xvf bison-2.5.1.tar.gz
+cd bison-2.5.1
+./configure --prefix=/usr
+make
+sudo make install
+cd ..
+
+wget http://sourceforge.net/projects/boost/files/boost/1.53.0/boost_1_53_0.tar.gz
+tar xvf boost_1_53_0.tar.gz
+cd boost_1_53_0
+./bootstrap.sh
+sudo ./b2 install
+cd ..
+
+wget http://mirrors.hust.edu.cn/apache/thrift/0.12.0thrift-0.12.0.tar.gz
+tar xvf thrift-0.12.0.tar.gz
+cd thrift
+./configure --with-lua=no
+make
+make &amp;&amp; make install
+</code></pre><h3 id="遇到的棘手问题"><a href="#遇到的棘手问题" class="headerlink" title="遇到的棘手问题"></a>遇到的棘手问题</h3><p>gcc升级问题：    </p>
+<ul>
+<li>g++: fatal error: braced spec is invalid at ‘%’    <blockquote>
+<p>env -i PATH=/bin:/usr/bin make [可能试一下环境变量导致的，用此命令来暂时还原最原始的环境变量]  首先得换高阶的gcc    </p>
+</blockquote>
+</li>
+</ul>
+<p>共享库编译问题   </p>
+<ul>
+<li>relocation R_X86_64_32S against `XXXXXXX’ can not be used when making a shared object; recompile with -fPIC<blockquote>
+<p>网上都显示这个问题是由于没有加-fPIC编译选项导致的，但是亲自尝试后并不是这样，加了也报这个错误；后来发现是由于代码里有static函数，共享库里不能有static，自己理解是shared里地址不能固定，而static放在常量区，将static改掉就可以了；</p>
+</blockquote>
+</li>
+</ul>
 
       
     </div>
@@ -342,8 +407,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/01/03/Machine Learning on System/" rel="next" title="当机器学习进入系统">
-                <i class="fa fa-chevron-left"></i> 当机器学习进入系统
+              <a href="/2019/03/11/RAID 一些研究/" rel="next" title="RAID一些研究 (RAID on SSD)">
+                <i class="fa fa-chevron-left"></i> RAID一些研究 (RAID on SSD)
               </a>
             
           </div>
@@ -351,10 +416,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/21/Gramfs安装/" rel="prev" title="Gramfs安装指南">
-                Gramfs安装指南 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -468,7 +529,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gramfs简介"><span class="nav-number">1.</span> <span class="nav-text">Gramfs简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖的库及下载地址"><span class="nav-number">2.</span> <span class="nav-text">依赖的库及下载地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cmake安装"><span class="nav-number">3.</span> <span class="nav-text">cmake安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#glog安装"><span class="nav-number">4.</span> <span class="nav-text">glog安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gflag安装"><span class="nav-number">5.</span> <span class="nav-text">gflag安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kyotocabinet安装"><span class="nav-number">6.</span> <span class="nav-text">kyotocabinet安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#thrift安装"><span class="nav-number">7.</span> <span class="nav-text">thrift安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遇到的棘手问题"><span class="nav-number">8.</span> <span class="nav-text">遇到的棘手问题</span></a></li></ol></div>
             
 
           </div>
