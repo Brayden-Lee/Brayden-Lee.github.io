@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="Gramfs简介gramfs的分布式实现 依赖的库及下载地址glog    [https://github.com/hb-lee/attachment/glog-0.3.3.tar.gz] gflag    [https://github.com/gflags/gflags] kyotocabinet    [https://github.com/hb-lee/attachment/kyotoca">
+<meta name="description" content="S3版本控制与生命周期版本控制存储桶可以处于三种状态之一：非（无）版本化（默认），启用版本控制或暂停版本控制。通过启用了版本控制的存储桶可以恢复因意外删除或覆盖操作而失去的对象。例如：  如果删除对象（而不是永久移除它），则 Amazon S3 会插入删除标记，该标记将成为当前对象版本。通过回滚可以恢复到以前的版本。 如果覆盖对象，则会导致存储桶中出现新的对象版本。通过回滚可以恢复到以前的版本。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Gramfs安装指南">
-<meta property="og:url" content="http://yoursite.com/2019/05/21/Gramfs安装/index.html">
+<meta property="og:title" content="S3版本控制与生命周期">
+<meta property="og:url" content="http://yoursite.com/2019/07/08/S3版本控制与生命周期/index.html">
 <meta property="og:site_name" content="hb-lee 的博客">
-<meta property="og:description" content="Gramfs简介gramfs的分布式实现 依赖的库及下载地址glog    [https://github.com/hb-lee/attachment/glog-0.3.3.tar.gz] gflag    [https://github.com/gflags/gflags] kyotocabinet    [https://github.com/hb-lee/attachment/kyotoca">
+<meta property="og:description" content="S3版本控制与生命周期版本控制存储桶可以处于三种状态之一：非（无）版本化（默认），启用版本控制或暂停版本控制。通过启用了版本控制的存储桶可以恢复因意外删除或覆盖操作而失去的对象。例如：  如果删除对象（而不是永久移除它），则 Amazon S3 会插入删除标记，该标记将成为当前对象版本。通过回滚可以恢复到以前的版本。 如果覆盖对象，则会导致存储桶中出现新的对象版本。通过回滚可以恢复到以前的版本。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-21T06:59:10.048Z">
+<meta property="og:updated_time" content="2019-07-08T14:50:07.216Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Gramfs安装指南">
-<meta name="twitter:description" content="Gramfs简介gramfs的分布式实现 依赖的库及下载地址glog    [https://github.com/hb-lee/attachment/glog-0.3.3.tar.gz] gflag    [https://github.com/gflags/gflags] kyotocabinet    [https://github.com/hb-lee/attachment/kyotoca">
+<meta name="twitter:title" content="S3版本控制与生命周期">
+<meta name="twitter:description" content="S3版本控制与生命周期版本控制存储桶可以处于三种状态之一：非（无）版本化（默认），启用版本控制或暂停版本控制。通过启用了版本控制的存储桶可以恢复因意外删除或覆盖操作而失去的对象。例如：  如果删除对象（而不是永久移除它），则 Amazon S3 会插入删除标记，该标记将成为当前对象版本。通过回滚可以恢复到以前的版本。 如果覆盖对象，则会导致存储桶中出现新的对象版本。通过回滚可以恢复到以前的版本。">
 
 
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/05/21/Gramfs安装/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/07/08/S3版本控制与生命周期/"/>
 
 
 
 
 
-  <title>Gramfs安装指南 | hb-lee 的博客</title>
+  <title>S3版本控制与生命周期 | hb-lee 的博客</title>
   
 
 
@@ -232,7 +232,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/21/Gramfs安装/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/S3版本控制与生命周期/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hb-lee">
@@ -249,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Gramfs安装指南</h1>
+          <h1 class="post-title" itemprop="name headline">S3版本控制与生命周期</h1>
         
 
         <div class="post-meta">
@@ -261,8 +261,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-21T14:31:28+08:00">
-                2019-05-21
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-08T22:36:24+08:00">
+                2019-07-08
               </time>
             
 
@@ -299,89 +299,23 @@
       
 
       
-        <h3 id="Gramfs简介"><a href="#Gramfs简介" class="headerlink" title="Gramfs简介"></a>Gramfs简介</h3><p>gramfs的分布式实现</p>
-<h3 id="依赖的库及下载地址"><a href="#依赖的库及下载地址" class="headerlink" title="依赖的库及下载地址"></a>依赖的库及下载地址</h3><pre><code>glog    [https://github.com/hb-lee/attachment/glog-0.3.3.tar.gz]
-gflag    [https://github.com/gflags/gflags]
-kyotocabinet    [https://github.com/hb-lee/attachment/kyotocabinet-1.2.77.tar.gz]
-boost_system    [https://github.com/hb-lee/attachment/boost_1_53_0.tar.gz]
-boost_serialization    [https://github.com/hb-lee/attachment/boost_1_53_0.tar.gz]
-thrift    [https://github.com/hb-lee/attachment/thrift-0.12.0.tar.gz]
-</code></pre><h3 id="cmake安装"><a href="#cmake安装" class="headerlink" title="cmake安装"></a>cmake安装</h3><pre><code>wget https://cmake.org/files/v3.14/cmake-3.14.0.tar.gz
-tar -xvf cmake-3.14.0.tar.gz
-cd cmake-3.14.0.tar.gz
-./configure
-make &amp;&amp; make install
-cd -
-</code></pre><h3 id="glog安装"><a href="#glog安装" class="headerlink" title="glog安装"></a>glog安装</h3><pre><code>tar -xvf glog-0.3.3.tar.gz
-cd glog-0.3.3.tar.gz
-./configure
-make &amp;&amp; make install
-cd -
-</code></pre><h3 id="gflag安装"><a href="#gflag安装" class="headerlink" title="gflag安装"></a>gflag安装</h3><pre><code>git clone https://github.com/gflags/gflags
-cd gflags
-cmake .
-make -j 24
-make install
-cd -
-</code></pre><h3 id="kyotocabinet安装"><a href="#kyotocabinet安装" class="headerlink" title="kyotocabinet安装"></a>kyotocabinet安装</h3><pre><code>tar xvf kyotocabinet-1.2.77.tar.gz
-cd kyotocabinet-1.2.77
-./configure
-make &amp;&amp; make install
-cd -
-</code></pre><h3 id="thrift安装"><a href="#thrift安装" class="headerlink" title="thrift安装"></a>thrift安装</h3><pre><code>yum -y groupinstall &quot;Development Tools&quot;
-sudo yum -y install libevent-devel zlib-devel openssl-devel
-</code></pre><blockquote>
-<p>openssl-devel若出现依赖导致安装不了，可以用源码包进行安装(提供包openssl-1.1.1b.tar.gz)</p>
-</blockquote>
-<pre><code>wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz
-tar xvf autoconf-2.69.tar.gz
-./configure --prefix=/usr
-make
-sudo make install
-cd ..
-
-wget http://ftp.gnu.org/gnu/automake/automake-1.14.tar.gz
-tar xvf automake-1.14.tar.gz
-cd automake-1.14
-./configure --prefix=/usr
-make
-sudo make install
-cd ..
-
-wget http://ftp.gnu.org/gnu/bison/bison-2.5.1.tar.gz
-tar xvf bison-2.5.1.tar.gz
-cd bison-2.5.1
-./configure --prefix=/usr
-make
-sudo make install
-cd ..
-
-wget http://sourceforge.net/projects/boost/files/boost/1.53.0/boost_1_53_0.tar.gz
-tar xvf boost_1_53_0.tar.gz
-cd boost_1_53_0
-./bootstrap.sh
-sudo ./b2 install
-cd ..
-
-wget http://mirrors.hust.edu.cn/apache/thrift/0.12.0thrift-0.12.0.tar.gz
-tar xvf thrift-0.12.0.tar.gz
-cd thrift
-./configure --with-lua=no
-make
-make &amp;&amp; make install
-</code></pre><h3 id="遇到的棘手问题"><a href="#遇到的棘手问题" class="headerlink" title="遇到的棘手问题"></a>遇到的棘手问题</h3><p>gcc升级问题：    </p>
+        <h1 id="S3版本控制与生命周期"><a href="#S3版本控制与生命周期" class="headerlink" title="S3版本控制与生命周期"></a>S3版本控制与生命周期</h1><h3 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h3><p>存储桶可以处于三种状态之一：非（无）版本化（默认），启用版本控制或暂停版本控制。通过启用了版本控制的存储桶可以恢复因意外删除或覆盖操作而失去的对象。例如：</p>
 <ul>
-<li>g++: fatal error: braced spec is invalid at ‘%’    <blockquote>
-<p>env -i PATH=/bin:/usr/bin make [可能试一下环境变量导致的，用此命令来暂时还原最原始的环境变量]  首先得换高阶的gcc    </p>
-</blockquote>
-</li>
+<li>如果删除对象（而不是永久移除它），则 Amazon S3 会插入删除标记，该标记将成为当前对象版本。通过回滚可以恢复到以前的版本。</li>
+<li>如果覆盖对象，则会导致存储桶中出现新的对象版本。通过回滚可以恢复到以前的版本。</li>
 </ul>
-<p>共享库编译问题   </p>
-<ul>
-<li>relocation R_X86_64_32S against `XXXXXXX’ can not be used when making a shared object; recompile with -fPIC<blockquote>
-<p>网上都显示这个问题是由于没有加-fPIC编译选项导致的，但是亲自尝试后并不是这样，加了也报这个错误；后来发现是由于代码里有static函数，共享库里不能有static，自己理解是shared里地址不能固定，而static放在常量区，将static改掉就可以了；</p>
+<blockquote>
+<p><strong>一旦您对存储桶启用了版本控制，它将无法返回到无版本控制状态。但是，您可以在该存储桶上暂停版本控制。</strong></p>
 </blockquote>
-</li>
+<p>版本控制状态将应用到该存储桶中的所有（不是某些）对象。您第一次对存储桶启用版本控制后，该存储桶中的对象将在之后一直受版本控制，并具有唯一的版本 ID。在您设置版本控制状态之前存储在存储桶中的对象具有版本 ID null。启用版本控制时，存储桶中的现有对象不会更改。更改的是 Amazon S3 在以后的请求中处理这些对象的方式。 存储桶拥有者（或任何具有适当权限的用户）可以暂停版本控制以停止累积对象版本。暂停版本控制时，存储桶中的现有对象不会更改。更改的是 Amazon S3 在以后的请求中处理对象的方式。</p>
+<blockquote>
+<p>改变不了之前，只能影响后面的处理</p>
+</blockquote>
+<p>在启用版本控制后，简单的DELETE无法永久删除对象，只是标记一下而已，要永久删除必须制定版本。</p>
+<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><p>S3支持通过以配置的形式实现对象的生命周期管理，主要应用在以下两种场景：</p>
+<ul>
+<li>如果你需要定期清理S3中的对象数据，可以设置相应的对象生命周期策略，实现对象的定期有计划删除。</li>
+<li>如果一些对象数据在一段限定的时间内需要频繁访问，之后这些不再需要访问，可以通过指定对象的生命周期策略，实现后台存储数据从热存储向冷存储（存储成本更低）的自动迁移，从而降低存储成本。</li>
 </ul>
 
       
@@ -407,8 +341,8 @@ make &amp;&amp; make install
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/11/RAID 一些研究/" rel="next" title="RAID一些研究 (RAID on SSD)">
-                <i class="fa fa-chevron-left"></i> RAID一些研究 (RAID on SSD)
+              <a href="/2019/07/08/S3接口特点/" rel="next" title="S3的RESTful接口特点总结">
+                <i class="fa fa-chevron-left"></i> S3的RESTful接口特点总结
               </a>
             
           </div>
@@ -417,8 +351,8 @@ make &amp;&amp; make install
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/05/23/tmux一个神奇的linux工具/" rel="prev" title="tmux:一个神奇的Linux工具">
-                tmux:一个神奇的Linux工具 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/07/08/S3对象存储/" rel="prev" title="S3（Simple Storage Service）对象存储简介及使用">
+                S3（Simple Storage Service）对象存储简介及使用 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -533,7 +467,7 @@ make &amp;&amp; make install
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gramfs简介"><span class="nav-number">1.</span> <span class="nav-text">Gramfs简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖的库及下载地址"><span class="nav-number">2.</span> <span class="nav-text">依赖的库及下载地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cmake安装"><span class="nav-number">3.</span> <span class="nav-text">cmake安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#glog安装"><span class="nav-number">4.</span> <span class="nav-text">glog安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gflag安装"><span class="nav-number">5.</span> <span class="nav-text">gflag安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kyotocabinet安装"><span class="nav-number">6.</span> <span class="nav-text">kyotocabinet安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#thrift安装"><span class="nav-number">7.</span> <span class="nav-text">thrift安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遇到的棘手问题"><span class="nav-number">8.</span> <span class="nav-text">遇到的棘手问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#S3版本控制与生命周期"><span class="nav-number">1.</span> <span class="nav-text">S3版本控制与生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#版本控制"><span class="nav-number">1.0.1.</span> <span class="nav-text">版本控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生命周期"><span class="nav-number">1.0.2.</span> <span class="nav-text">生命周期</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

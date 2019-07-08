@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="S3常见接口使用分段上传分段上传允许上传单个对象作为一组分段。每个分段都是对象数据的连续部分。您可以独立上传以及按任意顺序上传这些对象分段。如果任意分段传输失败，可以重新传输该分段且不会影响其他分段。当对象的所有段都上传后，Amazon S3 将这些段汇聚起来，然后创建对象。分段上传可提供以下优势：  文件小于5MB不适用分块上传 并行上传分段以提高吞吐量。 较小的分段大小可以将由于网络错误而需重">
+<meta property="og:type" content="article">
+<meta property="og:title" content="S3常见接口使用">
+<meta property="og:url" content="http://yoursite.com/2019/07/08/S3主要接口使用/index.html">
+<meta property="og:site_name" content="hb-lee 的博客">
+<meta property="og:description" content="S3常见接口使用分段上传分段上传允许上传单个对象作为一组分段。每个分段都是对象数据的连续部分。您可以独立上传以及按任意顺序上传这些对象分段。如果任意分段传输失败，可以重新传输该分段且不会影响其他分段。当对象的所有段都上传后，Amazon S3 将这些段汇聚起来，然后创建对象。分段上传可提供以下优势：  文件小于5MB不适用分块上传 并行上传分段以提高吞吐量。 较小的分段大小可以将由于网络错误而需重">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.imgur.com/OMlmyqG.png">
+<meta property="og:updated_time" content="2019-07-08T14:48:07.303Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="S3常见接口使用">
+<meta name="twitter:description" content="S3常见接口使用分段上传分段上传允许上传单个对象作为一组分段。每个分段都是对象数据的连续部分。您可以独立上传以及按任意顺序上传这些对象分段。如果任意分段传输失败，可以重新传输该分段且不会影响其他分段。当对象的所有段都上传后，Amazon S3 将这些段汇聚起来，然后创建对象。分段上传可提供以下优势：  文件小于5MB不适用分块上传 并行上传分段以提高吞吐量。 较小的分段大小可以将由于网络错误而需重">
+<meta name="twitter:image" content="https://i.imgur.com/OMlmyqG.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/08/S3主要接口使用/"/>
+
+
+
+
+
+  <title>S3常见接口使用 | hb-lee 的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">hb-lee 的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/S3主要接口使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hb-lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hb-lee 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">S3常见接口使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-08T22:36:24+08:00">
+                2019-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="S3常见接口使用"><a href="#S3常见接口使用" class="headerlink" title="S3常见接口使用"></a>S3常见接口使用</h1><h3 id="分段上传"><a href="#分段上传" class="headerlink" title="分段上传"></a>分段上传</h3><p>分段上传允许上传单个对象作为一组分段。每个分段都是对象数据的连续部分。您可以独立上传以及按任意顺序上传这些对象分段。如果任意分段传输失败，可以重新传输该分段且不会影响其他分段。当对象的所有段都上传后，Amazon S3 将这些段汇聚起来，然后创建对象。<br>分段上传可提供以下优势：</p>
+<ul>
+<li>文件小于5MB不适用分块上传</li>
+<li>并行上传分段以提高吞吐量。</li>
+<li>较小的分段大小可以将由于网络错误而需重启失败的上传所产生的影响降至最低。</li>
+<li>可以随时上传对象分段。启动分段上传后，不存在过期期限；您必须显式地完成或中止分段上传。</li>
+<li>可以在创建对象的同时上传对象。</li>
+</ul>
+<p>分段上传分三个步骤：初始化准备、并行上传，完成上传。同时在并行阶段，还可以进行终止上传和查询已上传列表的操作。</p>
+<p><img src="https://i.imgur.com/OMlmyqG.png" alt=""></p>
+<h5 id="上传初始化阶段"><a href="#上传初始化阶段" class="headerlink" title="上传初始化阶段"></a>上传初始化阶段</h5><p>发送HTTP POST请求，成功则返回对应的upload ID（后续的上传操作都必须使用相同的upload ID），完成Metadata设置和ACL设置。</p>
+<h5 id="上传分段阶段"><a href="#上传分段阶段" class="headerlink" title="上传分段阶段"></a>上传分段阶段</h5><p>client端完成文件切片，每个片有一个1~10000之间的任意分段编号（相同的编号会出现覆盖），无论何时上传分段，Amazon S3 都将在其响应中返回ETag 标头。对于每个分段上传，必须记录分段编号和ETag 值。除最后一个分块以为，其余分块大于 5 MB。</p>
+<h5 id="完成上传阶段"><a href="#完成上传阶段" class="headerlink" title="完成上传阶段"></a>完成上传阶段</h5><p>完成分段上传时，Amazon S3 通过按升序的分段编号规范化分段来创建数据元。成功完成请求后，分段将不再存在。完成分段上传请求必须包括上传 ID 以及分段编号和相应的 ETag 值的列表。这一阶段在完成所有upload Part以后必须执行（否则占用的临时资源仍然纳入计费范围）</p>
+<h5 id="分段上传列表"><a href="#分段上传列表" class="headerlink" title="分段上传列表"></a>分段上传列表</h5><p>对于每个列出分段请求，Amazon S3 将返回有关特定分段上传的分段信息，最多为 1 000 个分段。如果分段上传中的分段超过 1 000 个，您必须发送一系列列出分段请求以检索所有分段。<strong>返回的段列表不包括未完成上传的段</strong>。</p>
+<h4 id="分块上传规范"><a href="#分块上传规范" class="headerlink" title="分块上传规范"></a>分块上传规范</h4><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>规范</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>最大对象大小</td>
+<td>5 TB</td>
+</tr>
+<tr>
+<td>每次上传的分段的最大数量</td>
+<td>10000</td>
+</tr>
+<tr>
+<td>分段编号</td>
+<td>1 到 10000（含）</td>
+</tr>
+<tr>
+<td>分段大小</td>
+<td>5 MB 到 5 GB，最后一个分段可以 &lt;5 MB</td>
+</tr>
+<tr>
+<td>列出分段请求返回的分段的最大数量</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>在列出分段上传请求中返回的分段的最大数量</td>
+<td>1000</td>
+</tr>
+</tbody>
+</table>
+<p>【代码示例】</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> boto</span><br><span class="line"><span class="keyword">import</span> boto.s3.connection</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> boto.utils</span><br><span class="line"></span><br><span class="line"><span class="comment"># os.environ['S3_USE_SIGV4'] = 'True'</span></span><br><span class="line"></span><br><span class="line">endpoint = <span class="string">'s3dev.nie.netease.com'</span></span><br><span class="line">access_key = <span class="string">'ELWZK6*****05YTC25'</span></span><br><span class="line">secret_key = <span class="string">'quDVDt*******eVvOQsP'</span></span><br><span class="line"></span><br><span class="line">key_name = <span class="string">'TCP-IP.pdf'</span></span><br><span class="line">part_num = <span class="number">2</span> <span class="comment"># 文件切分数量</span></span><br><span class="line">bucket_name = <span class="string">'mybucket'</span></span><br><span class="line">metadata=&#123;<span class="string">'Content-Type'</span>:<span class="string">'application/json'</span>,<span class="string">'x-amz-meta-abc'</span>:<span class="string">'data'</span>&#125; <span class="comment">#metadata定义</span></span><br><span class="line">policy = <span class="string">'public-read'</span> <span class="comment"># ACL配置</span></span><br><span class="line">file_path = <span class="string">'/home/lihongbo01/workspace/s3_workspace/TCP-IP.pdf'</span></span><br><span class="line"></span><br><span class="line">conn = boto.connect_s3(</span><br><span class="line">                aws_access_key_id = access_key,</span><br><span class="line">                aws_secret_access_key = secret_key,</span><br><span class="line">                host = endpoint,</span><br><span class="line">                is_secure=<span class="keyword">False</span>,</span><br><span class="line">                calling_format = boto.s3.connection.SubdomainCallingFormat(),</span><br><span class="line">                )</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个函数完成本地文件的分块切片操作</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">split_file</span><span class="params">(filename)</span>:</span></span><br><span class="line">    filelist=[]</span><br><span class="line">    statinfo = os.stat(filename)</span><br><span class="line">    chunksize = statinfo.st_size/part_num</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"file size: %d(mb)"</span> % (statinfo.st_size/(<span class="number">1024</span>*<span class="number">1024</span>))</span><br><span class="line">    <span class="keyword">with</span> open(filename, <span class="string">"rb"</span>) <span class="keyword">as</span> f:</span><br><span class="line">        index = <span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">            chunk = f.read(chunksize)</span><br><span class="line">            <span class="keyword">if</span>(chunk):</span><br><span class="line">                fn = <span class="string">"%s.part.%d"</span> % (filename, index)</span><br><span class="line">                index = index + <span class="number">1</span></span><br><span class="line">                filelist.append(fn)</span><br><span class="line">                <span class="keyword">print</span> <span class="string">"creating"</span>, fn</span><br><span class="line">                <span class="keyword">with</span> open(fn, <span class="string">"wb"</span>) <span class="keyword">as</span> fw:</span><br><span class="line">                    fw.write(chunk)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> filelist</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">up_with_multi_part</span><span class="params">(filename,bucketname,key_name,metadata=None,policy=<span class="string">'private'</span>)</span>:</span></span><br><span class="line">    bucket = conn.get_bucket(bucketname)</span><br><span class="line">    <span class="keyword">print</span> bucket.get_location()</span><br><span class="line">    mpu = bucket.initiate_multipart_upload(key_name,metadata=metadata,policy=policy) <span class="comment"># 初始化分块上传</span></span><br><span class="line">    <span class="keyword">print</span> mpu.get_all_parts()</span><br><span class="line">    <span class="keyword">print</span> mpu.id</span><br><span class="line">    filelist = split_file(filename)</span><br><span class="line">    f_num = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> f <span class="keyword">in</span> filelist:</span><br><span class="line">        sfp = open(f,<span class="string">'rb'</span>)</span><br><span class="line">        hd, cm, cl = boto.utils.compute_md5(sfp)</span><br><span class="line">        md5 = (hd, cm)</span><br><span class="line">        <span class="keyword">print</span> md5</span><br><span class="line">        mpu.upload_part_from_file(sfp, part_num=f_num,md5=md5) <span class="comment"># 上传分块，每个分块都做md5校验</span></span><br><span class="line">        sfp.close()</span><br><span class="line">        f_num = f_num+<span class="number">1</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"%s is done"</span> % f</span><br><span class="line">    mpu.complete_upload() <span class="comment"># 完成上传</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">"%s is done"</span> % filename</span><br><span class="line"></span><br><span class="line">up_with_multi_part(file_path, bucket_name, key_name,metadata,policy)</span><br></pre></td></tr></table></figure>
+<p>【效果】</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$ ls</span><br><span class="line">s3sdk.py  split_upload.py  TCP-IP.pdf  TCP-IP.pdf.part.1  TCP-IP.pdf.part.2</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$ s3cmd ls s3://mybucket</span><br><span class="line">2019-06-17 06:29  19132008   s3://mybucket/TCP-IP.pdf</span><br><span class="line">2019-06-14 09:38      1094   s3://mybucket/s3sdk.py</span><br></pre></td></tr></table></figure>
+<p>【核心函数】</p>
+<blockquote>
+<p>boto.connect_s3：连接S3<br>conn.get_bucket：根据name获取bucket<br>bucket.initiate_multipart_upload：初始化分段上传<br>boto.utils.compute_md5：计算文件md5值<br>mpu.upload_part_from_file：上传某一块<br>mpu.complete_upload()：完成上传  </p>
+</blockquote>
+<p>【注意】</p>
+<blockquote>
+<ol>
+<li>除最后一块外每块要大于5MB  </li>
+<li>bucket要存在</li>
+<li>Debug可以根据接口返回的错误信息然后查阅API文档  </li>
+</ol>
+</blockquote>
+<h3 id="对象批量删除"><a href="#对象批量删除" class="headerlink" title="对象批量删除"></a>对象批量删除</h3><p>将多个对象的删除请求合成一个，降低请求的负载；批量删除之前需要获得这些待删除对象的key（最多一次1000个）。响应：verbose/quiet模式。</p>
+<blockquote>
+<p>批量删除Object（Python版本）</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> boto.s3.connection <span class="keyword">import</span> S3Connection</span><br><span class="line"><span class="keyword">import</span> boto</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">endpoint = <span class="string">'s3.ceph.work'</span> <span class="comment">#S3服务的endpoint地址</span></span><br><span class="line">bucket_name = <span class="string">''</span> <span class="comment">#bucket名称</span></span><br><span class="line">access_key = <span class="string">''</span> <span class="comment">#access-key</span></span><br><span class="line">secret_key = <span class="string">''</span> <span class="comment">#secret key</span></span><br><span class="line"></span><br><span class="line">conn = boto.connect_s3(</span><br><span class="line">    aws_access_key_id=access_key,</span><br><span class="line">    aws_secret_access_key=secret_key,</span><br><span class="line">    host=endpoint,</span><br><span class="line">    is_secure=<span class="keyword">False</span>,</span><br><span class="line">    calling_format=boto.s3.connection.SubdomainCallingFormat(), </span><br><span class="line">    validate_certs=<span class="keyword">True</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">bucket = conn.get_bucket(bucket_name) <span class="comment">#获取bucket实例</span></span><br><span class="line">file_list = bucket.get_all_keys(prefix=<span class="string">'user1_23695/'</span>) <span class="comment">#按指定prefix查询bucket中对应的Object列表,注意默认最多返回1000条记录</span></span><br><span class="line">bucket.delete_keys(file_list) <span class="comment">#批量删除Object</span></span><br></pre></td></tr></table></figure>
+<p>【代码示例】</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bucket = conn.get_bucket(bucket_name) <span class="comment"># 获取bucket实例</span></span><br><span class="line">file_list = bucket.get_all_keys(prefix=<span class="string">'TCP'</span>) <span class="comment"># 按指定prefix查询bucket中对应的Object列表,注意默认最多返回1000条记录</span></span><br><span class="line">bucket.delete_keys(file_list) <span class="comment"># 批量删除Object</span></span><br></pre></td></tr></table></figure>
+<p>【效果】</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$ s3cmd ls s3://mybucket</span><br><span class="line">2019-06-17 06:29  19132008   s3://mybucket/TCP-IP.pdf</span><br><span class="line">2019-06-17 06:42   9566004   s3://mybucket/TCP-IP.pdf.part.1</span><br><span class="line">2019-06-17 06:43   9566004   s3://mybucket/TCP-IP.pdf.part.2</span><br><span class="line">2019-06-14 09:38      1094   s3://mybucket/s3sdk.py</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$ python batch_delete.py </span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$ s3cmd ls s3://mybucket</span><br><span class="line">2019-06-14 09:38      1094   s3://mybucket/s3sdk.py</span><br></pre></td></tr></table></figure>
+<p>【核心函数】</p>
+<blockquote>
+<p>bucket.delete_keys(file_list)：批量删除Object</p>
+</blockquote>
+<h5 id="删除Buekct时先批量删除Object"><a href="#删除Buekct时先批量删除Object" class="headerlink" title="删除Buekct时先批量删除Object"></a>删除Buekct时先批量删除Object</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$ s3cmd rb s3://mybucket --force --recursive</span><br><span class="line">WARNING: Bucket is not empty. Removing all the objects from it first. This may take some time...</span><br><span class="line">delete: &apos;s3://mybucket/in/mybucket/s3sdk.py&apos;</span><br><span class="line">delete: &apos;s3://mybucket/s3sdk-in-mybucket.py&apos;</span><br><span class="line">Bucket &apos;s3://mybucket/&apos; removed</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$ s3cmd ls s3://</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>s3cmd rm s3://mybucket –recursive：清空桶（批量删除，支持前缀匹配）</p>
+</blockquote>
+<h3 id="获取对象列表"><a href="#获取对象列表" class="headerlink" title="获取对象列表"></a>获取对象列表</h3><p>支持使用前缀</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file_list = bucket.get_all_keys(prefix=<span class="string">'user1_23695/'</span>)</span><br></pre></td></tr></table></figure>
+<p>【代码示例】</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bucket = conn.get_bucket(bucket_name) <span class="comment">#获取bucket实例</span></span><br><span class="line">file_list = bucket.get_all_keys(prefix=<span class="string">'TCP'</span>) <span class="comment">#按指定prefix查询bucket中对应的Object列表,注意默认最多返回1000条记录</span></span><br></pre></td></tr></table></figure>
+<p>【效果】</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$ python list_key.py </span><br><span class="line">[&lt;Key: mybucket,TCP-IP.pdf&gt;, &lt;Key: mybucket,TCP-IP.pdf.part.1&gt;, &lt;Key: mybucket,TCP-IP.pdf.part.2&gt;]</span><br><span class="line"></span><br><span class="line">## 带有目录包含着前缀(in)</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$ python list_key.py </span><br><span class="line">[&lt;Key: mybucket,in.py&gt;, &lt;Key: mybucket,in/s3sdk.py&gt;]</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>返回的是一个ResultSet，接口可以参考：<a href="http://boto.cloudhackers.com/en/latest/ref/s3.html" target="_blank" rel="noopener">http://boto.cloudhackers.com/en/latest/ref/s3.html</a></p>
+</blockquote>
+<p>【核心函数】</p>
+<blockquote>
+<p>bucket.get_all_keys：获取所有键值</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/08/Ceph部署/" rel="next" title="Ceph环境搭建 （Debian发行版为例）">
+                <i class="fa fa-chevron-left"></i> Ceph环境搭建 （Debian发行版为例）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/08/S3接口特点/" rel="prev" title="S3的RESTful接口特点总结">
+                S3的RESTful接口特点总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">hb-lee</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#S3常见接口使用"><span class="nav-number">1.</span> <span class="nav-text">S3常见接口使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分段上传"><span class="nav-number">1.0.1.</span> <span class="nav-text">分段上传</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#上传初始化阶段"><span class="nav-number">1.0.1.0.1.</span> <span class="nav-text">上传初始化阶段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#上传分段阶段"><span class="nav-number">1.0.1.0.2.</span> <span class="nav-text">上传分段阶段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#完成上传阶段"><span class="nav-number">1.0.1.0.3.</span> <span class="nav-text">完成上传阶段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#分段上传列表"><span class="nav-number">1.0.1.0.4.</span> <span class="nav-text">分段上传列表</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分块上传规范"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">分块上传规范</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象批量删除"><span class="nav-number">1.0.2.</span> <span class="nav-text">对象批量删除</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#删除Buekct时先批量删除Object"><span class="nav-number">1.0.2.0.1.</span> <span class="nav-text">删除Buekct时先批量删除Object</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取对象列表"><span class="nav-number">1.0.3.</span> <span class="nav-text">获取对象列表</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hb-lee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

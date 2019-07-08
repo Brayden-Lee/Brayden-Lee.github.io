@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Ceph环境搭建 （Debian发行版为例） ref:http://docs.ceph.com/docs/master/start  注：一个ceph存储集群需要至少一个Ceph Monitor和至少两个Ceph OSD Daemons   安装前的了解安装版本L版本安装：echo deb http://download.ceph.com/debian-luminous/ $(lsb_releas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ceph环境搭建 （Debian发行版为例）">
+<meta property="og:url" content="http://yoursite.com/2019/07/08/Ceph部署/index.html">
+<meta property="og:site_name" content="hb-lee 的博客">
+<meta property="og:description" content="Ceph环境搭建 （Debian发行版为例） ref:http://docs.ceph.com/docs/master/start  注：一个ceph存储集群需要至少一个Ceph Monitor和至少两个Ceph OSD Daemons   安装前的了解安装版本L版本安装：echo deb http://download.ceph.com/debian-luminous/ $(lsb_releas">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-07-08T14:51:58.188Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ceph环境搭建 （Debian发行版为例）">
+<meta name="twitter:description" content="Ceph环境搭建 （Debian发行版为例） ref:http://docs.ceph.com/docs/master/start  注：一个ceph存储集群需要至少一个Ceph Monitor和至少两个Ceph OSD Daemons   安装前的了解安装版本L版本安装：echo deb http://download.ceph.com/debian-luminous/ $(lsb_releas">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/08/Ceph部署/"/>
+
+
+
+
+
+  <title>Ceph环境搭建 （Debian发行版为例） | hb-lee 的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">hb-lee 的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/Ceph部署/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hb-lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hb-lee 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Ceph环境搭建 （Debian发行版为例）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-08T22:36:05+08:00">
+                2019-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Ceph环境搭建-（Debian发行版为例）"><a href="#Ceph环境搭建-（Debian发行版为例）" class="headerlink" title="Ceph环境搭建 （Debian发行版为例）"></a>Ceph环境搭建 （Debian发行版为例）</h1><blockquote>
+<p>ref:<a href="http://docs.ceph.com/docs/master/start" target="_blank" rel="noopener">http://docs.ceph.com/docs/master/start</a></p>
+</blockquote>
+<p>注：一个ceph存储集群需要至少一个Ceph Monitor和至少两个Ceph OSD Daemons  </p>
+<h3 id="安装前的了解"><a href="#安装前的了解" class="headerlink" title="安装前的了解"></a>安装前的了解</h3><h5 id="安装版本"><a href="#安装版本" class="headerlink" title="安装版本"></a>安装版本</h5><p>L版本安装：echo deb <a href="http://download.ceph.com/debian-luminous/" target="_blank" rel="noopener">http://download.ceph.com/debian-luminous/</a> $(lsb_release -sc) main | sudo tee /etc/apt/sources.list.d/ceph.list</p>
+<h5 id="普通用户免密码sudo设置"><a href="#普通用户免密码sudo设置" class="headerlink" title="普通用户免密码sudo设置"></a>普通用户免密码sudo设置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">su root</span><br><span class="line">chmod u+w /etc/sudoers</span><br><span class="line">vim /etc/sudoers</span><br><span class="line">添加 lihongbo01 ALL=(ALL) NOPASSWD: ALL这一行，替换`lihongbo01`为你的用户名即可；</span><br></pre></td></tr></table></figure>
+<h5 id="ssh默认端口号问题-（不是22"><a href="#ssh默认端口号问题-（不是22" class="headerlink" title="ssh默认端口号问题 （不是22)"></a>ssh默认端口号问题 （不是22)</h5><p>解决方案：编辑<code>~/.ssh/config</code>文件，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Port 32200</span><br><span class="line">Host cld-unknown212867</span><br><span class="line">    Hostname cld-unknown212867</span><br><span class="line">    User lihongbo01</span><br><span class="line">Host cld-unknown212868</span><br><span class="line">    Hostname cld-unknown212868</span><br><span class="line">    User lihongbo01</span><br><span class="line">Host cld-unknown212869</span><br><span class="line">    Hostname cld-unknown212869</span><br><span class="line">    User lihongbo01</span><br></pre></td></tr></table></figure>
+<h3 id="安装步骤-lt-在此之前请配置好免密登录和节点时间同步，参考官网Pre-flight-gt"><a href="#安装步骤-lt-在此之前请配置好免密登录和节点时间同步，参考官网Pre-flight-gt" class="headerlink" title="安装步骤 &lt;在此之前请配置好免密登录和节点时间同步，参考官网Pre-flight&gt;"></a>安装步骤 &lt;在此之前请配置好免密登录和节点时间同步，参考官网Pre-flight&gt;</h3><pre><code>wget -q -O- &apos;https://download.ceph.com/keys/release.asc&apos; | sudo apt-key add -
+echo deb http://download.ceph.com/debian-{ceph-stable-release}/ $(lsb_release -sc) main | sudo tee /etc/apt/sources.list.d/ceph.list 【版本如：luminous】
+sudo apt-get update &amp;&amp; sudo apt-get install ceph-deploy
+</code></pre><blockquote>
+<p>1.注意：debian安装mimic版本时，用ceph-deploy安装不能安装到最新的，只能安装到<code>Candidate: 10.2.11-2</code>的，可以通过<code>apt-cache policy ceph-common</code>查看；而lumious可以安装到<code>12.2.10</code>。</p>
+</blockquote>
+<blockquote>
+<p>2.软件不知道怎么安装可以用： apt-file search xxx</p>
+</blockquote>
+<p>接着执行：</p>
+<pre><code>mkdir my-cluster
+cd my-cluster
+ceph-deploy new cld-unknown212867
+vim ceph.conf
+添加：osd pool default size = 2 ## 放到ceph.conf中修改副本数为2
+ceph-deploy install --release luminous cld-unknown212867 cld-unknown212868 cld-unknown212869
+ceph-deploy mon create-initial
+ceph-deploy admin cld-unknown212867 cld-unknown212868 cld-unknown212869
+ceph-deploy mgr create cld-unknown212867 *Required only for luminous+ builds, i.e &gt;= 12.x builds*
+</code></pre><h5 id="1-以loop来做虚拟盘-lt-考虑到当前节点没有额外盘-gt-—-失败"><a href="#1-以loop来做虚拟盘-lt-考虑到当前节点没有额外盘-gt-—-失败" class="headerlink" title="1. 以loop来做虚拟盘&lt;考虑到当前节点没有额外盘&gt;   —- 失败"></a>1. 以loop来做虚拟盘&lt;考虑到当前节点没有额外盘&gt;   —- 失败</h5><p>接着我们来添加OSDs，我们首先虚拟一个块设备（用<code>dd</code>命令）：</p>
+<pre><code>dd if=/dev/zero of=1G.img bs=1M count=1000  # OSD节点上虚拟一个1G的块设备
+ceph-deploy osd create --data /home/lihongbo01/dev/1G.img cld-unknown212868 【MON节点上执行的】
+</code></pre><blockquote>
+<p>经过多次尝试，用loop来做设备失败。 【可能还没有完全支持】</p>
+</blockquote>
+<h5 id="2-【添加盘后添加OSD成功】-—-成功"><a href="#2-【添加盘后添加OSD成功】-—-成功" class="headerlink" title="2. 【添加盘后添加OSD成功】     —- 成功"></a>2. 【添加盘后添加OSD成功】     —- 成功</h5><pre><code>ceph-deploy osd create --data /dev/vdd cld-unknown212868 
+ceph-deploy osd create --data /dev/vdd cld-unknown212869
+</code></pre><blockquote>
+<p>创建OSD时最终会调用ceph-volume，这时<code>--data</code>已经不能是目录了，而须一个<code>disk</code>，可参见问题部分查看<code>disk.py</code>代码来理解。</p>
+</blockquote>
+<h5 id="查看成功"><a href="#查看成功" class="headerlink" title="查看成功"></a>查看成功</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212867:~/my-cluster$ sudo ceph health</span><br><span class="line">HEALTH_OK</span><br><span class="line">lihongbo01@cld-unknown212867:~/my-cluster$ sudo ceph -s</span><br><span class="line">  cluster:</span><br><span class="line">    id:     67170b2c-c545-4efb-80cb-810256529f34</span><br><span class="line">    health: HEALTH_OK</span><br><span class="line"> </span><br><span class="line">  services:</span><br><span class="line">    mon: 1 daemons, quorum cld-unknown212867</span><br><span class="line">    mgr: cld-unknown212867(active)</span><br><span class="line">    osd: 2 osds: 2 up, 2 in</span><br><span class="line"> </span><br><span class="line">  data:</span><br><span class="line">    pools:   0 pools, 0 pgs</span><br><span class="line">    objects: 0 objects, 0B</span><br><span class="line">    usage:   2.00GiB used, 98.0GiB / 100GiB avail</span><br><span class="line">    pgs:</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>一定要加sudo查看</p>
+</blockquote>
+<h5 id="中途安装失败删除命令："><a href="#中途安装失败删除命令：" class="headerlink" title="中途安装失败删除命令："></a>中途安装失败删除命令：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ceph-deploy purge &#123;ceph-node&#125; [&#123;ceph-node&#125;]</span><br><span class="line">ceph-deploy purgedata &#123;ceph-node&#125; [&#123;ceph-node&#125;]</span><br><span class="line">ceph-deploy forgetkeys</span><br><span class="line">rm ceph.*</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意要加上–release luminous才会安装该版本的，不然就安装默认的了，当前<code>ceph-deploy</code>是2.0.1版本，Debian上默认安装Ceph是10.2.11版本的。</p>
+</blockquote>
+<p><hr><br>以下是以loop虚拟设备来做OSD时遇到的问题即解决方法：</p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><blockquote>
+<p>添加OSD不成功</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">[node4][DEBUG ]  stderr: 12: (main()+0x2c58) [0x7f8e8dc18c18]</span><br><span class="line">[node4][DEBUG ]  stderr: 13: (__libc_start_main()+0xf5) [0x7f8e808c03d5]</span><br><span class="line">[node4][DEBUG ]  stderr: 14: (()+0x384ab0) [0x7f8e8dcf0ab0]</span><br><span class="line">[node4][DEBUG ]  stderr: NOTE: a copy of the executable, or `objdump -rdS &lt;executable&gt;` is needed to interpret this.</span><br><span class="line">[node4][DEBUG ] --&gt; Was unable to complete a new OSD, will rollback changes</span><br><span class="line">[node4][DEBUG ] Running command: /bin/ceph --cluster ceph --name client.bootstrap-osd --keyring /var/lib/ceph/bootstrap-osd/ceph.keyring osd purge-new osd.3 --yes-i-really-mean-it</span><br><span class="line">[node4][DEBUG ]  stderr: purged osd.3</span><br><span class="line">[node4][ERROR ] RuntimeError: command returned non-zero exit status: 1</span><br><span class="line">[ceph_deploy.osd][ERROR ] Failed to execute command: /usr/sbin/ceph-volume --cluster ceph lvm create --bluestore --data /dev/sdc --block.wal /dev/sdb2 --block.db /dev/sdb1</span><br><span class="line">[ceph_deploy][ERROR ] GenericError: Failed to create 1 OSDs</span><br><span class="line"></span><br><span class="line">修复：</span><br><span class="line">node节点卸载挂载分区</span><br><span class="line">[root@node4 ~]# umount /var/lib/ceph/osd/ceph-3</span><br><span class="line">查看lvs</span><br><span class="line"></span><br><span class="line">[root@node4 ~]# lvs</span><br><span class="line">  LV                                             VG                                        Attr       LSize  Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert</span><br><span class="line">  osd-block-ab4df89f-8682-4233-b683-e05c161089a4 ceph-183df03c-83fb-441c-a82e-d7b560e1a611 -wi-a----- 50.00g                                                    </span><br><span class="line">  root                                           cl                                        -wi-ao---- 35.12g                                                    </span><br><span class="line">  swap                                           cl                                        -wi-ao----  3.88g        </span><br><span class="line"></span><br><span class="line">删除lv，vg，pv</span><br><span class="line">[root@node4 ~]# lvremove osd-block-ab4df89f-8682-4233-b683-e05c161089a4 ceph-183df03c-83fb-441c-a82e-d7b560e1a611</span><br><span class="line">  Volume group &quot;osd-block-ab4df89f-8682-4233-b683-e05c161089a4&quot; not found</span><br><span class="line">  Cannot process volume group osd-block-ab4df89f-8682-4233-b683-e05c161089a4</span><br><span class="line">Do you really want to remove active logical volume ceph-183df03c-83fb-441c-a82e-d7b560e1a611/osd-block-ab4df89f-8682-4233-b683-e05c161089a4? [y/n]: y</span><br><span class="line">  Logical volume &quot;osd-block-ab4df89f-8682-4233-b683-e05c161089a4&quot; successfully removed</span><br><span class="line"></span><br><span class="line">[root@node4 ~]# vgremove  ceph-183df03c-83fb-441c-a82e-d7b560e1a611</span><br><span class="line">  Volume group &quot;ceph-183df03c-83fb-441c-a82e-d7b560e1a611&quot; successfully removed</span><br><span class="line"></span><br><span class="line">[root@node4 ~]# pvremove /dev/sdc</span><br><span class="line">  Labels on physical volume &quot;/dev/sdc&quot; successfully wiped.</span><br><span class="line"></span><br><span class="line">删除/var/lib/ceph/osd/ 所有</span><br><span class="line">[root@node4 ~]# rm /var/log/ceph/ceph-* -rf</span><br><span class="line"></span><br><span class="line">删除 ceph 日志</span><br><span class="line">[root@node4 ~]# rm -rf /var/lib/ceph/*</span><br><span class="line"></span><br><span class="line">monitor1 上重置node4 的sdc分区</span><br><span class="line">[root@monitor1 ceph-cluster]# ceph-deploy disk zap node4 /dev/sdc</span><br><span class="line"></span><br><span class="line">monitor1 上重新创建osd节点</span><br><span class="line">[root@monitor1 ceph-cluster]# ceph-deploy osd create node4 --bluestore --data /dev/sdc --block-db /dev/sdb1 --block-wal /dev/sdb2</span><br></pre></td></tr></table></figure>
+<h3 id="【实践失败】"><a href="#【实践失败】" class="headerlink" title="【实践失败】"></a>【实践失败】</h3><h3 id="loop设备做块设备"><a href="#loop设备做块设备" class="headerlink" title="loop设备做块设备"></a>loop设备做块设备</h3><p>需要修改两处：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/lib/python2.7/dist-packages/ceph_volume/util/disk.py +332  修改为：return TYPE == &apos;disk&apos; or &apos;loop&apos;</span><br><span class="line">vim /usr/lib/python2.7/dist-packages/ceph_volume/util/disk.py +417  True ==&gt; False</span><br></pre></td></tr></table></figure></p>
+<p>ref:<a href="https://www.netways.de/blog/2018/11/14/ceph-mimic-using-loop-devices-as-osd/" target="_blank" rel="noopener">https://www.netways.de/blog/2018/11/14/ceph-mimic-using-loop-devices-as-osd/</a></p>
+<h4 id="清理操作"><a href="#清理操作" class="headerlink" title="清理操作"></a>清理操作</h4><pre><code>sudo lvs (vgscan)
+sudo vgremove ceph-9eee83f3-8b17-4b3f-b53e-62bf4977733b -y
+lsblk
+</code></pre><p><hr><br>华丽的分割线</p>
+<hr>
+
+<h3 id="Ceph对象网关部署-可部署多个"><a href="#Ceph对象网关部署-可部署多个" class="headerlink" title="Ceph对象网关部署 (可部署多个)"></a>Ceph对象网关部署 (可部署多个)</h3><p>使用命令在 Ceph 对象网关节点上新建一个 Ceph对象网关实例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph-deploy rgw create cld-unknown212868</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>需要开放7480端口：iptables -I INPUT 1 -p tcp -m tcp –dport 7480 -j ACCEPT</p>
+</blockquote>
+<p>测试及效果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">curl http://cld-unknown212868:7480</span><br><span class="line"></span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;ListAllMyBucketsResult xmlns=&quot;http://s3.amazonaws.com/doc/2006-03-01/&quot;&gt;</span><br><span class="line">  &lt;Owner&gt;</span><br><span class="line">    &lt;ID&gt;anonymous&lt;/ID&gt;</span><br><span class="line">    &lt;DisplayName&gt;&lt;/DisplayName&gt;</span><br><span class="line">  &lt;/Owner&gt;</span><br><span class="line">  &lt;Buckets&gt;</span><br><span class="line">  &lt;/Buckets&gt;</span><br><span class="line">&lt;/ListAllMyBucketsResult&gt;</span><br></pre></td></tr></table></figure>
+<p>即表示安装成功。</p>
+<h5 id="创建S3用户"><a href="#创建S3用户" class="headerlink" title="创建S3用户"></a>创建S3用户</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212867:~/my-cluster$ sudo radosgw-admin user create --uid=&quot;lhb&quot; --display-name=&quot;First User&quot;</span><br><span class="line">&#123;</span><br><span class="line">    &quot;user_id&quot;: &quot;lhb&quot;,</span><br><span class="line">    &quot;display_name&quot;: &quot;First User&quot;,</span><br><span class="line">    &quot;email&quot;: &quot;&quot;,</span><br><span class="line">    &quot;suspended&quot;: 0,</span><br><span class="line">    &quot;max_buckets&quot;: 1000,</span><br><span class="line">    &quot;auid&quot;: 0,</span><br><span class="line">    &quot;subusers&quot;: [],</span><br><span class="line">    &quot;keys&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;user&quot;: &quot;lhb&quot;,</span><br><span class="line">            &quot;access_key&quot;: &quot;KSOF3PIEDDNI7KP4I1HC&quot;,</span><br><span class="line">            &quot;secret_key&quot;: &quot;f6N9wvBWbfviV0R5TaGUHYCXZKWCTfmMPDIQf4hF&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    &quot;swift_keys&quot;: [],</span><br><span class="line">    &quot;caps&quot;: [],</span><br><span class="line">    &quot;op_mask&quot;: &quot;read, write, delete&quot;,</span><br><span class="line">    &quot;default_placement&quot;: &quot;&quot;,</span><br><span class="line">    &quot;placement_tags&quot;: [],</span><br><span class="line">    &quot;bucket_quota&quot;: &#123;</span><br><span class="line">        &quot;enabled&quot;: false,</span><br><span class="line">        &quot;check_on_raw&quot;: false,</span><br><span class="line">        &quot;max_size&quot;: -1,</span><br><span class="line">        &quot;max_size_kb&quot;: 0,</span><br><span class="line">        &quot;max_objects&quot;: -1</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;user_quota&quot;: &#123;</span><br><span class="line">        &quot;enabled&quot;: false,</span><br><span class="line">        &quot;check_on_raw&quot;: false,</span><br><span class="line">        &quot;max_size&quot;: -1,</span><br><span class="line">        &quot;max_size_kb&quot;: 0,</span><br><span class="line">        &quot;max_objects&quot;: -1</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;temp_url_keys&quot;: [],</span><br><span class="line">    &quot;type&quot;: &quot;rgw&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>目前只能使用path-style来访问，hosted-style需要另外配置。</p>
+</blockquote>
+<h5 id="修改了配置文件（如网关端口号）"><a href="#修改了配置文件（如网关端口号）" class="headerlink" title="修改了配置文件（如网关端口号）"></a>修改了配置文件（如网关端口号）</h5><pre><code>ceph-deploy --overwrite-conf config push &lt;gateway-node&gt; [&lt;other-nodes&gt;] # 将该配置文件推送到你的 Ceph 对象网关节点
+sudo service radosgw restart id=rgw.&lt;short-hostname&gt;  # 重启Ceph对象网关
+</code></pre><h5 id="提供泛域名解析能力"><a href="#提供泛域名解析能力" class="headerlink" title="提供泛域名解析能力"></a>提供泛域名解析能力</h5><p>Ceph对象存储网关支持两种访问模式：<code>path-style</code>和<code>host-style</code>；默认的支持<code>path-style</code>，即<code>http://cld-unknown212868/bucket</code>；要想以类似S3的<code>host-style</code>进行访问，即用<code>http://bucket.cld-unknown212868/obj</code>来进行访问，需要配置泛域名解析，此处用到<code>dnsmasq</code>工具。</p>
+<pre><code>sudo apt-get install dnsmasq -y
+vim /etc/resolv.conf    【改为：nameserver 127.0.0.1】
+vim /etc/resolv.dnsmasq.conf    【将原来resolv.conf的内容写在这个文件里面】
+</code></pre><p>接着编辑dnsmqsq配置文件，在<code>/etc/dnsmasq.conf</code>中加入一下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">address=/.cld-unknown212868/10.202.42.147</span><br><span class="line">address=/.cld-unknown212868.i.nease.net/10.202.42.147</span><br><span class="line">resolv-file=/etc/resolv.dnsmasq.conf</span><br><span class="line">conf-dir=/etc/dnsmasq.d</span><br><span class="line">conf-dir=/etc/dnsmasq.d/,*.conf</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>此配置的含义是将<code>xxx.cld-unknown212868</code>的路径都转到10.202.42.147这个地址；</p>
+</blockquote>
+<p>然后重启dnsmasq服务：<code>/etc/init.d/dnsmasq restart</code></p>
+<h6 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212868:~/workspace/ceph_workspace$ ping bucket.cld-unknown212868</span><br><span class="line">PING bucket.cld-unknown212868 (10.202.42.147) 56(84) bytes of data.</span><br><span class="line">64 bytes from cld-unknown212868.i.nease.net (10.202.42.147): icmp_seq=1 ttl=64 time=0.045 ms</span><br><span class="line">64 bytes from cld-unknown212868.i.nease.net (10.202.42.147): icmp_seq=2 ttl=64 time=0.064 ms</span><br><span class="line">64 bytes from cld-unknown212868.i.nease.net (10.202.42.147): icmp_seq=3 ttl=64 time=0.065 ms</span><br><span class="line">64 bytes from cld-unknown212868.i.nease.net (10.202.42.147): icmp_seq=4 ttl=64 time=0.043 ms</span><br><span class="line">^C</span><br><span class="line">--- bucket.cld-unknown212868 ping statistics ---</span><br><span class="line">4 packets transmitted, 4 received, 0% packet loss, time 3075ms</span><br><span class="line">rtt min/avg/max/mdev = 0.043/0.054/0.065/0.011 ms</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/08/Ceph集群使用/" rel="next" title="Ceph集群使用---常用命令">
+                <i class="fa fa-chevron-left"></i> Ceph集群使用---常用命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/08/S3主要接口使用/" rel="prev" title="S3常见接口使用">
+                S3常见接口使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">hb-lee</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ceph环境搭建-（Debian发行版为例）"><span class="nav-number">1.</span> <span class="nav-text">Ceph环境搭建 （Debian发行版为例）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装前的了解"><span class="nav-number">1.0.1.</span> <span class="nav-text">安装前的了解</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#安装版本"><span class="nav-number">1.0.1.0.1.</span> <span class="nav-text">安装版本</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#普通用户免密码sudo设置"><span class="nav-number">1.0.1.0.2.</span> <span class="nav-text">普通用户免密码sudo设置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ssh默认端口号问题-（不是22"><span class="nav-number">1.0.1.0.3.</span> <span class="nav-text">ssh默认端口号问题 （不是22)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装步骤-lt-在此之前请配置好免密登录和节点时间同步，参考官网Pre-flight-gt"><span class="nav-number">1.0.2.</span> <span class="nav-text">安装步骤 &lt;在此之前请配置好免密登录和节点时间同步，参考官网Pre-flight&gt;</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-以loop来做虚拟盘-lt-考虑到当前节点没有额外盘-gt-—-失败"><span class="nav-number">1.0.2.0.1.</span> <span class="nav-text">1. 以loop来做虚拟盘&lt;考虑到当前节点没有额外盘&gt;   —- 失败</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-【添加盘后添加OSD成功】-—-成功"><span class="nav-number">1.0.2.0.2.</span> <span class="nav-text">2. 【添加盘后添加OSD成功】     —- 成功</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看成功"><span class="nav-number">1.0.2.0.3.</span> <span class="nav-text">查看成功</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#中途安装失败删除命令："><span class="nav-number">1.0.2.0.4.</span> <span class="nav-text">中途安装失败删除命令：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-number">1.0.3.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#【实践失败】"><span class="nav-number">1.0.4.</span> <span class="nav-text">【实践失败】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#loop设备做块设备"><span class="nav-number">1.0.5.</span> <span class="nav-text">loop设备做块设备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#清理操作"><span class="nav-number">1.0.5.1.</span> <span class="nav-text">清理操作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ceph对象网关部署-可部署多个"><span class="nav-number">1.0.6.</span> <span class="nav-text">Ceph对象网关部署 (可部署多个)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#创建S3用户"><span class="nav-number">1.0.6.0.1.</span> <span class="nav-text">创建S3用户</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#修改了配置文件（如网关端口号）"><span class="nav-number">1.0.6.0.2.</span> <span class="nav-text">修改了配置文件（如网关端口号）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#提供泛域名解析能力"><span class="nav-number">1.0.6.0.3.</span> <span class="nav-text">提供泛域名解析能力</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#效果"><span class="nav-number">1.0.6.0.3.1.</span> <span class="nav-text">效果</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hb-lee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

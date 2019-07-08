@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Ceph集群使用—常用命令背景知识ceph中的pool、PG、OSD的关系Pool每个pool是逻辑上的隔离单位，不同的pool可以有完全不一样的数据处理方式，它规定了数据冗余的类型和对应的副本分布策略；支持两种类型：副本（replicated）和 纠删码（ Erasure Code）PG（ placement group）是一个放置策略组，它是对象的集合，该集合里的所有对象都具有相同的放置策略；">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ceph集群使用---常用命令">
+<meta property="og:url" content="http://yoursite.com/2019/07/08/Ceph集群使用/index.html">
+<meta property="og:site_name" content="hb-lee 的博客">
+<meta property="og:description" content="Ceph集群使用—常用命令背景知识ceph中的pool、PG、OSD的关系Pool每个pool是逻辑上的隔离单位，不同的pool可以有完全不一样的数据处理方式，它规定了数据冗余的类型和对应的副本分布策略；支持两种类型：副本（replicated）和 纠删码（ Erasure Code）PG（ placement group）是一个放置策略组，它是对象的集合，该集合里的所有对象都具有相同的放置策略；">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.imgur.com/xJm9ITv.png">
+<meta property="og:image" content="https://i.imgur.com/z1J3wrD.png">
+<meta property="og:image" content="https://i.imgur.com/YUAqFpZ.png">
+<meta property="og:image" content="https://i.imgur.com/LmdlKW6.jpg">
+<meta property="og:updated_time" content="2019-07-08T14:51:38.539Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ceph集群使用---常用命令">
+<meta name="twitter:description" content="Ceph集群使用—常用命令背景知识ceph中的pool、PG、OSD的关系Pool每个pool是逻辑上的隔离单位，不同的pool可以有完全不一样的数据处理方式，它规定了数据冗余的类型和对应的副本分布策略；支持两种类型：副本（replicated）和 纠删码（ Erasure Code）PG（ placement group）是一个放置策略组，它是对象的集合，该集合里的所有对象都具有相同的放置策略；">
+<meta name="twitter:image" content="https://i.imgur.com/xJm9ITv.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/08/Ceph集群使用/"/>
+
+
+
+
+
+  <title>Ceph集群使用---常用命令 | hb-lee 的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">hb-lee 的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/Ceph集群使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hb-lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hb-lee 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Ceph集群使用---常用命令</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-08T22:36:05+08:00">
+                2019-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Ceph集群使用—常用命令"><a href="#Ceph集群使用—常用命令" class="headerlink" title="Ceph集群使用—常用命令"></a>Ceph集群使用—常用命令</h1><h3 id="背景知识"><a href="#背景知识" class="headerlink" title="背景知识"></a>背景知识</h3><h5 id="ceph中的pool、PG、OSD的关系"><a href="#ceph中的pool、PG、OSD的关系" class="headerlink" title="ceph中的pool、PG、OSD的关系"></a>ceph中的pool、PG、OSD的关系</h5><p>Pool每个pool是逻辑上的隔离单位，不同的pool可以有完全不一样的数据处理方式，它规定了数据冗余的类型和对应的副本分布策略；支持两种类型：副本（replicated）和 纠删码（ Erasure Code）<br>PG（ placement group）是一个放置策略组，它是对象的集合，该集合里的所有对象都具有相同的放置策略；简单点说就是相同PG内的对象都会放到相同的硬盘上； PG是 ceph的核心概念， 服务端数据均衡和恢复的最小粒度就是PG；<br>OSD是负责物理存储的进程，一般配置成和磁盘一一对应，一块磁盘启动一个OSD进程；<br>关系如下：</p>
+<ul>
+<li>一个Pool里有很多PG</li>
+<li>一个PG里包含一堆对象；一个对象只能属于一个PG</li>
+<li>PG有主从之分，一个PG分布在不同的OSD上（针对三副本类型）</li>
+</ul>
+<p>下图来区别：</p>
+<p><img src="https://i.imgur.com/xJm9ITv.png" alt=""></p>
+<h5 id="Ceph架构"><a href="#Ceph架构" class="headerlink" title="Ceph架构"></a>Ceph架构</h5><p>其架构如下；</p>
+<p><img src="https://i.imgur.com/z1J3wrD.png" alt=""></p>
+<h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><pre><code>sudo ceph health  查看健康状况
+sudo ceph -s  查看集群状况
+sudo ceph osd tree  查看OSD信息
+</code></pre><h5 id="pool"><a href="#pool" class="headerlink" title="pool"></a>pool</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ceph osd pool create lhbpool 128 128</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>创建名为<code>lhbpool</code>的pool，这个pool中的pg，pgp都为128；</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ceph osd pool get lhbpool pg_num</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>获取<code>pg_num</code>，或<code>pgp_num</code>的大小；</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ceph osd pool rename rlhbpool lhbpool</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>重命名pool</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph osd pool set-quota test-pool max_objects 100</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>设置允许最大object数量为100<br>取消配额限制只需要把对应值设为0即可。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph osd pool set-quota test-pool max_bytes $((10 * 1024 * 1024 * 1024))</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>设置允许容量限制为10GB<br>取消配额限制只需要把对应值设为0即可。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ceph osd lspools</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>打印pool列表</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph osd pool delete test-pool test-pool  --yes-i-really-really-mean-it</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>删除pool，删除一个pool会同时清空pool的所有数据，因此非常危险。(和rm -rf /类似）。因此删除pool时ceph要求必须输入两次pool名称，同时加上–yes-i-really-really-mean-it选项。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo rados df</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>查看pool状态信息</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph osd pool set/get &#123;pool-name&#125; &#123;key&#125; &#123;value&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>通过上述语法设置获取pool的元数据</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph osd pool set test-pool size 3</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>设置pool的冗余副本数量为3</p>
+</blockquote>
+<h5 id="Crush-MAP-相关"><a href="#Crush-MAP-相关" class="headerlink" title="Crush MAP 相关"></a>Crush MAP 相关</h5><ul>
+<li>获取现有集群的crush map</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ceph osd getcrushmap -o crush.map</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>为二进制文件，需要反编译；反编译命令为：<code>crushtool -d crush.map -o crushmap-decompile</code></p>
+</blockquote>
+<ul>
+<li>运用新的crush map<br>当你修改了crush map后需要编译，如下命令：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crushtool -c crushmap-decompile -o crush.map</span><br></pre></td></tr></table></figure>
+<p>接着设置到集群中，用如下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ceph osd setcrushmap -i crush.map</span><br></pre></td></tr></table></figure>
+<h5 id="Ceph-管理接口-radosgw-admin"><a href="#Ceph-管理接口-radosgw-admin" class="headerlink" title="Ceph 管理接口 (radosgw-admin)"></a>Ceph 管理接口 (radosgw-admin)</h5><ul>
+<li>列出所有用户</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">radosgw-admin metadata list user</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>还可以列出桶：radosgw-admin metadata list bucket</p>
+</blockquote>
+<ul>
+<li>创建用户</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo radosgw-admin user create --uid=&quot;lhb&quot; --display-name=&quot;First User&quot;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>sudo radosgw-admin user create</p>
+</blockquote>
+<ul>
+<li>显示用户信息，以及可能存在的子用户和密钥</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo radosgw-admin user info --uid=testuser</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>sudo radosgw-admin user info</p>
+</blockquote>
+<ul>
+<li>显示配额子系统统计的用户状态</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo radosgw-admin user stats --uid=testuser</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>sudo radosgw-admin user stats</p>
+</blockquote>
+<ul>
+<li>其他功能</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">user rm  删除用户</span><br><span class="line">user suspend  暂停某用户</span><br><span class="line">user enable  重新允许暂停的用户</span><br><span class="line">user check  检查用户信息</span><br><span class="line">bucket list  罗列所有桶</span><br><span class="line">bucket rm  删除一个桶</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>ref: <a href="http://docs.ceph.org.cn/man/8/radosgw-admin/" target="_blank" rel="noopener">http://docs.ceph.org.cn/man/8/radosgw-admin/</a></p>
+</blockquote>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>摘自某处的一个图，是相关命令的总结，如下：</p>
+<p><img src="https://i.imgur.com/YUAqFpZ.png" alt=""></p>
+<p>另外还有一个知识树：</p>
+<p><img src="https://i.imgur.com/LmdlKW6.jpg" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/23/tmux一个神奇的linux工具/" rel="next" title="tmux:一个神奇的Linux工具">
+                <i class="fa fa-chevron-left"></i> tmux:一个神奇的Linux工具
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/08/Ceph部署/" rel="prev" title="Ceph环境搭建 （Debian发行版为例）">
+                Ceph环境搭建 （Debian发行版为例） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">hb-lee</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ceph集群使用—常用命令"><span class="nav-number">1.</span> <span class="nav-text">Ceph集群使用—常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景知识"><span class="nav-number">1.0.1.</span> <span class="nav-text">背景知识</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#ceph中的pool、PG、OSD的关系"><span class="nav-number">1.0.1.0.1.</span> <span class="nav-text">ceph中的pool、PG、OSD的关系</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Ceph架构"><span class="nav-number">1.0.1.0.2.</span> <span class="nav-text">Ceph架构</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用命令"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#pool"><span class="nav-number">1.0.1.1.1.</span> <span class="nav-text">pool</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Crush-MAP-相关"><span class="nav-number">1.0.1.1.2.</span> <span class="nav-text">Crush MAP 相关</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Ceph-管理接口-radosgw-admin"><span class="nav-number">1.0.1.1.3.</span> <span class="nav-text">Ceph 管理接口 (radosgw-admin)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.0.2.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hb-lee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

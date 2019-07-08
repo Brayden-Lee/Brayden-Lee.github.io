@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="S3（Simple Storage Service）对象存储简介及使用什么是S3服务S3是一套基于HTTP协议并采用RESTful风格构建起来的Web存储管理服务 S3的一些特点 存储桶是S3用于数据存储的基础容器 存储桶中可以存储无限量的数据，每个对象最多5TB数据，使用开发人员分配的唯一密钥存储和检索每个对象 身份验证机制 访问接口使用基于标准的REST和SOAP接口，可以与任何Interne">
+<meta property="og:type" content="article">
+<meta property="og:title" content="S3（Simple Storage Service）对象存储简介及使用">
+<meta property="og:url" content="http://yoursite.com/2019/07/08/S3对象存储/index.html">
+<meta property="og:site_name" content="hb-lee 的博客">
+<meta property="og:description" content="S3（Simple Storage Service）对象存储简介及使用什么是S3服务S3是一套基于HTTP协议并采用RESTful风格构建起来的Web存储管理服务 S3的一些特点 存储桶是S3用于数据存储的基础容器 存储桶中可以存储无限量的数据，每个对象最多5TB数据，使用开发人员分配的唯一密钥存储和检索每个对象 身份验证机制 访问接口使用基于标准的REST和SOAP接口，可以与任何Interne">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.imgur.com/acPjn1t.png">
+<meta property="og:image" content="https://i.imgur.com/lhQgMNV.png">
+<meta property="og:image" content="https://i.imgur.com/meDxXFV.png">
+<meta property="og:image" content="https://i.imgur.com/oTJd9Xk.png">
+<meta property="og:updated_time" content="2019-07-08T14:49:52.165Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="S3（Simple Storage Service）对象存储简介及使用">
+<meta name="twitter:description" content="S3（Simple Storage Service）对象存储简介及使用什么是S3服务S3是一套基于HTTP协议并采用RESTful风格构建起来的Web存储管理服务 S3的一些特点 存储桶是S3用于数据存储的基础容器 存储桶中可以存储无限量的数据，每个对象最多5TB数据，使用开发人员分配的唯一密钥存储和检索每个对象 身份验证机制 访问接口使用基于标准的REST和SOAP接口，可以与任何Interne">
+<meta name="twitter:image" content="https://i.imgur.com/acPjn1t.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/08/S3对象存储/"/>
+
+
+
+
+
+  <title>S3（Simple Storage Service）对象存储简介及使用 | hb-lee 的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">hb-lee 的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/S3对象存储/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hb-lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hb-lee 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">S3（Simple Storage Service）对象存储简介及使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-08T22:36:24+08:00">
+                2019-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="S3（Simple-Storage-Service）对象存储简介及使用"><a href="#S3（Simple-Storage-Service）对象存储简介及使用" class="headerlink" title="S3（Simple Storage Service）对象存储简介及使用"></a>S3（Simple Storage Service）对象存储简介及使用</h1><h3 id="什么是S3服务"><a href="#什么是S3服务" class="headerlink" title="什么是S3服务"></a>什么是S3服务</h3><p>S3是一套基于HTTP协议并采用RESTful风格构建起来的Web存储管理服务</p>
+<h3 id="S3的一些特点"><a href="#S3的一些特点" class="headerlink" title="S3的一些特点"></a>S3的一些特点</h3><ul>
+<li>存储桶是S3用于数据存储的基础容器</li>
+<li>存储桶中可以存储无限量的数据，每个对象最多5TB数据，使用开发人员分配的唯一密钥存储和检索每个对象</li>
+<li>身份验证机制</li>
+<li>访问接口使用基于标准的REST和SOAP接口，可以与任何Internet开发工具搭配使用</li>
+</ul>
+<h3 id="S3基本存储模型"><a href="#S3基本存储模型" class="headerlink" title="S3基本存储模型"></a>S3基本存储模型</h3><p>两种存储单元：Bucket和Object，扁平化存储结构，可以横向增加Bucket和Object，理论上可以存储无数个Object。</p>
+<p><img src="https://i.imgur.com/acPjn1t.png" alt=""></p>
+<ul>
+<li>对象（Object）</li>
+</ul>
+<p>S3存储的最小单位，数据不透明，元数据透明，数据和元数据一起存，还可以指定自定义元数据。在存储桶中，对象将由密钥（名称）和版本 ID 进行唯一地标识。</p>
+<ul>
+<li>存储桶（Bucket）</li>
+</ul>
+<p>存储对象的容器，名称要全局唯一，并且命名需要符合英文国际域名的命名规则。对象名为<code>mybucket</code>组成的URL为<code>http://mybucket.s3.cephbook.com</code>。</p>
+<h3 id="传统文件系统向S3的转变"><a href="#传统文件系统向S3的转变" class="headerlink" title="传统文件系统向S3的转变"></a>传统文件系统向S3的转变</h3><ul>
+<li>文件路径和数据存储</li>
+<li>文件元数据存储</li>
+</ul>
+<h5 id="解决文件路径和数据存储"><a href="#解决文件路径和数据存储" class="headerlink" title="解决文件路径和数据存储"></a>解决文件路径和数据存储</h5><p><img src="https://i.imgur.com/lhQgMNV.png" alt=""></p>
+<ul>
+<li>所有数据都存放在Bucket中，文件都是Object。</li>
+</ul>
+<blockquote>
+<p>个人理解文件夹不需要管，在路径中直接用”/“区分就行了（这个分割符可以指定），因此也没有了文件夹的元数据信息。目录样式演示是模拟出来的对象的层次结构。删除目录可以理解为删除具有该前缀的所有对象。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$ s3cmd ls s3://mybucket/in</span><br><span class="line">                       DIR   s3://mybucket/in/</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$ s3cmd ls s3://mybucket/in/mybucket</span><br><span class="line">                       DIR   s3://mybucket/in/mybucket/</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$ s3cmd ls s3://mybucket/in/mybucket/s3sdk.py</span><br><span class="line">2019-06-17 07:05      1094   s3://mybucket/in/mybucket/s3sdk.py</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在key name中加上”/”来区分“文件夹”。</li>
+<li>文件数据内容作为Content存储在Object内。</li>
+</ul>
+<h5 id="解决文件元数据存储"><a href="#解决文件元数据存储" class="headerlink" title="解决文件元数据存储"></a>解决文件元数据存储</h5><p><img src="https://i.imgur.com/meDxXFV.png" alt=""></p>
+<p><img src="https://i.imgur.com/oTJd9Xk.png" alt=""></p>
+<p>两种存储的元数据对应关系： </p>
+<ul>
+<li>key name -&gt; 文件路径  </li>
+<li>etag -&gt; 文件md5  </li>
+<li>metadata(File size, Last mode, MIME type) -&gt; 文件的size/x-time这些</li>
+<li>ACL -&gt; 文件的acl/uid/gid这些</li>
+<li>Content-Type -&gt; MIME</li>
+</ul>
+<blockquote>
+<p>MIME用于设定某种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，浏览器会自动使用指定应用程序来打开。</p>
+</blockquote>
+<h3 id="S3的使用"><a href="#S3的使用" class="headerlink" title="S3的使用"></a>S3的使用</h3><h4 id="s3cmd-命令行形式访问（连接到其他第三方S3服务为例）"><a href="#s3cmd-命令行形式访问（连接到其他第三方S3服务为例）" class="headerlink" title="s3cmd 命令行形式访问（连接到其他第三方S3服务为例）"></a>s3cmd 命令行形式访问（连接到其他第三方S3服务为例）</h4><h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><pre><code>pip install s3cmd
+</code></pre><blockquote>
+<p>默认s3cmd会读取当前用户的$HOME/.s3cfg，可以使用-c参数手工指定配置文件路径。</p>
+</blockquote>
+<h5 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[default]</span><br><span class="line">access_key = XXXXXXX <span class="comment"># 填写access_key</span></span><br><span class="line">secret_key = XXXXXXX <span class="comment"># 填写secret_key</span></span><br><span class="line">default_mime_type = binary/octet-stream</span><br><span class="line">enable_multipart = True <span class="comment"># 启动分块上传</span></span><br><span class="line">encoding = UTF-8</span><br><span class="line">encrypt = False</span><br><span class="line">host_base = s3dev.nie.netease.com <span class="comment"># 接入点</span></span><br><span class="line">host_bucket = %(bucket)s.s3dev.nie.netease.com</span><br><span class="line">multipart_chunk_size_mb = 15 <span class="comment"># 分块上传大小</span></span><br><span class="line">socket_timeout = 300 <span class="comment"># 超时时长</span></span><br><span class="line">stop_on_error = False</span><br><span class="line">use_https = False <span class="comment"># 是否使用HTTPs</span></span><br><span class="line">use_mime_magic = True</span><br><span class="line">verbosity = WARNING</span><br><span class="line">signature_v2 = True <span class="comment"># 强制使用AWS2签名认证</span></span><br></pre></td></tr></table></figure>
+<h5 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h5><blockquote>
+<p>s3cmd –help 查看帮助</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd ls</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd mb s3://mybucket</span><br><span class="line">Bucket <span class="string">'s3://mybucket/'</span> created</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd rb s3://mybucket</span><br><span class="line">Bucket <span class="string">'s3://mybucket/'</span> removed</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd mb s3://mybucket</span><br><span class="line">Bucket <span class="string">'s3://mybucket/'</span> created</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd put hello.lua s3://mybucket</span><br><span class="line">upload: <span class="string">'hello.lua'</span> -&gt; <span class="string">'s3://mybucket/hello.lua'</span>  [1 of 1]</span><br><span class="line"> 15 of 15   100% <span class="keyword">in</span>    0s   120.37 B/s  <span class="keyword">done</span></span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd rb s3://mybucket</span><br><span class="line">ERROR: S3 error: 409 (BucketNotEmpty)    <span class="comment"># rb是删除空bucket，加--force可以删除（未启用版本控制）</span></span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd del s3://mybucket</span><br><span class="line">ERROR: Parameter problem: File name required, not only the bucket name. Alternatively use --recursive</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd del s3://mybucket/hello.lua</span><br><span class="line">delete: <span class="string">'s3://mybucket/hello.lua'</span></span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd ls s3://mybucket</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$</span><br></pre></td></tr></table></figure>
+<p>其他常用命令如：</p>
+<pre><code>s3cmd get s3://new_bucket/file # 下载file到本地
+s3cmd setacl s3://new_bucket/file --acl-public # 开启file的匿名访问权限,注意权限控制
+s3cmd info s3://new_bucket/file # 查看object属性信息
+s3cmd del s3://new_bucket --recursive --force # 递归删除bucket内的所有内容，慎用！
+s3cmd signurl s3://new_bucket/file +30 # 生成临时的url访问链接（30s有效时长）。
+s3cmd du s3://new_bucket # 查看bucket的信息
+s3cmd cp src dst # 复制
+s3cmd mv src dst # 移动
+</code></pre><h4 id="Python-SDK使用S3"><a href="#Python-SDK使用S3" class="headerlink" title="Python SDK使用S3"></a>Python SDK使用S3</h4><h5 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h5><pre><code>pip install boto
+</code></pre><blockquote>
+<p>boto 适用于Python 2.6 and 2.7环境，python 3.x推荐使用boto3</p>
+</blockquote>
+<p>新建、删除bucket实例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> boto.s3.connection <span class="keyword">import</span> S3Connection</span><br><span class="line"><span class="keyword">import</span> boto</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启下面则启用AWS4认证,默认使用AWS2</span></span><br><span class="line"><span class="comment"># os.environ['S3_USE_SIGV4'] = 'True'</span></span><br><span class="line"></span><br><span class="line">endpoint = <span class="string">'s3dev.nie.netease.com'</span> <span class="comment">#S3服务的endpoint地址</span></span><br><span class="line">bucket_name = <span class="string">'mk_by_python'</span> <span class="comment">#bucket名称</span></span><br><span class="line">access_key = <span class="string">'XXXXXXX'</span> <span class="comment">#access-key</span></span><br><span class="line">secret_key = <span class="string">'XXXXXXX'</span> <span class="comment">#secret key</span></span><br><span class="line"></span><br><span class="line">conn = boto.connect_s3(</span><br><span class="line">    aws_access_key_id=access_key,</span><br><span class="line">    aws_secret_access_key=secret_key,</span><br><span class="line">    host=endpoint,</span><br><span class="line">    is_secure=<span class="keyword">False</span>, <span class="comment">#不使用HTTPS</span></span><br><span class="line">    calling_format=boto.s3.connection.SubdomainCallingFormat(), <span class="comment">#使用virtual-hosted-style,推荐使用</span></span><br><span class="line">    <span class="comment"># calling_format=boto.s3.connection.OrdinaryCallingFormat(), #使用path-style</span></span><br><span class="line">    validate_certs=<span class="keyword">True</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">buckets = conn.get_all_buckets() <span class="comment">#获取当前bucket列表</span></span><br><span class="line"><span class="keyword">print</span> buckets</span><br><span class="line">bucket = conn.create_bucket(bucket_name) <span class="comment">#新建bucket</span></span><br><span class="line">buckets = conn.get_all_buckets() <span class="comment">#获取当前bucket列表</span></span><br><span class="line"><span class="keyword">print</span> buckets</span><br><span class="line">conn.delete_bucket(bucket_name) <span class="comment">#删除bucket</span></span><br><span class="line">buckets = conn.get_all_buckets()</span><br><span class="line"><span class="keyword">print</span> buckets</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>输出</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$ python s3sdk.py </span><br><span class="line">[&lt;Bucket: mybucket&gt;]</span><br><span class="line">[&lt;Bucket: mk_by_python&gt;, &lt;Bucket: mybucket&gt;]</span><br><span class="line">[&lt;Bucket: mybucket&gt;]</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$</span><br></pre></td></tr></table></figure>
+<h5 id="Python接口"><a href="#Python接口" class="headerlink" title="Python接口"></a>Python接口</h5><blockquote>
+<p>bucket相关</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">conn.create_bucket(bucket_name)  <span class="comment"># 新建bucket</span></span><br><span class="line">conn.get_all_buckets()  <span class="comment"># 获取当前bucket列表</span></span><br><span class="line">conn.delete_bucket(bucket_name)  <span class="comment"># 删除bucket</span></span><br><span class="line">bucket.get_acl()  <span class="comment"># 获取bucket ACL</span></span><br><span class="line">bucket.get_xml_acl()  <span class="comment"># 获取bucket ACL的xml格式描述</span></span><br><span class="line">bucket.set_acl(<span class="string">'private'</span>)  <span class="comment"># 设置bucket ACL，可以选:private,public-read,public-read-write,authenticated-read这些</span></span><br><span class="line">bucket.set_xml_acl(xml_acl)  <span class="comment"># 以XML格式进行设置</span></span><br><span class="line">bucket.add_user_grant(<span class="string">'WRITE'</span>,<span class="string">'test1'</span>) <span class="comment"># 对‘test1’这个用户赋予‘WRITE’权限 # bucket新增用户ACL，可选:READ, WRITE, READ_ACP, WRITE_ACP, FULL_CONTROL</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>object相关</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">key_ = bucket.new_key(key_name)  <span class="comment"># 生成一个key</span></span><br><span class="line">key_.set_contents_from_filename(local_file)  <span class="comment"># 上传文件 [与上一条命令一起用]</span></span><br><span class="line"><span class="comment"># 两种删除方式</span></span><br><span class="line">key_.delete()</span><br><span class="line">bucket.delete_key(key_name)</span><br><span class="line">bucket.get_all_keys(prefix=<span class="string">'user1_23695/'</span>)  <span class="comment"># 按指定prefix查询bucket中对应的Object列表,注意默认最多返回1000条记录</span></span><br><span class="line">bucket.delete_keys(file_list)  <span class="comment"># 批量删除Object</span></span><br><span class="line">key_.get_xml_acl()  <span class="comment"># 获取XML格式的Object的ACL信息 </span></span><br><span class="line">key_.get_acl()  <span class="comment"># 获取Object的ACL</span></span><br><span class="line">key_.set_acl(<span class="string">'public-read'</span>)  <span class="comment"># 方式1，设置Object的ACL</span></span><br><span class="line">key_.set_canned_acl(<span class="string">'public-read'</span>)  <span class="comment"># 方式2，设置Object的ACL</span></span><br><span class="line">key_.set_xml_acl(acl_xml)  <span class="comment"># 方式3，设置Object的ACL</span></span><br><span class="line">key_.add_user_grant(<span class="string">'READ'</span>,<span class="string">'test1'</span>)  <span class="comment"># 对‘test1’这个用户添加READ权限。 #添加用户授权，可选权限有:READ, WRITE, READ_ACP, WRITE_ACP, FULL_CONTROL</span></span><br><span class="line">key_.set_metadata(<span class="string">'key'</span>,<span class="string">'value'</span>)  <span class="comment"># 设置Object的metadata，注意必须在上传Object之前做好初始化设置</span></span><br><span class="line"><span class="comment">#获取Object的metadata</span></span><br><span class="line">key_ = bucket.get_key(key_name)</span><br><span class="line"><span class="keyword">print</span> key_.get_metadata(<span class="string">'key'</span>)</span><br><span class="line">key_.get_contents_to_filename(down_file)  <span class="comment"># 下载Object，保存为本地的‘/tmp/download.file’</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/08/S3版本控制与生命周期/" rel="next" title="S3版本控制与生命周期">
+                <i class="fa fa-chevron-left"></i> S3版本控制与生命周期
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">hb-lee</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#S3（Simple-Storage-Service）对象存储简介及使用"><span class="nav-number">1.</span> <span class="nav-text">S3（Simple Storage Service）对象存储简介及使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是S3服务"><span class="nav-number">1.0.1.</span> <span class="nav-text">什么是S3服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#S3的一些特点"><span class="nav-number">1.0.2.</span> <span class="nav-text">S3的一些特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#S3基本存储模型"><span class="nav-number">1.0.3.</span> <span class="nav-text">S3基本存储模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#传统文件系统向S3的转变"><span class="nav-number">1.0.4.</span> <span class="nav-text">传统文件系统向S3的转变</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#解决文件路径和数据存储"><span class="nav-number">1.0.4.0.1.</span> <span class="nav-text">解决文件路径和数据存储</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解决文件元数据存储"><span class="nav-number">1.0.4.0.2.</span> <span class="nav-text">解决文件元数据存储</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#S3的使用"><span class="nav-number">1.0.5.</span> <span class="nav-text">S3的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#s3cmd-命令行形式访问（连接到其他第三方S3服务为例）"><span class="nav-number">1.0.5.1.</span> <span class="nav-text">s3cmd 命令行形式访问（连接到其他第三方S3服务为例）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#安装"><span class="nav-number">1.0.5.1.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置"><span class="nav-number">1.0.5.1.2.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用实例"><span class="nav-number">1.0.5.1.3.</span> <span class="nav-text">使用实例</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Python-SDK使用S3"><span class="nav-number">1.0.5.2.</span> <span class="nav-text">Python SDK使用S3</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#安装-1"><span class="nav-number">1.0.5.2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Python接口"><span class="nav-number">1.0.5.2.2.</span> <span class="nav-text">Python接口</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hb-lee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="Gramfs简介gramfs的分布式实现 依赖的库及下载地址glog    [https://github.com/hb-lee/attachment/glog-0.3.3.tar.gz] gflag    [https://github.com/gflags/gflags] kyotocabinet    [https://github.com/hb-lee/attachment/kyotoca">
+<meta name="description" content="tmux简介tmux是Linux上的终端复用神器，可以实现一个屏幕管理多个终端，类似一个虚拟的远程连接，通过一个终端，可以维持多个连接会话； tmux安装Ubuntu上: apt-get install tmux Centos上： yum install tmux tmux常用命令tmux new -s mysession    创建名为mysession的会话 tmux ls    显示会话列表">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Gramfs安装指南">
-<meta property="og:url" content="http://yoursite.com/2019/05/21/Gramfs安装/index.html">
+<meta property="og:title" content="tmux:一个神奇的Linux工具">
+<meta property="og:url" content="http://yoursite.com/2019/05/23/tmux一个神奇的linux工具/index.html">
 <meta property="og:site_name" content="hb-lee 的博客">
-<meta property="og:description" content="Gramfs简介gramfs的分布式实现 依赖的库及下载地址glog    [https://github.com/hb-lee/attachment/glog-0.3.3.tar.gz] gflag    [https://github.com/gflags/gflags] kyotocabinet    [https://github.com/hb-lee/attachment/kyotoca">
+<meta property="og:description" content="tmux简介tmux是Linux上的终端复用神器，可以实现一个屏幕管理多个终端，类似一个虚拟的远程连接，通过一个终端，可以维持多个连接会话； tmux安装Ubuntu上: apt-get install tmux Centos上： yum install tmux tmux常用命令tmux new -s mysession    创建名为mysession的会话 tmux ls    显示会话列表">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-21T06:59:10.048Z">
+<meta property="og:updated_time" content="2019-05-23T01:31:52.978Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Gramfs安装指南">
-<meta name="twitter:description" content="Gramfs简介gramfs的分布式实现 依赖的库及下载地址glog    [https://github.com/hb-lee/attachment/glog-0.3.3.tar.gz] gflag    [https://github.com/gflags/gflags] kyotocabinet    [https://github.com/hb-lee/attachment/kyotoca">
+<meta name="twitter:title" content="tmux:一个神奇的Linux工具">
+<meta name="twitter:description" content="tmux简介tmux是Linux上的终端复用神器，可以实现一个屏幕管理多个终端，类似一个虚拟的远程连接，通过一个终端，可以维持多个连接会话； tmux安装Ubuntu上: apt-get install tmux Centos上： yum install tmux tmux常用命令tmux new -s mysession    创建名为mysession的会话 tmux ls    显示会话列表">
 
 
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/05/21/Gramfs安装/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/05/23/tmux一个神奇的linux工具/"/>
 
 
 
 
 
-  <title>Gramfs安装指南 | hb-lee 的博客</title>
+  <title>tmux:一个神奇的Linux工具 | hb-lee 的博客</title>
   
 
 
@@ -232,7 +232,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/21/Gramfs安装/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/23/tmux一个神奇的linux工具/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hb-lee">
@@ -249,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Gramfs安装指南</h1>
+          <h1 class="post-title" itemprop="name headline">tmux:一个神奇的Linux工具</h1>
         
 
         <div class="post-meta">
@@ -261,8 +261,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-21T14:31:28+08:00">
-                2019-05-21
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-23T09:14:40+08:00">
+                2019-05-23
               </time>
             
 
@@ -299,91 +299,19 @@
       
 
       
-        <h3 id="Gramfs简介"><a href="#Gramfs简介" class="headerlink" title="Gramfs简介"></a>Gramfs简介</h3><p>gramfs的分布式实现</p>
-<h3 id="依赖的库及下载地址"><a href="#依赖的库及下载地址" class="headerlink" title="依赖的库及下载地址"></a>依赖的库及下载地址</h3><pre><code>glog    [https://github.com/hb-lee/attachment/glog-0.3.3.tar.gz]
-gflag    [https://github.com/gflags/gflags]
-kyotocabinet    [https://github.com/hb-lee/attachment/kyotocabinet-1.2.77.tar.gz]
-boost_system    [https://github.com/hb-lee/attachment/boost_1_53_0.tar.gz]
-boost_serialization    [https://github.com/hb-lee/attachment/boost_1_53_0.tar.gz]
-thrift    [https://github.com/hb-lee/attachment/thrift-0.12.0.tar.gz]
-</code></pre><h3 id="cmake安装"><a href="#cmake安装" class="headerlink" title="cmake安装"></a>cmake安装</h3><pre><code>wget https://cmake.org/files/v3.14/cmake-3.14.0.tar.gz
-tar -xvf cmake-3.14.0.tar.gz
-cd cmake-3.14.0.tar.gz
-./configure
-make &amp;&amp; make install
-cd -
-</code></pre><h3 id="glog安装"><a href="#glog安装" class="headerlink" title="glog安装"></a>glog安装</h3><pre><code>tar -xvf glog-0.3.3.tar.gz
-cd glog-0.3.3.tar.gz
-./configure
-make &amp;&amp; make install
-cd -
-</code></pre><h3 id="gflag安装"><a href="#gflag安装" class="headerlink" title="gflag安装"></a>gflag安装</h3><pre><code>git clone https://github.com/gflags/gflags
-cd gflags
-cmake .
-make -j 24
-make install
-cd -
-</code></pre><h3 id="kyotocabinet安装"><a href="#kyotocabinet安装" class="headerlink" title="kyotocabinet安装"></a>kyotocabinet安装</h3><pre><code>tar xvf kyotocabinet-1.2.77.tar.gz
-cd kyotocabinet-1.2.77
-./configure
-make &amp;&amp; make install
-cd -
-</code></pre><h3 id="thrift安装"><a href="#thrift安装" class="headerlink" title="thrift安装"></a>thrift安装</h3><pre><code>yum -y groupinstall &quot;Development Tools&quot;
-sudo yum -y install libevent-devel zlib-devel openssl-devel
-</code></pre><blockquote>
-<p>openssl-devel若出现依赖导致安装不了，可以用源码包进行安装(提供包openssl-1.1.1b.tar.gz)</p>
-</blockquote>
-<pre><code>wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz
-tar xvf autoconf-2.69.tar.gz
-./configure --prefix=/usr
-make
-sudo make install
-cd ..
-
-wget http://ftp.gnu.org/gnu/automake/automake-1.14.tar.gz
-tar xvf automake-1.14.tar.gz
-cd automake-1.14
-./configure --prefix=/usr
-make
-sudo make install
-cd ..
-
-wget http://ftp.gnu.org/gnu/bison/bison-2.5.1.tar.gz
-tar xvf bison-2.5.1.tar.gz
-cd bison-2.5.1
-./configure --prefix=/usr
-make
-sudo make install
-cd ..
-
-wget http://sourceforge.net/projects/boost/files/boost/1.53.0/boost_1_53_0.tar.gz
-tar xvf boost_1_53_0.tar.gz
-cd boost_1_53_0
-./bootstrap.sh
-sudo ./b2 install
-cd ..
-
-wget http://mirrors.hust.edu.cn/apache/thrift/0.12.0thrift-0.12.0.tar.gz
-tar xvf thrift-0.12.0.tar.gz
-cd thrift
-./configure --with-lua=no
-make
-make &amp;&amp; make install
-</code></pre><h3 id="遇到的棘手问题"><a href="#遇到的棘手问题" class="headerlink" title="遇到的棘手问题"></a>遇到的棘手问题</h3><p>gcc升级问题：    </p>
-<ul>
-<li>g++: fatal error: braced spec is invalid at ‘%’    <blockquote>
-<p>env -i PATH=/bin:/usr/bin make [可能试一下环境变量导致的，用此命令来暂时还原最原始的环境变量]  首先得换高阶的gcc    </p>
-</blockquote>
-</li>
-</ul>
-<p>共享库编译问题   </p>
-<ul>
-<li>relocation R_X86_64_32S against `XXXXXXX’ can not be used when making a shared object; recompile with -fPIC<blockquote>
-<p>网上都显示这个问题是由于没有加-fPIC编译选项导致的，但是亲自尝试后并不是这样，加了也报这个错误；后来发现是由于代码里有static函数，共享库里不能有static，自己理解是shared里地址不能固定，而static放在常量区，将static改掉就可以了；</p>
-</blockquote>
-</li>
-</ul>
-
+        <h3 id="tmux简介"><a href="#tmux简介" class="headerlink" title="tmux简介"></a>tmux简介</h3><p>tmux是Linux上的终端复用神器，可以实现一个屏幕管理多个终端，类似一个虚拟的远程连接，通过一个终端，可以维持多个连接会话；</p>
+<h3 id="tmux安装"><a href="#tmux安装" class="headerlink" title="tmux安装"></a>tmux安装</h3><pre><code>Ubuntu上: apt-get install tmux
+Centos上： yum install tmux
+</code></pre><h3 id="tmux常用命令"><a href="#tmux常用命令" class="headerlink" title="tmux常用命令"></a>tmux常用命令</h3><pre><code>tmux new -s mysession    创建名为mysession的会话
+tmux ls    显示会话列表
+tmux a    连接上一个会话
+tmux a -t mysession    连接指定会话
+tmux rename -t s1 s2    重命名会话s1为s2
+tmux kill-session    关闭上次打开的会话
+tmux kill-session -t s1    关闭会话s1
+tmux kill-session -a -t s1    关闭除s1外的所有会话
+tmux kill-server    关闭所有会话
+</code></pre>
       
     </div>
     
@@ -407,8 +335,8 @@ make &amp;&amp; make install
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/11/RAID 一些研究/" rel="next" title="RAID一些研究 (RAID on SSD)">
-                <i class="fa fa-chevron-left"></i> RAID一些研究 (RAID on SSD)
+              <a href="/2019/05/21/Gramfs安装/" rel="next" title="Gramfs安装指南">
+                <i class="fa fa-chevron-left"></i> Gramfs安装指南
               </a>
             
           </div>
@@ -417,8 +345,8 @@ make &amp;&amp; make install
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/05/23/tmux一个神奇的linux工具/" rel="prev" title="tmux:一个神奇的Linux工具">
-                tmux:一个神奇的Linux工具 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/07/08/Ceph集群使用/" rel="prev" title="Ceph集群使用---常用命令">
+                Ceph集群使用---常用命令 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -533,7 +461,7 @@ make &amp;&amp; make install
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gramfs简介"><span class="nav-number">1.</span> <span class="nav-text">Gramfs简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖的库及下载地址"><span class="nav-number">2.</span> <span class="nav-text">依赖的库及下载地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cmake安装"><span class="nav-number">3.</span> <span class="nav-text">cmake安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#glog安装"><span class="nav-number">4.</span> <span class="nav-text">glog安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gflag安装"><span class="nav-number">5.</span> <span class="nav-text">gflag安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kyotocabinet安装"><span class="nav-number">6.</span> <span class="nav-text">kyotocabinet安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#thrift安装"><span class="nav-number">7.</span> <span class="nav-text">thrift安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遇到的棘手问题"><span class="nav-number">8.</span> <span class="nav-text">遇到的棘手问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#tmux简介"><span class="nav-number">1.</span> <span class="nav-text">tmux简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tmux安装"><span class="nav-number">2.</span> <span class="nav-text">tmux安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tmux常用命令"><span class="nav-number">3.</span> <span class="nav-text">tmux常用命令</span></a></li></ol></div>
             
 
           </div>
