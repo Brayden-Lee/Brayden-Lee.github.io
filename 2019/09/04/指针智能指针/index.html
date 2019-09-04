@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="PS：本文针对那些不能访问互联网的服务器（比如需要认证的网络等等），可以提供代理服务，让该服务器访问互联网！    ###需要的配置参数：http_proxy, https_proxy, ftp_proxy…比如你有一机器的IP为 10.10.10.10,可以用来上网；可以用此机器做代理；首先下载CCProxy工具，接着在工具的 账号 选项里添加允许访问的内网机器的ip地址；然后启动该工具即可；">
+<meta name="description" content="指针相关智能指针 智能指针原理智能指针是一个类，这个类的构造函数中传入一个普通指针，胸骨函数中释放传入的指针。智能指针的类都是栈上的对象，所以当函数（或程序）结束时会自动被释放。可以避免内存泄露。  常见的智能指针C++11引入了智能指针有：auto_ptr, unique_ptr, shared_ptr和weak_ptr;shared_ptr是基于引用计数的智能指针，可随意赋值，直到内存的引用计">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linux服务器上设置网络代理">
-<meta property="og:url" content="http://yoursite.com/2018/11/02/linux-server-proxy/index.html">
+<meta property="og:title" content="hb-lee 的博客">
+<meta property="og:url" content="http://yoursite.com/2019/09/04/指针智能指针/index.html">
 <meta property="og:site_name" content="hb-lee 的博客">
-<meta property="og:description" content="PS：本文针对那些不能访问互联网的服务器（比如需要认证的网络等等），可以提供代理服务，让该服务器访问互联网！    ###需要的配置参数：http_proxy, https_proxy, ftp_proxy…比如你有一机器的IP为 10.10.10.10,可以用来上网；可以用此机器做代理；首先下载CCProxy工具，接着在工具的 账号 选项里添加允许访问的内网机器的ip地址；然后启动该工具即可；">
+<meta property="og:description" content="指针相关智能指针 智能指针原理智能指针是一个类，这个类的构造函数中传入一个普通指针，胸骨函数中释放传入的指针。智能指针的类都是栈上的对象，所以当函数（或程序）结束时会自动被释放。可以避免内存泄露。  常见的智能指针C++11引入了智能指针有：auto_ptr, unique_ptr, shared_ptr和weak_ptr;shared_ptr是基于引用计数的智能指针，可随意赋值，直到内存的引用计">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-03T11:36:14.816Z">
+<meta property="og:updated_time" content="2019-09-03T07:03:35.055Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="linux服务器上设置网络代理">
-<meta name="twitter:description" content="PS：本文针对那些不能访问互联网的服务器（比如需要认证的网络等等），可以提供代理服务，让该服务器访问互联网！    ###需要的配置参数：http_proxy, https_proxy, ftp_proxy…比如你有一机器的IP为 10.10.10.10,可以用来上网；可以用此机器做代理；首先下载CCProxy工具，接着在工具的 账号 选项里添加允许访问的内网机器的ip地址；然后启动该工具即可；">
+<meta name="twitter:title" content="hb-lee 的博客">
+<meta name="twitter:description" content="指针相关智能指针 智能指针原理智能指针是一个类，这个类的构造函数中传入一个普通指针，胸骨函数中释放传入的指针。智能指针的类都是栈上的对象，所以当函数（或程序）结束时会自动被释放。可以避免内存泄露。  常见的智能指针C++11引入了智能指针有：auto_ptr, unique_ptr, shared_ptr和weak_ptr;shared_ptr是基于引用计数的智能指针，可随意赋值，直到内存的引用计">
 
 
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/11/02/linux-server-proxy/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/09/04/指针智能指针/"/>
 
 
 
 
 
-  <title>linux服务器上设置网络代理 | hb-lee 的博客</title>
+  <title> | hb-lee 的博客</title>
   
 
 
@@ -232,7 +232,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/02/linux-server-proxy/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/04/指针智能指针/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hb-lee">
@@ -249,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">linux服务器上设置网络代理</h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -261,8 +261,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-02T16:37:48+08:00">
-                2018-11-02
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-04T10:15:03+08:00">
+                2019-09-04
               </time>
             
 
@@ -299,20 +299,12 @@
       
 
       
-        <blockquote>
-<p><strong>PS：本文针对那些不能访问互联网的服务器（比如需要认证的网络等等），可以提供代理服务，让该服务器访问互联网！</strong>  </p>
-</blockquote>
-<p>###需要的配置参数：http_proxy, https_proxy, ftp_proxy…<br>比如你有一机器的IP为 10.10.10.10,可以用来上网；可以用此机器做代理；<br>首先下载CCProxy工具，接着在工具的 账号 选项里添加允许访问的内网机器的ip地址；然后启动该工具即可；    </p>
-<p>###在linux服务器上的配置为：</p>
-<p>####vim /etc/profile   [全局代理]<br>    http_proxy=<a href="http://10.10.10.10:808/" target="_blank" rel="noopener">http://10.10.10.10:808/</a><br>    https_proxy=<a href="http://10.10.10.10:808/" target="_blank" rel="noopener">http://10.10.10.10:808/</a><br>    export http_proxy<br>    export https_proxy<br>    source /etc/profile</p>
-<p>####vim /etc/yum.conf<br>    添加：proxy=<a href="http://10.10.10.10:808/" target="_blank" rel="noopener">http://10.10.10.10:808/</a>  </p>
-<blockquote>
-<p>ps:有密码的格式为：proxy=<a href="http://username:password@yourproxy:8080/" target="_blank" rel="noopener">http://username:password@yourproxy:8080/</a>  </p>
-</blockquote>
-<p>####wget的代理：<br>    vim /etc/wgetrc<br>    添加：<br>    http_proxy=<a href="http://10.10.10.10:808/" target="_blank" rel="noopener">http://10.10.10.10:808/</a><br>    https_proxy=<a href="http://10.10.10.10:808/" target="_blank" rel="noopener">http://10.10.10.10:808/</a><br>    ftp_proxy=<a href="http://10.10.10.10:808/" target="_blank" rel="noopener">http://10.10.10.10:808/</a></p>
-<blockquote>
-<p><strong>yum，wget等一类网页访问的工具走的都是http(s)协议，ping走的是tcp层的协议，代理只是对应用层上的起作用，所以ping命令仍然是ping不通的</strong></p>
-</blockquote>
+        <h1 id="指针相关"><a href="#指针相关" class="headerlink" title="指针相关"></a>指针相关</h1><h3 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h3><ul>
+<li><p>智能指针原理<br>智能指针是一个类，这个类的构造函数中传入一个普通指针，胸骨函数中释放传入的指针。智能指针的类都是栈上的对象，所以当函数（或程序）结束时会自动被释放。可以避免内存泄露。</p>
+</li>
+<li><p>常见的智能指针<br>C++11引入了智能指针有：<code>auto_ptr</code>, <code>unique_ptr</code>, <code>shared_ptr</code>和<code>weak_ptr</code>;<code>shared_ptr</code>是基于引用计数的智能指针，可随意赋值，直到内存的引用计数为0的时候这个内存会被释放。</p>
+</li>
+</ul>
 
       
     </div>
@@ -337,8 +329,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/10/28/ext4-mode/" rel="next" title="Ext4 文件系统的三种模式（mode）">
-                <i class="fa fa-chevron-left"></i> Ext4 文件系统的三种模式（mode）
+              <a href="/2019/09/04/升级gcc/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
               </a>
             
           </div>
@@ -346,10 +338,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/29/blktrace 分析不同负载在各种文件系统下的磁盘访问情况/" rel="prev" title="blktrace 分析不同负载在各种文件系统下的磁盘访问情况">
-                blktrace 分析不同负载在各种文件系统下的磁盘访问情况 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -401,8 +389,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -444,6 +441,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#指针相关"><span class="nav-number">1.</span> <span class="nav-text">指针相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#智能指针"><span class="nav-number">1.0.1.</span> <span class="nav-text">智能指针</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

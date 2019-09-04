@@ -229,6 +229,413 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/04/指针智能指针/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hb-lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hb-lee 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/04/指针智能指针/" itemprop="url">Untitled</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-04T10:15:03+08:00">
+                2019-09-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="指针相关"><a href="#指针相关" class="headerlink" title="指针相关"></a>指针相关</h1><h3 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h3><ul>
+<li><p>智能指针原理<br>智能指针是一个类，这个类的构造函数中传入一个普通指针，胸骨函数中释放传入的指针。智能指针的类都是栈上的对象，所以当函数（或程序）结束时会自动被释放。可以避免内存泄露。</p>
+</li>
+<li><p>常见的智能指针<br>C++11引入了智能指针有：<code>auto_ptr</code>, <code>unique_ptr</code>, <code>shared_ptr</code>和<code>weak_ptr</code>;<code>shared_ptr</code>是基于引用计数的智能指针，可随意赋值，直到内存的引用计数为0的时候这个内存会被释放。</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/04/升级gcc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hb-lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hb-lee 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/04/升级gcc/" itemprop="url">Untitled</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-04T10:15:03+08:00">
+                2019-09-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="升级GCC"><a href="#升级GCC" class="headerlink" title="升级GCC"></a>升级GCC</h1><blockquote>
+<p>有时升级内核，安装软件需要更高级的<code>gcc</code>，而<code>CentOS</code>默认的<code>gcc</code>版本是<code>4.8.5</code>;这里我们升级到<code>gcc-6.4</code></p>
+</blockquote>
+<h3 id="编译安装（无网络的情况下）"><a href="#编译安装（无网络的情况下）" class="headerlink" title="编译安装（无网络的情况下）"></a>编译安装（无网络的情况下）</h3><ul>
+<li><p>下载<br>下载gcc-6.4：<a href="https://ftp.gnu.org/gnu/gcc/gcc-6.4.0/gcc-6.4.0.tar.gz" target="_blank" rel="noopener">https://ftp.gnu.org/gnu/gcc/gcc-6.4.0/gcc-6.4.0.tar.gz</a></p>
+</li>
+<li><p>安装依赖<br>需要安装的依赖有<code>gmp</code>, <code>mpfr</code>, <code>mpc</code>, <code>isl</code>;下载路径依次为：</p>
+<ul>
+<li>gmp: <a href="https://gmplib.org/download/gmp" target="_blank" rel="noopener">https://gmplib.org/download/gmp</a></li>
+<li>mpfr： <a href="https://www.mpfr.org/mpfr-current" target="_blank" rel="noopener">https://www.mpfr.org/mpfr-current</a></li>
+<li>mpc： <a href="https://ftp.gnu.org/gnu/mpc" target="_blank" rel="noopener">https://ftp.gnu.org/gnu/mpc</a></li>
+<li>isl：<a href="http://isl.gforge.inria.fr" target="_blank" rel="noopener">http://isl.gforge.inria.fr</a></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">【安装依赖的步骤】</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<ul>
+<li>更新库新加的库</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br><span class="line">添加 `export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib`避免找不到库；</span><br></pre></td></tr></table></figure>
+<ul>
+<li>安装gcc</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">【安装步骤】</span><br><span class="line">./configure -enable-checking=release -enable-languages=c,c++ -disable-multilib</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<h3 id="报错解决"><a href="#报错解决" class="headerlink" title="报错解决"></a>报错解决</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">isl_space_dim, isl_id_alloc, isl_id_get_user等等未声明；</span><br></pre></td></tr></table></figure>
+<p>这些变量是<code>isl</code>库中的参数，通过查找<code>grep -rn &quot;xxx&quot; /usr/local/include/isl</code>知道是在<code>isl/id.h</code>, <code>isl/space.h</code>这些头文件中，在报错的文件中加入头文件即可！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim gcc/graphite.h</span><br><span class="line"></span><br><span class="line">#include &lt;isl/id.h&gt;</span><br><span class="line">#include &lt;isl/space.h&gt;</span><br></pre></td></tr></table></figure>
+<p>然后重新编译gcc后即可成功。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@bogon gcc-6.4.0]# gcc --version</span><br><span class="line">gcc (GCC) 6.4.0</span><br><span class="line">Copyright (C) 2017 Free Software Foundation, Inc.</span><br><span class="line">This is free software; see the source for copying conditions.  There is NO</span><br><span class="line">warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/04/程序内存布局/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hb-lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hb-lee 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/04/程序内存布局/" itemprop="url">Untitled</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-04T10:15:03+08:00">
+                2019-09-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="程序内存布局"><a href="#程序内存布局" class="headerlink" title="程序内存布局"></a>程序内存布局</h1><p>程序在内存中的运行会涉及到以下布局：</p>
+<ul>
+<li>栈（高地址）<br>  存局部变量，临时变量，返回值，指针…</li>
+<li>堆<br>  存new出来的对象</li>
+<li>BBS段<br>  存未初始化的全局变量+静态变量</li>
+<li>代码段<br>  存二进制代码片段，一般只读</li>
+<li>数据段<br>  存已经初始化的全局变量+静态变量+常量</li>
+</ul>
+<blockquote>
+<p>BSS段+数据段共同组成DATA区</p>
+</blockquote>
+<p>程序例子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">0</span>;                   <span class="comment">//全局初始化区  数据段</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> *p1;                <span class="comment">//全局未初始化区  BSS段</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>  </span>&#123; </span><br><span class="line">        <span class="keyword">int</span> b;                <span class="comment">// 栈 </span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">char</span> s[] = <span class="string">"abc"</span>;       <span class="comment">//栈 </span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">char</span> *p2;             <span class="comment">//栈 </span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">char</span> *p3 = <span class="string">"123456"</span>;    <span class="comment">//123456\0在常量区，而p3在栈上。 </span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">int</span> c = <span class="number">0</span>;    <span class="comment">//全局（静态）初始化区  </span></span><br><span class="line"></span><br><span class="line">        p1 = (<span class="keyword">char</span> *)<span class="built_in">malloc</span>(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">        p2 = (<span class="keyword">char</span> *)<span class="built_in">malloc</span>(<span class="number">20</span>); <span class="comment">//分配得来得10和20字节的区域就在堆区。 </span></span><br><span class="line"></span><br><span class="line">        <span class="built_in">strcpy</span>(p1, <span class="string">"123456"</span>);    <span class="comment">//123456\0放在常量区，编译器可能会将它与p3所指向的"123456"优化成一个地方。</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><blockquote>
+<p><a href="https://www.jianshu.com/p/4c74a19ad03b" target="_blank" rel="noopener">https://www.jianshu.com/p/4c74a19ad03b</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/S3对象存储/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -382,143 +789,6 @@ s3cmd mv src dst # 移动
 <p>object相关</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">key_ = bucket.new_key(key_name)  <span class="comment"># 生成一个key</span></span><br><span class="line">key_.set_contents_from_filename(local_file)  <span class="comment"># 上传文件 [与上一条命令一起用]</span></span><br><span class="line"><span class="comment"># 两种删除方式</span></span><br><span class="line">key_.delete()</span><br><span class="line">bucket.delete_key(key_name)</span><br><span class="line">bucket.get_all_keys(prefix=<span class="string">'user1_23695/'</span>)  <span class="comment"># 按指定prefix查询bucket中对应的Object列表,注意默认最多返回1000条记录</span></span><br><span class="line">bucket.delete_keys(file_list)  <span class="comment"># 批量删除Object</span></span><br><span class="line">key_.get_xml_acl()  <span class="comment"># 获取XML格式的Object的ACL信息 </span></span><br><span class="line">key_.get_acl()  <span class="comment"># 获取Object的ACL</span></span><br><span class="line">key_.set_acl(<span class="string">'public-read'</span>)  <span class="comment"># 方式1，设置Object的ACL</span></span><br><span class="line">key_.set_canned_acl(<span class="string">'public-read'</span>)  <span class="comment"># 方式2，设置Object的ACL</span></span><br><span class="line">key_.set_xml_acl(acl_xml)  <span class="comment"># 方式3，设置Object的ACL</span></span><br><span class="line">key_.add_user_grant(<span class="string">'READ'</span>,<span class="string">'test1'</span>)  <span class="comment"># 对‘test1’这个用户添加READ权限。 #添加用户授权，可选权限有:READ, WRITE, READ_ACP, WRITE_ACP, FULL_CONTROL</span></span><br><span class="line">key_.set_metadata(<span class="string">'key'</span>,<span class="string">'value'</span>)  <span class="comment"># 设置Object的metadata，注意必须在上传Object之前做好初始化设置</span></span><br><span class="line"><span class="comment">#获取Object的metadata</span></span><br><span class="line">key_ = bucket.get_key(key_name)</span><br><span class="line"><span class="keyword">print</span> key_.get_metadata(<span class="string">'key'</span>)</span><br><span class="line">key_.get_contents_to_filename(down_file)  <span class="comment"># 下载Object，保存为本地的‘/tmp/download.file’</span></span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/S3版本控制与生命周期/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="hb-lee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hb-lee 的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/08/S3版本控制与生命周期/" itemprop="url">S3版本控制与生命周期</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-08T22:36:24+08:00">
-                2019-07-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="S3版本控制与生命周期"><a href="#S3版本控制与生命周期" class="headerlink" title="S3版本控制与生命周期"></a>S3版本控制与生命周期</h1><h3 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h3><p>存储桶可以处于三种状态之一：非（无）版本化（默认），启用版本控制或暂停版本控制。通过启用了版本控制的存储桶可以恢复因意外删除或覆盖操作而失去的对象。例如：</p>
-<ul>
-<li>如果删除对象（而不是永久移除它），则 Amazon S3 会插入删除标记，该标记将成为当前对象版本。通过回滚可以恢复到以前的版本。</li>
-<li>如果覆盖对象，则会导致存储桶中出现新的对象版本。通过回滚可以恢复到以前的版本。</li>
-</ul>
-<blockquote>
-<p><strong>一旦您对存储桶启用了版本控制，它将无法返回到无版本控制状态。但是，您可以在该存储桶上暂停版本控制。</strong></p>
-</blockquote>
-<p>版本控制状态将应用到该存储桶中的所有（不是某些）对象。您第一次对存储桶启用版本控制后，该存储桶中的对象将在之后一直受版本控制，并具有唯一的版本 ID。在您设置版本控制状态之前存储在存储桶中的对象具有版本 ID null。启用版本控制时，存储桶中的现有对象不会更改。更改的是 Amazon S3 在以后的请求中处理这些对象的方式。 存储桶拥有者（或任何具有适当权限的用户）可以暂停版本控制以停止累积对象版本。暂停版本控制时，存储桶中的现有对象不会更改。更改的是 Amazon S3 在以后的请求中处理对象的方式。</p>
-<blockquote>
-<p>改变不了之前，只能影响后面的处理</p>
-</blockquote>
-<p>在启用版本控制后，简单的DELETE无法永久删除对象，只是标记一下而已，要永久删除必须制定版本。</p>
-<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><p>S3支持通过以配置的形式实现对象的生命周期管理，主要应用在以下两种场景：</p>
-<ul>
-<li>如果你需要定期清理S3中的对象数据，可以设置相应的对象生命周期策略，实现对象的定期有计划删除。</li>
-<li>如果一些对象数据在一段限定的时间内需要频繁访问，之后这些不再需要访问，可以通过指定对象的生命周期策略，实现后台存储数据从热存储向冷存储（存储成本更低）的自动迁移，从而降低存储成本。</li>
-</ul>
-
           
         
       
@@ -810,6 +1080,143 @@ s3cmd mv src dst # 移动
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/S3版本控制与生命周期/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hb-lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hb-lee 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/08/S3版本控制与生命周期/" itemprop="url">S3版本控制与生命周期</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-08T22:36:24+08:00">
+                2019-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="S3版本控制与生命周期"><a href="#S3版本控制与生命周期" class="headerlink" title="S3版本控制与生命周期"></a>S3版本控制与生命周期</h1><h3 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h3><p>存储桶可以处于三种状态之一：非（无）版本化（默认），启用版本控制或暂停版本控制。通过启用了版本控制的存储桶可以恢复因意外删除或覆盖操作而失去的对象。例如：</p>
+<ul>
+<li>如果删除对象（而不是永久移除它），则 Amazon S3 会插入删除标记，该标记将成为当前对象版本。通过回滚可以恢复到以前的版本。</li>
+<li>如果覆盖对象，则会导致存储桶中出现新的对象版本。通过回滚可以恢复到以前的版本。</li>
+</ul>
+<blockquote>
+<p><strong>一旦您对存储桶启用了版本控制，它将无法返回到无版本控制状态。但是，您可以在该存储桶上暂停版本控制。</strong></p>
+</blockquote>
+<p>版本控制状态将应用到该存储桶中的所有（不是某些）对象。您第一次对存储桶启用版本控制后，该存储桶中的对象将在之后一直受版本控制，并具有唯一的版本 ID。在您设置版本控制状态之前存储在存储桶中的对象具有版本 ID null。启用版本控制时，存储桶中的现有对象不会更改。更改的是 Amazon S3 在以后的请求中处理这些对象的方式。 存储桶拥有者（或任何具有适当权限的用户）可以暂停版本控制以停止累积对象版本。暂停版本控制时，存储桶中的现有对象不会更改。更改的是 Amazon S3 在以后的请求中处理对象的方式。</p>
+<blockquote>
+<p>改变不了之前，只能影响后面的处理</p>
+</blockquote>
+<p>在启用版本控制后，简单的DELETE无法永久删除对象，只是标记一下而已，要永久删除必须制定版本。</p>
+<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><p>S3支持通过以配置的形式实现对象的生命周期管理，主要应用在以下两种场景：</p>
+<ul>
+<li>如果你需要定期清理S3中的对象数据，可以设置相应的对象生命周期策略，实现对象的定期有计划删除。</li>
+<li>如果一些对象数据在一段限定的时间内需要频繁访问，之后这些不再需要访问，可以通过指定对象的生命周期策略，实现后台存储数据从热存储向冷存储（存储成本更低）的自动迁移，从而降低存储成本。</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/S3主要接口使用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -976,208 +1383,6 @@ s3cmd mv src dst # 移动
 <p>bucket.get_all_keys：获取所有键值</p>
 </blockquote>
 
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/Ceph部署/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="hb-lee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hb-lee 的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/08/Ceph部署/" itemprop="url">Ceph环境搭建 （Debian发行版为例）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-08T22:36:05+08:00">
-                2019-07-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Ceph环境搭建-（Debian发行版为例）"><a href="#Ceph环境搭建-（Debian发行版为例）" class="headerlink" title="Ceph环境搭建 （Debian发行版为例）"></a>Ceph环境搭建 （Debian发行版为例）</h1><blockquote>
-<p>ref:<a href="http://docs.ceph.com/docs/master/start" target="_blank" rel="noopener">http://docs.ceph.com/docs/master/start</a></p>
-</blockquote>
-<p>注：一个ceph存储集群需要至少一个Ceph Monitor和至少两个Ceph OSD Daemons  </p>
-<h3 id="安装前的了解"><a href="#安装前的了解" class="headerlink" title="安装前的了解"></a>安装前的了解</h3><h5 id="安装版本"><a href="#安装版本" class="headerlink" title="安装版本"></a>安装版本</h5><p>L版本安装：echo deb <a href="http://download.ceph.com/debian-luminous/" target="_blank" rel="noopener">http://download.ceph.com/debian-luminous/</a> $(lsb_release -sc) main | sudo tee /etc/apt/sources.list.d/ceph.list</p>
-<h5 id="普通用户免密码sudo设置"><a href="#普通用户免密码sudo设置" class="headerlink" title="普通用户免密码sudo设置"></a>普通用户免密码sudo设置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">su root</span><br><span class="line">chmod u+w /etc/sudoers</span><br><span class="line">vim /etc/sudoers</span><br><span class="line">添加 lihongbo01 ALL=(ALL) NOPASSWD: ALL这一行，替换`lihongbo01`为你的用户名即可；</span><br></pre></td></tr></table></figure>
-<h5 id="ssh默认端口号问题-（不是22"><a href="#ssh默认端口号问题-（不是22" class="headerlink" title="ssh默认端口号问题 （不是22)"></a>ssh默认端口号问题 （不是22)</h5><p>解决方案：编辑<code>~/.ssh/config</code>文件，内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Port 32200</span><br><span class="line">Host cld-unknown212867</span><br><span class="line">    Hostname cld-unknown212867</span><br><span class="line">    User lihongbo01</span><br><span class="line">Host cld-unknown212868</span><br><span class="line">    Hostname cld-unknown212868</span><br><span class="line">    User lihongbo01</span><br><span class="line">Host cld-unknown212869</span><br><span class="line">    Hostname cld-unknown212869</span><br><span class="line">    User lihongbo01</span><br></pre></td></tr></table></figure>
-<h3 id="安装步骤-lt-在此之前请配置好免密登录和节点时间同步，参考官网Pre-flight-gt"><a href="#安装步骤-lt-在此之前请配置好免密登录和节点时间同步，参考官网Pre-flight-gt" class="headerlink" title="安装步骤 &lt;在此之前请配置好免密登录和节点时间同步，参考官网Pre-flight&gt;"></a>安装步骤 &lt;在此之前请配置好免密登录和节点时间同步，参考官网Pre-flight&gt;</h3><pre><code>wget -q -O- &apos;https://download.ceph.com/keys/release.asc&apos; | sudo apt-key add -
-echo deb http://download.ceph.com/debian-{ceph-stable-release}/ $(lsb_release -sc) main | sudo tee /etc/apt/sources.list.d/ceph.list 【版本如：luminous】
-sudo apt-get update &amp;&amp; sudo apt-get install ceph-deploy
-</code></pre><blockquote>
-<p>1.注意：debian安装mimic版本时，用ceph-deploy安装不能安装到最新的，只能安装到<code>Candidate: 10.2.11-2</code>的，可以通过<code>apt-cache policy ceph-common</code>查看；而lumious可以安装到<code>12.2.10</code>。</p>
-</blockquote>
-<blockquote>
-<p>2.软件不知道怎么安装可以用： apt-file search xxx</p>
-</blockquote>
-<p>接着执行：</p>
-<pre><code>mkdir my-cluster
-cd my-cluster
-ceph-deploy new cld-unknown212867
-vim ceph.conf
-添加：osd pool default size = 2 ## 放到ceph.conf中修改副本数为2
-ceph-deploy install --release luminous cld-unknown212867 cld-unknown212868 cld-unknown212869
-ceph-deploy mon create-initial
-ceph-deploy admin cld-unknown212867 cld-unknown212868 cld-unknown212869
-ceph-deploy mgr create cld-unknown212867 *Required only for luminous+ builds, i.e &gt;= 12.x builds*
-</code></pre><h5 id="1-以loop来做虚拟盘-lt-考虑到当前节点没有额外盘-gt-—-失败"><a href="#1-以loop来做虚拟盘-lt-考虑到当前节点没有额外盘-gt-—-失败" class="headerlink" title="1. 以loop来做虚拟盘&lt;考虑到当前节点没有额外盘&gt;   —- 失败"></a>1. 以loop来做虚拟盘&lt;考虑到当前节点没有额外盘&gt;   —- 失败</h5><p>接着我们来添加OSDs，我们首先虚拟一个块设备（用<code>dd</code>命令）：</p>
-<pre><code>dd if=/dev/zero of=1G.img bs=1M count=1000  # OSD节点上虚拟一个1G的块设备
-ceph-deploy osd create --data /home/lihongbo01/dev/1G.img cld-unknown212868 【MON节点上执行的】
-</code></pre><blockquote>
-<p>经过多次尝试，用loop来做设备失败。 【可能还没有完全支持】</p>
-</blockquote>
-<h5 id="2-【添加盘后添加OSD成功】-—-成功"><a href="#2-【添加盘后添加OSD成功】-—-成功" class="headerlink" title="2. 【添加盘后添加OSD成功】     —- 成功"></a>2. 【添加盘后添加OSD成功】     —- 成功</h5><pre><code>ceph-deploy osd create --data /dev/vdd cld-unknown212868 
-ceph-deploy osd create --data /dev/vdd cld-unknown212869
-</code></pre><blockquote>
-<p>创建OSD时最终会调用ceph-volume，这时<code>--data</code>已经不能是目录了，而须一个<code>disk</code>，可参见问题部分查看<code>disk.py</code>代码来理解。</p>
-</blockquote>
-<h5 id="查看成功"><a href="#查看成功" class="headerlink" title="查看成功"></a>查看成功</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212867:~/my-cluster$ sudo ceph health</span><br><span class="line">HEALTH_OK</span><br><span class="line">lihongbo01@cld-unknown212867:~/my-cluster$ sudo ceph -s</span><br><span class="line">  cluster:</span><br><span class="line">    id:     67170b2c-c545-4efb-80cb-810256529f34</span><br><span class="line">    health: HEALTH_OK</span><br><span class="line"> </span><br><span class="line">  services:</span><br><span class="line">    mon: 1 daemons, quorum cld-unknown212867</span><br><span class="line">    mgr: cld-unknown212867(active)</span><br><span class="line">    osd: 2 osds: 2 up, 2 in</span><br><span class="line"> </span><br><span class="line">  data:</span><br><span class="line">    pools:   0 pools, 0 pgs</span><br><span class="line">    objects: 0 objects, 0B</span><br><span class="line">    usage:   2.00GiB used, 98.0GiB / 100GiB avail</span><br><span class="line">    pgs:</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>一定要加sudo查看</p>
-</blockquote>
-<h5 id="中途安装失败删除命令："><a href="#中途安装失败删除命令：" class="headerlink" title="中途安装失败删除命令："></a>中途安装失败删除命令：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ceph-deploy purge &#123;ceph-node&#125; [&#123;ceph-node&#125;]</span><br><span class="line">ceph-deploy purgedata &#123;ceph-node&#125; [&#123;ceph-node&#125;]</span><br><span class="line">ceph-deploy forgetkeys</span><br><span class="line">rm ceph.*</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注意要加上–release luminous才会安装该版本的，不然就安装默认的了，当前<code>ceph-deploy</code>是2.0.1版本，Debian上默认安装Ceph是10.2.11版本的。</p>
-</blockquote>
-<p><hr><br>以下是以loop虚拟设备来做OSD时遇到的问题即解决方法：</p>
-<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><blockquote>
-<p>添加OSD不成功</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">[node4][DEBUG ]  stderr: 12: (main()+0x2c58) [0x7f8e8dc18c18]</span><br><span class="line">[node4][DEBUG ]  stderr: 13: (__libc_start_main()+0xf5) [0x7f8e808c03d5]</span><br><span class="line">[node4][DEBUG ]  stderr: 14: (()+0x384ab0) [0x7f8e8dcf0ab0]</span><br><span class="line">[node4][DEBUG ]  stderr: NOTE: a copy of the executable, or `objdump -rdS &lt;executable&gt;` is needed to interpret this.</span><br><span class="line">[node4][DEBUG ] --&gt; Was unable to complete a new OSD, will rollback changes</span><br><span class="line">[node4][DEBUG ] Running command: /bin/ceph --cluster ceph --name client.bootstrap-osd --keyring /var/lib/ceph/bootstrap-osd/ceph.keyring osd purge-new osd.3 --yes-i-really-mean-it</span><br><span class="line">[node4][DEBUG ]  stderr: purged osd.3</span><br><span class="line">[node4][ERROR ] RuntimeError: command returned non-zero exit status: 1</span><br><span class="line">[ceph_deploy.osd][ERROR ] Failed to execute command: /usr/sbin/ceph-volume --cluster ceph lvm create --bluestore --data /dev/sdc --block.wal /dev/sdb2 --block.db /dev/sdb1</span><br><span class="line">[ceph_deploy][ERROR ] GenericError: Failed to create 1 OSDs</span><br><span class="line"></span><br><span class="line">修复：</span><br><span class="line">node节点卸载挂载分区</span><br><span class="line">[root@node4 ~]# umount /var/lib/ceph/osd/ceph-3</span><br><span class="line">查看lvs</span><br><span class="line"></span><br><span class="line">[root@node4 ~]# lvs</span><br><span class="line">  LV                                             VG                                        Attr       LSize  Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert</span><br><span class="line">  osd-block-ab4df89f-8682-4233-b683-e05c161089a4 ceph-183df03c-83fb-441c-a82e-d7b560e1a611 -wi-a----- 50.00g                                                    </span><br><span class="line">  root                                           cl                                        -wi-ao---- 35.12g                                                    </span><br><span class="line">  swap                                           cl                                        -wi-ao----  3.88g        </span><br><span class="line"></span><br><span class="line">删除lv，vg，pv</span><br><span class="line">[root@node4 ~]# lvremove osd-block-ab4df89f-8682-4233-b683-e05c161089a4 ceph-183df03c-83fb-441c-a82e-d7b560e1a611</span><br><span class="line">  Volume group &quot;osd-block-ab4df89f-8682-4233-b683-e05c161089a4&quot; not found</span><br><span class="line">  Cannot process volume group osd-block-ab4df89f-8682-4233-b683-e05c161089a4</span><br><span class="line">Do you really want to remove active logical volume ceph-183df03c-83fb-441c-a82e-d7b560e1a611/osd-block-ab4df89f-8682-4233-b683-e05c161089a4? [y/n]: y</span><br><span class="line">  Logical volume &quot;osd-block-ab4df89f-8682-4233-b683-e05c161089a4&quot; successfully removed</span><br><span class="line"></span><br><span class="line">[root@node4 ~]# vgremove  ceph-183df03c-83fb-441c-a82e-d7b560e1a611</span><br><span class="line">  Volume group &quot;ceph-183df03c-83fb-441c-a82e-d7b560e1a611&quot; successfully removed</span><br><span class="line"></span><br><span class="line">[root@node4 ~]# pvremove /dev/sdc</span><br><span class="line">  Labels on physical volume &quot;/dev/sdc&quot; successfully wiped.</span><br><span class="line"></span><br><span class="line">删除/var/lib/ceph/osd/ 所有</span><br><span class="line">[root@node4 ~]# rm /var/log/ceph/ceph-* -rf</span><br><span class="line"></span><br><span class="line">删除 ceph 日志</span><br><span class="line">[root@node4 ~]# rm -rf /var/lib/ceph/*</span><br><span class="line"></span><br><span class="line">monitor1 上重置node4 的sdc分区</span><br><span class="line">[root@monitor1 ceph-cluster]# ceph-deploy disk zap node4 /dev/sdc</span><br><span class="line"></span><br><span class="line">monitor1 上重新创建osd节点</span><br><span class="line">[root@monitor1 ceph-cluster]# ceph-deploy osd create node4 --bluestore --data /dev/sdc --block-db /dev/sdb1 --block-wal /dev/sdb2</span><br></pre></td></tr></table></figure>
-<h3 id="【实践失败】"><a href="#【实践失败】" class="headerlink" title="【实践失败】"></a>【实践失败】</h3><h3 id="loop设备做块设备"><a href="#loop设备做块设备" class="headerlink" title="loop设备做块设备"></a>loop设备做块设备</h3><p>需要修改两处：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/lib/python2.7/dist-packages/ceph_volume/util/disk.py +332  修改为：return TYPE == &apos;disk&apos; or &apos;loop&apos;</span><br><span class="line">vim /usr/lib/python2.7/dist-packages/ceph_volume/util/disk.py +417  True ==&gt; False</span><br></pre></td></tr></table></figure></p>
-<p>ref:<a href="https://www.netways.de/blog/2018/11/14/ceph-mimic-using-loop-devices-as-osd/" target="_blank" rel="noopener">https://www.netways.de/blog/2018/11/14/ceph-mimic-using-loop-devices-as-osd/</a></p>
-<h4 id="清理操作"><a href="#清理操作" class="headerlink" title="清理操作"></a>清理操作</h4><pre><code>sudo lvs (vgscan)
-sudo vgremove ceph-9eee83f3-8b17-4b3f-b53e-62bf4977733b -y
-lsblk
-</code></pre><p><hr><br>华丽的分割线</p>
-<hr>
-
-<h3 id="Ceph对象网关部署-可部署多个"><a href="#Ceph对象网关部署-可部署多个" class="headerlink" title="Ceph对象网关部署 (可部署多个)"></a>Ceph对象网关部署 (可部署多个)</h3><p>使用命令在 Ceph 对象网关节点上新建一个 Ceph对象网关实例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph-deploy rgw create cld-unknown212868</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>需要开放7480端口：iptables -I INPUT 1 -p tcp -m tcp –dport 7480 -j ACCEPT</p>
-</blockquote>
-<p>测试及效果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">curl http://cld-unknown212868:7480</span><br><span class="line"></span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;ListAllMyBucketsResult xmlns=&quot;http://s3.amazonaws.com/doc/2006-03-01/&quot;&gt;</span><br><span class="line">  &lt;Owner&gt;</span><br><span class="line">    &lt;ID&gt;anonymous&lt;/ID&gt;</span><br><span class="line">    &lt;DisplayName&gt;&lt;/DisplayName&gt;</span><br><span class="line">  &lt;/Owner&gt;</span><br><span class="line">  &lt;Buckets&gt;</span><br><span class="line">  &lt;/Buckets&gt;</span><br><span class="line">&lt;/ListAllMyBucketsResult&gt;</span><br></pre></td></tr></table></figure>
-<p>即表示安装成功。</p>
-<h5 id="创建S3用户"><a href="#创建S3用户" class="headerlink" title="创建S3用户"></a>创建S3用户</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212867:~/my-cluster$ sudo radosgw-admin user create --uid=&quot;lhb&quot; --display-name=&quot;First User&quot;</span><br><span class="line">&#123;</span><br><span class="line">    &quot;user_id&quot;: &quot;lhb&quot;,</span><br><span class="line">    &quot;display_name&quot;: &quot;First User&quot;,</span><br><span class="line">    &quot;email&quot;: &quot;&quot;,</span><br><span class="line">    &quot;suspended&quot;: 0,</span><br><span class="line">    &quot;max_buckets&quot;: 1000,</span><br><span class="line">    &quot;auid&quot;: 0,</span><br><span class="line">    &quot;subusers&quot;: [],</span><br><span class="line">    &quot;keys&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;user&quot;: &quot;lhb&quot;,</span><br><span class="line">            &quot;access_key&quot;: &quot;KSOF3PIEDDNI7KP4I1HC&quot;,</span><br><span class="line">            &quot;secret_key&quot;: &quot;f6N9wvBWbfviV0R5TaGUHYCXZKWCTfmMPDIQf4hF&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    &quot;swift_keys&quot;: [],</span><br><span class="line">    &quot;caps&quot;: [],</span><br><span class="line">    &quot;op_mask&quot;: &quot;read, write, delete&quot;,</span><br><span class="line">    &quot;default_placement&quot;: &quot;&quot;,</span><br><span class="line">    &quot;placement_tags&quot;: [],</span><br><span class="line">    &quot;bucket_quota&quot;: &#123;</span><br><span class="line">        &quot;enabled&quot;: false,</span><br><span class="line">        &quot;check_on_raw&quot;: false,</span><br><span class="line">        &quot;max_size&quot;: -1,</span><br><span class="line">        &quot;max_size_kb&quot;: 0,</span><br><span class="line">        &quot;max_objects&quot;: -1</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;user_quota&quot;: &#123;</span><br><span class="line">        &quot;enabled&quot;: false,</span><br><span class="line">        &quot;check_on_raw&quot;: false,</span><br><span class="line">        &quot;max_size&quot;: -1,</span><br><span class="line">        &quot;max_size_kb&quot;: 0,</span><br><span class="line">        &quot;max_objects&quot;: -1</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;temp_url_keys&quot;: [],</span><br><span class="line">    &quot;type&quot;: &quot;rgw&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>目前只能使用path-style来访问，hosted-style需要另外配置。</p>
-</blockquote>
-<h5 id="修改了配置文件（如网关端口号）"><a href="#修改了配置文件（如网关端口号）" class="headerlink" title="修改了配置文件（如网关端口号）"></a>修改了配置文件（如网关端口号）</h5><pre><code>ceph-deploy --overwrite-conf config push &lt;gateway-node&gt; [&lt;other-nodes&gt;] # 将该配置文件推送到你的 Ceph 对象网关节点
-sudo service radosgw restart id=rgw.&lt;short-hostname&gt;  # 重启Ceph对象网关
-</code></pre><h5 id="提供泛域名解析能力"><a href="#提供泛域名解析能力" class="headerlink" title="提供泛域名解析能力"></a>提供泛域名解析能力</h5><p>Ceph对象存储网关支持两种访问模式：<code>path-style</code>和<code>host-style</code>；默认的支持<code>path-style</code>，即<code>http://cld-unknown212868/bucket</code>；要想以类似S3的<code>host-style</code>进行访问，即用<code>http://bucket.cld-unknown212868/obj</code>来进行访问，需要配置泛域名解析，此处用到<code>dnsmasq</code>工具。</p>
-<pre><code>sudo apt-get install dnsmasq -y
-vim /etc/resolv.conf    【改为：nameserver 127.0.0.1】
-vim /etc/resolv.dnsmasq.conf    【将原来resolv.conf的内容写在这个文件里面】
-</code></pre><p>接着编辑dnsmqsq配置文件，在<code>/etc/dnsmasq.conf</code>中加入一下内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">address=/.cld-unknown212868/10.202.42.147</span><br><span class="line">address=/.cld-unknown212868.i.nease.net/10.202.42.147</span><br><span class="line">resolv-file=/etc/resolv.dnsmasq.conf</span><br><span class="line">conf-dir=/etc/dnsmasq.d</span><br><span class="line">conf-dir=/etc/dnsmasq.d/,*.conf</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>此配置的含义是将<code>xxx.cld-unknown212868</code>的路径都转到10.202.42.147这个地址；</p>
-</blockquote>
-<p>然后重启dnsmasq服务：<code>/etc/init.d/dnsmasq restart</code></p>
-<h6 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212868:~/workspace/ceph_workspace$ ping bucket.cld-unknown212868</span><br><span class="line">PING bucket.cld-unknown212868 (10.202.42.147) 56(84) bytes of data.</span><br><span class="line">64 bytes from cld-unknown212868.i.nease.net (10.202.42.147): icmp_seq=1 ttl=64 time=0.045 ms</span><br><span class="line">64 bytes from cld-unknown212868.i.nease.net (10.202.42.147): icmp_seq=2 ttl=64 time=0.064 ms</span><br><span class="line">64 bytes from cld-unknown212868.i.nease.net (10.202.42.147): icmp_seq=3 ttl=64 time=0.065 ms</span><br><span class="line">64 bytes from cld-unknown212868.i.nease.net (10.202.42.147): icmp_seq=4 ttl=64 time=0.043 ms</span><br><span class="line">^C</span><br><span class="line">--- bucket.cld-unknown212868 ping statistics ---</span><br><span class="line">4 packets transmitted, 4 received, 0% packet loss, time 3075ms</span><br><span class="line">rtt min/avg/max/mdev = 0.043/0.054/0.065/0.011 ms</span><br></pre></td></tr></table></figure>
           
         
       
@@ -1449,6 +1654,208 @@ sudo ceph osd tree  查看OSD信息
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/Ceph部署/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hb-lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hb-lee 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/08/Ceph部署/" itemprop="url">Ceph环境搭建 （Debian发行版为例）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-08T22:36:05+08:00">
+                2019-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Ceph环境搭建-（Debian发行版为例）"><a href="#Ceph环境搭建-（Debian发行版为例）" class="headerlink" title="Ceph环境搭建 （Debian发行版为例）"></a>Ceph环境搭建 （Debian发行版为例）</h1><blockquote>
+<p>ref:<a href="http://docs.ceph.com/docs/master/start" target="_blank" rel="noopener">http://docs.ceph.com/docs/master/start</a></p>
+</blockquote>
+<p>注：一个ceph存储集群需要至少一个Ceph Monitor和至少两个Ceph OSD Daemons  </p>
+<h3 id="安装前的了解"><a href="#安装前的了解" class="headerlink" title="安装前的了解"></a>安装前的了解</h3><h5 id="安装版本"><a href="#安装版本" class="headerlink" title="安装版本"></a>安装版本</h5><p>L版本安装：echo deb <a href="http://download.ceph.com/debian-luminous/" target="_blank" rel="noopener">http://download.ceph.com/debian-luminous/</a> $(lsb_release -sc) main | sudo tee /etc/apt/sources.list.d/ceph.list</p>
+<h5 id="普通用户免密码sudo设置"><a href="#普通用户免密码sudo设置" class="headerlink" title="普通用户免密码sudo设置"></a>普通用户免密码sudo设置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">su root</span><br><span class="line">chmod u+w /etc/sudoers</span><br><span class="line">vim /etc/sudoers</span><br><span class="line">添加 lihongbo01 ALL=(ALL) NOPASSWD: ALL这一行，替换`lihongbo01`为你的用户名即可；</span><br></pre></td></tr></table></figure>
+<h5 id="ssh默认端口号问题-（不是22"><a href="#ssh默认端口号问题-（不是22" class="headerlink" title="ssh默认端口号问题 （不是22)"></a>ssh默认端口号问题 （不是22)</h5><p>解决方案：编辑<code>~/.ssh/config</code>文件，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Port 32200</span><br><span class="line">Host cld-unknown212867</span><br><span class="line">    Hostname cld-unknown212867</span><br><span class="line">    User lihongbo01</span><br><span class="line">Host cld-unknown212868</span><br><span class="line">    Hostname cld-unknown212868</span><br><span class="line">    User lihongbo01</span><br><span class="line">Host cld-unknown212869</span><br><span class="line">    Hostname cld-unknown212869</span><br><span class="line">    User lihongbo01</span><br></pre></td></tr></table></figure>
+<h3 id="安装步骤-lt-在此之前请配置好免密登录和节点时间同步，参考官网Pre-flight-gt"><a href="#安装步骤-lt-在此之前请配置好免密登录和节点时间同步，参考官网Pre-flight-gt" class="headerlink" title="安装步骤 &lt;在此之前请配置好免密登录和节点时间同步，参考官网Pre-flight&gt;"></a>安装步骤 &lt;在此之前请配置好免密登录和节点时间同步，参考官网Pre-flight&gt;</h3><pre><code>wget -q -O- &apos;https://download.ceph.com/keys/release.asc&apos; | sudo apt-key add -
+echo deb http://download.ceph.com/debian-{ceph-stable-release}/ $(lsb_release -sc) main | sudo tee /etc/apt/sources.list.d/ceph.list 【版本如：luminous】
+sudo apt-get update &amp;&amp; sudo apt-get install ceph-deploy
+</code></pre><blockquote>
+<p>1.注意：debian安装mimic版本时，用ceph-deploy安装不能安装到最新的，只能安装到<code>Candidate: 10.2.11-2</code>的，可以通过<code>apt-cache policy ceph-common</code>查看；而lumious可以安装到<code>12.2.10</code>。</p>
+</blockquote>
+<blockquote>
+<p>2.软件不知道怎么安装可以用： apt-file search xxx</p>
+</blockquote>
+<p>接着执行：</p>
+<pre><code>mkdir my-cluster
+cd my-cluster
+ceph-deploy new cld-unknown212867
+vim ceph.conf
+添加：osd pool default size = 2 ## 放到ceph.conf中修改副本数为2
+ceph-deploy install --release luminous cld-unknown212867 cld-unknown212868 cld-unknown212869
+ceph-deploy mon create-initial
+ceph-deploy admin cld-unknown212867 cld-unknown212868 cld-unknown212869
+ceph-deploy mgr create cld-unknown212867 *Required only for luminous+ builds, i.e &gt;= 12.x builds*
+</code></pre><h5 id="1-以loop来做虚拟盘-lt-考虑到当前节点没有额外盘-gt-—-失败"><a href="#1-以loop来做虚拟盘-lt-考虑到当前节点没有额外盘-gt-—-失败" class="headerlink" title="1. 以loop来做虚拟盘&lt;考虑到当前节点没有额外盘&gt;   —- 失败"></a>1. 以loop来做虚拟盘&lt;考虑到当前节点没有额外盘&gt;   —- 失败</h5><p>接着我们来添加OSDs，我们首先虚拟一个块设备（用<code>dd</code>命令）：</p>
+<pre><code>dd if=/dev/zero of=1G.img bs=1M count=1000  # OSD节点上虚拟一个1G的块设备
+ceph-deploy osd create --data /home/lihongbo01/dev/1G.img cld-unknown212868 【MON节点上执行的】
+</code></pre><blockquote>
+<p>经过多次尝试，用loop来做设备失败。 【可能还没有完全支持】</p>
+</blockquote>
+<h5 id="2-【添加盘后添加OSD成功】-—-成功"><a href="#2-【添加盘后添加OSD成功】-—-成功" class="headerlink" title="2. 【添加盘后添加OSD成功】     —- 成功"></a>2. 【添加盘后添加OSD成功】     —- 成功</h5><pre><code>ceph-deploy osd create --data /dev/vdd cld-unknown212868 
+ceph-deploy osd create --data /dev/vdd cld-unknown212869
+</code></pre><blockquote>
+<p>创建OSD时最终会调用ceph-volume，这时<code>--data</code>已经不能是目录了，而须一个<code>disk</code>，可参见问题部分查看<code>disk.py</code>代码来理解。</p>
+</blockquote>
+<h5 id="查看成功"><a href="#查看成功" class="headerlink" title="查看成功"></a>查看成功</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212867:~/my-cluster$ sudo ceph health</span><br><span class="line">HEALTH_OK</span><br><span class="line">lihongbo01@cld-unknown212867:~/my-cluster$ sudo ceph -s</span><br><span class="line">  cluster:</span><br><span class="line">    id:     67170b2c-c545-4efb-80cb-810256529f34</span><br><span class="line">    health: HEALTH_OK</span><br><span class="line"> </span><br><span class="line">  services:</span><br><span class="line">    mon: 1 daemons, quorum cld-unknown212867</span><br><span class="line">    mgr: cld-unknown212867(active)</span><br><span class="line">    osd: 2 osds: 2 up, 2 in</span><br><span class="line"> </span><br><span class="line">  data:</span><br><span class="line">    pools:   0 pools, 0 pgs</span><br><span class="line">    objects: 0 objects, 0B</span><br><span class="line">    usage:   2.00GiB used, 98.0GiB / 100GiB avail</span><br><span class="line">    pgs:</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>一定要加sudo查看</p>
+</blockquote>
+<h5 id="中途安装失败删除命令："><a href="#中途安装失败删除命令：" class="headerlink" title="中途安装失败删除命令："></a>中途安装失败删除命令：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ceph-deploy purge &#123;ceph-node&#125; [&#123;ceph-node&#125;]</span><br><span class="line">ceph-deploy purgedata &#123;ceph-node&#125; [&#123;ceph-node&#125;]</span><br><span class="line">ceph-deploy forgetkeys</span><br><span class="line">rm ceph.*</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意要加上–release luminous才会安装该版本的，不然就安装默认的了，当前<code>ceph-deploy</code>是2.0.1版本，Debian上默认安装Ceph是10.2.11版本的。</p>
+</blockquote>
+<p><hr><br>以下是以loop虚拟设备来做OSD时遇到的问题即解决方法：</p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><blockquote>
+<p>添加OSD不成功</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">[node4][DEBUG ]  stderr: 12: (main()+0x2c58) [0x7f8e8dc18c18]</span><br><span class="line">[node4][DEBUG ]  stderr: 13: (__libc_start_main()+0xf5) [0x7f8e808c03d5]</span><br><span class="line">[node4][DEBUG ]  stderr: 14: (()+0x384ab0) [0x7f8e8dcf0ab0]</span><br><span class="line">[node4][DEBUG ]  stderr: NOTE: a copy of the executable, or `objdump -rdS &lt;executable&gt;` is needed to interpret this.</span><br><span class="line">[node4][DEBUG ] --&gt; Was unable to complete a new OSD, will rollback changes</span><br><span class="line">[node4][DEBUG ] Running command: /bin/ceph --cluster ceph --name client.bootstrap-osd --keyring /var/lib/ceph/bootstrap-osd/ceph.keyring osd purge-new osd.3 --yes-i-really-mean-it</span><br><span class="line">[node4][DEBUG ]  stderr: purged osd.3</span><br><span class="line">[node4][ERROR ] RuntimeError: command returned non-zero exit status: 1</span><br><span class="line">[ceph_deploy.osd][ERROR ] Failed to execute command: /usr/sbin/ceph-volume --cluster ceph lvm create --bluestore --data /dev/sdc --block.wal /dev/sdb2 --block.db /dev/sdb1</span><br><span class="line">[ceph_deploy][ERROR ] GenericError: Failed to create 1 OSDs</span><br><span class="line"></span><br><span class="line">修复：</span><br><span class="line">node节点卸载挂载分区</span><br><span class="line">[root@node4 ~]# umount /var/lib/ceph/osd/ceph-3</span><br><span class="line">查看lvs</span><br><span class="line"></span><br><span class="line">[root@node4 ~]# lvs</span><br><span class="line">  LV                                             VG                                        Attr       LSize  Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert</span><br><span class="line">  osd-block-ab4df89f-8682-4233-b683-e05c161089a4 ceph-183df03c-83fb-441c-a82e-d7b560e1a611 -wi-a----- 50.00g                                                    </span><br><span class="line">  root                                           cl                                        -wi-ao---- 35.12g                                                    </span><br><span class="line">  swap                                           cl                                        -wi-ao----  3.88g        </span><br><span class="line"></span><br><span class="line">删除lv，vg，pv</span><br><span class="line">[root@node4 ~]# lvremove osd-block-ab4df89f-8682-4233-b683-e05c161089a4 ceph-183df03c-83fb-441c-a82e-d7b560e1a611</span><br><span class="line">  Volume group &quot;osd-block-ab4df89f-8682-4233-b683-e05c161089a4&quot; not found</span><br><span class="line">  Cannot process volume group osd-block-ab4df89f-8682-4233-b683-e05c161089a4</span><br><span class="line">Do you really want to remove active logical volume ceph-183df03c-83fb-441c-a82e-d7b560e1a611/osd-block-ab4df89f-8682-4233-b683-e05c161089a4? [y/n]: y</span><br><span class="line">  Logical volume &quot;osd-block-ab4df89f-8682-4233-b683-e05c161089a4&quot; successfully removed</span><br><span class="line"></span><br><span class="line">[root@node4 ~]# vgremove  ceph-183df03c-83fb-441c-a82e-d7b560e1a611</span><br><span class="line">  Volume group &quot;ceph-183df03c-83fb-441c-a82e-d7b560e1a611&quot; successfully removed</span><br><span class="line"></span><br><span class="line">[root@node4 ~]# pvremove /dev/sdc</span><br><span class="line">  Labels on physical volume &quot;/dev/sdc&quot; successfully wiped.</span><br><span class="line"></span><br><span class="line">删除/var/lib/ceph/osd/ 所有</span><br><span class="line">[root@node4 ~]# rm /var/log/ceph/ceph-* -rf</span><br><span class="line"></span><br><span class="line">删除 ceph 日志</span><br><span class="line">[root@node4 ~]# rm -rf /var/lib/ceph/*</span><br><span class="line"></span><br><span class="line">monitor1 上重置node4 的sdc分区</span><br><span class="line">[root@monitor1 ceph-cluster]# ceph-deploy disk zap node4 /dev/sdc</span><br><span class="line"></span><br><span class="line">monitor1 上重新创建osd节点</span><br><span class="line">[root@monitor1 ceph-cluster]# ceph-deploy osd create node4 --bluestore --data /dev/sdc --block-db /dev/sdb1 --block-wal /dev/sdb2</span><br></pre></td></tr></table></figure>
+<h3 id="【实践失败】"><a href="#【实践失败】" class="headerlink" title="【实践失败】"></a>【实践失败】</h3><h3 id="loop设备做块设备"><a href="#loop设备做块设备" class="headerlink" title="loop设备做块设备"></a>loop设备做块设备</h3><p>需要修改两处：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/lib/python2.7/dist-packages/ceph_volume/util/disk.py +332  修改为：return TYPE == &apos;disk&apos; or &apos;loop&apos;</span><br><span class="line">vim /usr/lib/python2.7/dist-packages/ceph_volume/util/disk.py +417  True ==&gt; False</span><br></pre></td></tr></table></figure></p>
+<p>ref:<a href="https://www.netways.de/blog/2018/11/14/ceph-mimic-using-loop-devices-as-osd/" target="_blank" rel="noopener">https://www.netways.de/blog/2018/11/14/ceph-mimic-using-loop-devices-as-osd/</a></p>
+<h4 id="清理操作"><a href="#清理操作" class="headerlink" title="清理操作"></a>清理操作</h4><pre><code>sudo lvs (vgscan)
+sudo vgremove ceph-9eee83f3-8b17-4b3f-b53e-62bf4977733b -y
+lsblk
+</code></pre><p><hr><br>华丽的分割线</p>
+<hr>
+
+<h3 id="Ceph对象网关部署-可部署多个"><a href="#Ceph对象网关部署-可部署多个" class="headerlink" title="Ceph对象网关部署 (可部署多个)"></a>Ceph对象网关部署 (可部署多个)</h3><p>使用命令在 Ceph 对象网关节点上新建一个 Ceph对象网关实例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph-deploy rgw create cld-unknown212868</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>需要开放7480端口：iptables -I INPUT 1 -p tcp -m tcp –dport 7480 -j ACCEPT</p>
+</blockquote>
+<p>测试及效果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">curl http://cld-unknown212868:7480</span><br><span class="line"></span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;ListAllMyBucketsResult xmlns=&quot;http://s3.amazonaws.com/doc/2006-03-01/&quot;&gt;</span><br><span class="line">  &lt;Owner&gt;</span><br><span class="line">    &lt;ID&gt;anonymous&lt;/ID&gt;</span><br><span class="line">    &lt;DisplayName&gt;&lt;/DisplayName&gt;</span><br><span class="line">  &lt;/Owner&gt;</span><br><span class="line">  &lt;Buckets&gt;</span><br><span class="line">  &lt;/Buckets&gt;</span><br><span class="line">&lt;/ListAllMyBucketsResult&gt;</span><br></pre></td></tr></table></figure>
+<p>即表示安装成功。</p>
+<h5 id="创建S3用户"><a href="#创建S3用户" class="headerlink" title="创建S3用户"></a>创建S3用户</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212867:~/my-cluster$ sudo radosgw-admin user create --uid=&quot;lhb&quot; --display-name=&quot;First User&quot;</span><br><span class="line">&#123;</span><br><span class="line">    &quot;user_id&quot;: &quot;lhb&quot;,</span><br><span class="line">    &quot;display_name&quot;: &quot;First User&quot;,</span><br><span class="line">    &quot;email&quot;: &quot;&quot;,</span><br><span class="line">    &quot;suspended&quot;: 0,</span><br><span class="line">    &quot;max_buckets&quot;: 1000,</span><br><span class="line">    &quot;auid&quot;: 0,</span><br><span class="line">    &quot;subusers&quot;: [],</span><br><span class="line">    &quot;keys&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;user&quot;: &quot;lhb&quot;,</span><br><span class="line">            &quot;access_key&quot;: &quot;KSOF3PIEDDNI7KP4I1HC&quot;,</span><br><span class="line">            &quot;secret_key&quot;: &quot;f6N9wvBWbfviV0R5TaGUHYCXZKWCTfmMPDIQf4hF&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    &quot;swift_keys&quot;: [],</span><br><span class="line">    &quot;caps&quot;: [],</span><br><span class="line">    &quot;op_mask&quot;: &quot;read, write, delete&quot;,</span><br><span class="line">    &quot;default_placement&quot;: &quot;&quot;,</span><br><span class="line">    &quot;placement_tags&quot;: [],</span><br><span class="line">    &quot;bucket_quota&quot;: &#123;</span><br><span class="line">        &quot;enabled&quot;: false,</span><br><span class="line">        &quot;check_on_raw&quot;: false,</span><br><span class="line">        &quot;max_size&quot;: -1,</span><br><span class="line">        &quot;max_size_kb&quot;: 0,</span><br><span class="line">        &quot;max_objects&quot;: -1</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;user_quota&quot;: &#123;</span><br><span class="line">        &quot;enabled&quot;: false,</span><br><span class="line">        &quot;check_on_raw&quot;: false,</span><br><span class="line">        &quot;max_size&quot;: -1,</span><br><span class="line">        &quot;max_size_kb&quot;: 0,</span><br><span class="line">        &quot;max_objects&quot;: -1</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;temp_url_keys&quot;: [],</span><br><span class="line">    &quot;type&quot;: &quot;rgw&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>目前只能使用path-style来访问，hosted-style需要另外配置。</p>
+</blockquote>
+<h5 id="修改了配置文件（如网关端口号）"><a href="#修改了配置文件（如网关端口号）" class="headerlink" title="修改了配置文件（如网关端口号）"></a>修改了配置文件（如网关端口号）</h5><pre><code>ceph-deploy --overwrite-conf config push &lt;gateway-node&gt; [&lt;other-nodes&gt;] # 将该配置文件推送到你的 Ceph 对象网关节点
+sudo service radosgw restart id=rgw.&lt;short-hostname&gt;  # 重启Ceph对象网关
+</code></pre><h5 id="提供泛域名解析能力"><a href="#提供泛域名解析能力" class="headerlink" title="提供泛域名解析能力"></a>提供泛域名解析能力</h5><p>Ceph对象存储网关支持两种访问模式：<code>path-style</code>和<code>host-style</code>；默认的支持<code>path-style</code>，即<code>http://cld-unknown212868/bucket</code>；要想以类似S3的<code>host-style</code>进行访问，即用<code>http://bucket.cld-unknown212868/obj</code>来进行访问，需要配置泛域名解析，此处用到<code>dnsmasq</code>工具。</p>
+<pre><code>sudo apt-get install dnsmasq -y
+vim /etc/resolv.conf    【改为：nameserver 127.0.0.1】
+vim /etc/resolv.dnsmasq.conf    【将原来resolv.conf的内容写在这个文件里面】
+</code></pre><p>接着编辑dnsmqsq配置文件，在<code>/etc/dnsmasq.conf</code>中加入一下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">address=/.cld-unknown212868/10.202.42.147</span><br><span class="line">address=/.cld-unknown212868.i.nease.net/10.202.42.147</span><br><span class="line">resolv-file=/etc/resolv.dnsmasq.conf</span><br><span class="line">conf-dir=/etc/dnsmasq.d</span><br><span class="line">conf-dir=/etc/dnsmasq.d/,*.conf</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>此配置的含义是将<code>xxx.cld-unknown212868</code>的路径都转到10.202.42.147这个地址；</p>
+</blockquote>
+<p>然后重启dnsmasq服务：<code>/etc/init.d/dnsmasq restart</code></p>
+<h6 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212868:~/workspace/ceph_workspace$ ping bucket.cld-unknown212868</span><br><span class="line">PING bucket.cld-unknown212868 (10.202.42.147) 56(84) bytes of data.</span><br><span class="line">64 bytes from cld-unknown212868.i.nease.net (10.202.42.147): icmp_seq=1 ttl=64 time=0.045 ms</span><br><span class="line">64 bytes from cld-unknown212868.i.nease.net (10.202.42.147): icmp_seq=2 ttl=64 time=0.064 ms</span><br><span class="line">64 bytes from cld-unknown212868.i.nease.net (10.202.42.147): icmp_seq=3 ttl=64 time=0.065 ms</span><br><span class="line">64 bytes from cld-unknown212868.i.nease.net (10.202.42.147): icmp_seq=4 ttl=64 time=0.043 ms</span><br><span class="line">^C</span><br><span class="line">--- bucket.cld-unknown212868 ping statistics ---</span><br><span class="line">4 packets transmitted, 4 received, 0% packet loss, time 3075ms</span><br><span class="line">rtt min/avg/max/mdev = 0.043/0.054/0.065/0.011 ms</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/23/tmux一个神奇的linux工具/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1567,457 +1974,6 @@ tmux kill-server    关闭所有会话
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/21/Gramfs安装/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="hb-lee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hb-lee 的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/21/Gramfs安装/" itemprop="url">Gramfs安装指南</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-21T14:31:28+08:00">
-                2019-05-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="Gramfs简介"><a href="#Gramfs简介" class="headerlink" title="Gramfs简介"></a>Gramfs简介</h3><p>gramfs的分布式实现</p>
-<h3 id="依赖的库及下载地址"><a href="#依赖的库及下载地址" class="headerlink" title="依赖的库及下载地址"></a>依赖的库及下载地址</h3><pre><code>glog    [https://github.com/hb-lee/attachment/glog-0.3.3.tar.gz]
-gflag    [https://github.com/gflags/gflags]
-kyotocabinet    [https://github.com/hb-lee/attachment/kyotocabinet-1.2.77.tar.gz]
-boost_system    [https://github.com/hb-lee/attachment/boost_1_53_0.tar.gz]
-boost_serialization    [https://github.com/hb-lee/attachment/boost_1_53_0.tar.gz]
-thrift    [https://github.com/hb-lee/attachment/thrift-0.12.0.tar.gz]
-</code></pre><h3 id="cmake安装"><a href="#cmake安装" class="headerlink" title="cmake安装"></a>cmake安装</h3><pre><code>wget https://cmake.org/files/v3.14/cmake-3.14.0.tar.gz
-tar -xvf cmake-3.14.0.tar.gz
-cd cmake-3.14.0.tar.gz
-./configure
-make &amp;&amp; make install
-cd -
-</code></pre><h3 id="glog安装"><a href="#glog安装" class="headerlink" title="glog安装"></a>glog安装</h3><pre><code>tar -xvf glog-0.3.3.tar.gz
-cd glog-0.3.3.tar.gz
-./configure
-make &amp;&amp; make install
-cd -
-</code></pre><h3 id="gflag安装"><a href="#gflag安装" class="headerlink" title="gflag安装"></a>gflag安装</h3><pre><code>git clone https://github.com/gflags/gflags
-cd gflags
-cmake .
-make -j 24
-make install
-cd -
-</code></pre><h3 id="kyotocabinet安装"><a href="#kyotocabinet安装" class="headerlink" title="kyotocabinet安装"></a>kyotocabinet安装</h3><pre><code>tar xvf kyotocabinet-1.2.77.tar.gz
-cd kyotocabinet-1.2.77
-./configure
-make &amp;&amp; make install
-cd -
-</code></pre><h3 id="thrift安装"><a href="#thrift安装" class="headerlink" title="thrift安装"></a>thrift安装</h3><pre><code>yum -y groupinstall &quot;Development Tools&quot;
-sudo yum -y install libevent-devel zlib-devel openssl-devel
-</code></pre><blockquote>
-<p>openssl-devel若出现依赖导致安装不了，可以用源码包进行安装(提供包openssl-1.1.1b.tar.gz)</p>
-</blockquote>
-<pre><code>wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz
-tar xvf autoconf-2.69.tar.gz
-./configure --prefix=/usr
-make
-sudo make install
-cd ..
-
-wget http://ftp.gnu.org/gnu/automake/automake-1.14.tar.gz
-tar xvf automake-1.14.tar.gz
-cd automake-1.14
-./configure --prefix=/usr
-make
-sudo make install
-cd ..
-
-wget http://ftp.gnu.org/gnu/bison/bison-2.5.1.tar.gz
-tar xvf bison-2.5.1.tar.gz
-cd bison-2.5.1
-./configure --prefix=/usr
-make
-sudo make install
-cd ..
-
-wget http://sourceforge.net/projects/boost/files/boost/1.53.0/boost_1_53_0.tar.gz
-tar xvf boost_1_53_0.tar.gz
-cd boost_1_53_0
-./bootstrap.sh
-sudo ./b2 install
-cd ..
-
-wget http://mirrors.hust.edu.cn/apache/thrift/0.12.0thrift-0.12.0.tar.gz
-tar xvf thrift-0.12.0.tar.gz
-cd thrift
-./configure --with-lua=no
-make
-make &amp;&amp; make install
-</code></pre><h3 id="遇到的棘手问题"><a href="#遇到的棘手问题" class="headerlink" title="遇到的棘手问题"></a>遇到的棘手问题</h3><p>gcc升级问题：    </p>
-<ul>
-<li>g++: fatal error: braced spec is invalid at ‘%’    <blockquote>
-<p>env -i PATH=/bin:/usr/bin make [可能试一下环境变量导致的，用此命令来暂时还原最原始的环境变量]  首先得换高阶的gcc    </p>
-</blockquote>
-</li>
-</ul>
-<p>共享库编译问题   </p>
-<ul>
-<li>relocation R_X86_64_32S against `XXXXXXX’ can not be used when making a shared object; recompile with -fPIC<blockquote>
-<p>网上都显示这个问题是由于没有加-fPIC编译选项导致的，但是亲自尝试后并不是这样，加了也报这个错误；后来发现是由于代码里有static函数，共享库里不能有static，自己理解是shared里地址不能固定，而static放在常量区，将static改掉就可以了；</p>
-</blockquote>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/11/RAID 一些研究/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="hb-lee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hb-lee 的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/11/RAID 一些研究/" itemprop="url">RAID一些研究 (RAID on SSD)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-11T14:26:53+08:00">
-                2019-03-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><img src="https://i.imgur.com/ER2q13U.jpg" alt=""></p>
-<p><img src="https://i.imgur.com/p5luCu8.jpg" alt=""></p>
-<p><img src="https://i.imgur.com/xT3yZGl.jpg" alt=""></p>
-<p><img src="https://i.imgur.com/oY20K6r.jpg" alt=""></p>
-<p><img src="https://i.imgur.com/cFht1WG.jpg" alt=""></p>
-<p><img src="https://i.imgur.com/5w5t0We.jpg" alt=""></p>
-<p><img src="https://i.imgur.com/YCSyJs8.jpg" alt=""></p>
-<p><img src="https://i.imgur.com/UIucS46.jpg" alt=""></p>
-<p><img src="https://i.imgur.com/MrfyYNV.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/03/Machine Learning on System/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="hb-lee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hb-lee 的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/03/Machine Learning on System/" itemprop="url">当机器学习进入系统</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-03T16:14:40+08:00">
-                2019-01-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="组会报告-12-25"><a href="#组会报告-12-25" class="headerlink" title="组会报告 12.25"></a>组会报告 12.25</h3><h2 id=""><a href="#" class="headerlink" title=""></a><img src="https://i.imgur.com/rNvA3Mf.jpg" alt=""></h2><h2 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="https://i.imgur.com/GW4JHPy.jpg" alt=""></h2><h2 id="-2"><a href="#-2" class="headerlink" title=""></a><img src="https://i.imgur.com/Whr1faG.jpg" alt=""></h2><h2 id="-3"><a href="#-3" class="headerlink" title=""></a><img src="https://i.imgur.com/ZhzdVmx.jpg" alt=""></h2><h2 id="-4"><a href="#-4" class="headerlink" title=""></a><img src="https://i.imgur.com/NeU9Czx.jpg" alt=""></h2><h2 id="-5"><a href="#-5" class="headerlink" title=""></a><img src="https://i.imgur.com/KQ0SFyh.jpg" alt=""></h2><h2 id="-6"><a href="#-6" class="headerlink" title=""></a><img src="https://i.imgur.com/h1Gh8N4.jpg" alt=""></h2><h2 id="-7"><a href="#-7" class="headerlink" title=""></a><img src="https://i.imgur.com/st1pDJ1.jpg" alt=""></h2><h2 id="-8"><a href="#-8" class="headerlink" title=""></a><img src="https://i.imgur.com/GWnQ9hc.jpg" alt=""></h2><h2 id="-9"><a href="#-9" class="headerlink" title=""></a><img src="https://i.imgur.com/aj2GKVG.jpg" alt=""></h2><h2 id="-10"><a href="#-10" class="headerlink" title=""></a><img src="https://i.imgur.com/Hw1xLjs.jpg" alt=""></h2><h2 id="-11"><a href="#-11" class="headerlink" title=""></a><img src="https://i.imgur.com/muV0Zlf.jpg" alt=""></h2><h2 id="-12"><a href="#-12" class="headerlink" title=""></a><img src="https://i.imgur.com/iF3uc9e.jpg" alt=""></h2><h2 id="-13"><a href="#-13" class="headerlink" title=""></a><img src="https://i.imgur.com/FfP3Vbl.jpg" alt=""></h2><h2 id="-14"><a href="#-14" class="headerlink" title=""></a><img src="https://i.imgur.com/mAesOeV.jpg" alt=""></h2><h2 id="-15"><a href="#-15" class="headerlink" title=""></a><img src="https://i.imgur.com/u8B6fDv.jpg" alt=""></h2><h2 id="-16"><a href="#-16" class="headerlink" title=""></a><img src="https://i.imgur.com/Bez2Nad.jpg" alt=""></h2><p><img src="https://i.imgur.com/gjSwgcF.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2068,7 +2024,7 @@ make &amp;&amp; make install
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

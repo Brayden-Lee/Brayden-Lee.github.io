@@ -229,6 +229,457 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/21/Gramfs安装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hb-lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hb-lee 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/21/Gramfs安装/" itemprop="url">Gramfs安装指南</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-21T14:31:28+08:00">
+                2019-05-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Gramfs简介"><a href="#Gramfs简介" class="headerlink" title="Gramfs简介"></a>Gramfs简介</h3><p>gramfs的分布式实现</p>
+<h3 id="依赖的库及下载地址"><a href="#依赖的库及下载地址" class="headerlink" title="依赖的库及下载地址"></a>依赖的库及下载地址</h3><pre><code>glog    [https://github.com/hb-lee/attachment/glog-0.3.3.tar.gz]
+gflag    [https://github.com/gflags/gflags]
+kyotocabinet    [https://github.com/hb-lee/attachment/kyotocabinet-1.2.77.tar.gz]
+boost_system    [https://github.com/hb-lee/attachment/boost_1_53_0.tar.gz]
+boost_serialization    [https://github.com/hb-lee/attachment/boost_1_53_0.tar.gz]
+thrift    [https://github.com/hb-lee/attachment/thrift-0.12.0.tar.gz]
+</code></pre><h3 id="cmake安装"><a href="#cmake安装" class="headerlink" title="cmake安装"></a>cmake安装</h3><pre><code>wget https://cmake.org/files/v3.14/cmake-3.14.0.tar.gz
+tar -xvf cmake-3.14.0.tar.gz
+cd cmake-3.14.0.tar.gz
+./configure
+make &amp;&amp; make install
+cd -
+</code></pre><h3 id="glog安装"><a href="#glog安装" class="headerlink" title="glog安装"></a>glog安装</h3><pre><code>tar -xvf glog-0.3.3.tar.gz
+cd glog-0.3.3.tar.gz
+./configure
+make &amp;&amp; make install
+cd -
+</code></pre><h3 id="gflag安装"><a href="#gflag安装" class="headerlink" title="gflag安装"></a>gflag安装</h3><pre><code>git clone https://github.com/gflags/gflags
+cd gflags
+cmake .
+make -j 24
+make install
+cd -
+</code></pre><h3 id="kyotocabinet安装"><a href="#kyotocabinet安装" class="headerlink" title="kyotocabinet安装"></a>kyotocabinet安装</h3><pre><code>tar xvf kyotocabinet-1.2.77.tar.gz
+cd kyotocabinet-1.2.77
+./configure
+make &amp;&amp; make install
+cd -
+</code></pre><h3 id="thrift安装"><a href="#thrift安装" class="headerlink" title="thrift安装"></a>thrift安装</h3><pre><code>yum -y groupinstall &quot;Development Tools&quot;
+sudo yum -y install libevent-devel zlib-devel openssl-devel
+</code></pre><blockquote>
+<p>openssl-devel若出现依赖导致安装不了，可以用源码包进行安装(提供包openssl-1.1.1b.tar.gz)</p>
+</blockquote>
+<pre><code>wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz
+tar xvf autoconf-2.69.tar.gz
+./configure --prefix=/usr
+make
+sudo make install
+cd ..
+
+wget http://ftp.gnu.org/gnu/automake/automake-1.14.tar.gz
+tar xvf automake-1.14.tar.gz
+cd automake-1.14
+./configure --prefix=/usr
+make
+sudo make install
+cd ..
+
+wget http://ftp.gnu.org/gnu/bison/bison-2.5.1.tar.gz
+tar xvf bison-2.5.1.tar.gz
+cd bison-2.5.1
+./configure --prefix=/usr
+make
+sudo make install
+cd ..
+
+wget http://sourceforge.net/projects/boost/files/boost/1.53.0/boost_1_53_0.tar.gz
+tar xvf boost_1_53_0.tar.gz
+cd boost_1_53_0
+./bootstrap.sh
+sudo ./b2 install
+cd ..
+
+wget http://mirrors.hust.edu.cn/apache/thrift/0.12.0thrift-0.12.0.tar.gz
+tar xvf thrift-0.12.0.tar.gz
+cd thrift
+./configure --with-lua=no
+make
+make &amp;&amp; make install
+</code></pre><h3 id="遇到的棘手问题"><a href="#遇到的棘手问题" class="headerlink" title="遇到的棘手问题"></a>遇到的棘手问题</h3><p>gcc升级问题：    </p>
+<ul>
+<li>g++: fatal error: braced spec is invalid at ‘%’    <blockquote>
+<p>env -i PATH=/bin:/usr/bin make [可能试一下环境变量导致的，用此命令来暂时还原最原始的环境变量]  首先得换高阶的gcc    </p>
+</blockquote>
+</li>
+</ul>
+<p>共享库编译问题   </p>
+<ul>
+<li>relocation R_X86_64_32S against `XXXXXXX’ can not be used when making a shared object; recompile with -fPIC<blockquote>
+<p>网上都显示这个问题是由于没有加-fPIC编译选项导致的，但是亲自尝试后并不是这样，加了也报这个错误；后来发现是由于代码里有static函数，共享库里不能有static，自己理解是shared里地址不能固定，而static放在常量区，将static改掉就可以了；</p>
+</blockquote>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/11/RAID 一些研究/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hb-lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hb-lee 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/11/RAID 一些研究/" itemprop="url">RAID一些研究 (RAID on SSD)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-11T14:26:53+08:00">
+                2019-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><img src="https://i.imgur.com/ER2q13U.jpg" alt=""></p>
+<p><img src="https://i.imgur.com/p5luCu8.jpg" alt=""></p>
+<p><img src="https://i.imgur.com/xT3yZGl.jpg" alt=""></p>
+<p><img src="https://i.imgur.com/oY20K6r.jpg" alt=""></p>
+<p><img src="https://i.imgur.com/cFht1WG.jpg" alt=""></p>
+<p><img src="https://i.imgur.com/5w5t0We.jpg" alt=""></p>
+<p><img src="https://i.imgur.com/YCSyJs8.jpg" alt=""></p>
+<p><img src="https://i.imgur.com/UIucS46.jpg" alt=""></p>
+<p><img src="https://i.imgur.com/MrfyYNV.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/03/Machine Learning on System/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hb-lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hb-lee 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/03/Machine Learning on System/" itemprop="url">当机器学习进入系统</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-03T16:14:40+08:00">
+                2019-01-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="组会报告-12-25"><a href="#组会报告-12-25" class="headerlink" title="组会报告 12.25"></a>组会报告 12.25</h3><h2 id=""><a href="#" class="headerlink" title=""></a><img src="https://i.imgur.com/rNvA3Mf.jpg" alt=""></h2><h2 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="https://i.imgur.com/GW4JHPy.jpg" alt=""></h2><h2 id="-2"><a href="#-2" class="headerlink" title=""></a><img src="https://i.imgur.com/Whr1faG.jpg" alt=""></h2><h2 id="-3"><a href="#-3" class="headerlink" title=""></a><img src="https://i.imgur.com/ZhzdVmx.jpg" alt=""></h2><h2 id="-4"><a href="#-4" class="headerlink" title=""></a><img src="https://i.imgur.com/NeU9Czx.jpg" alt=""></h2><h2 id="-5"><a href="#-5" class="headerlink" title=""></a><img src="https://i.imgur.com/KQ0SFyh.jpg" alt=""></h2><h2 id="-6"><a href="#-6" class="headerlink" title=""></a><img src="https://i.imgur.com/h1Gh8N4.jpg" alt=""></h2><h2 id="-7"><a href="#-7" class="headerlink" title=""></a><img src="https://i.imgur.com/st1pDJ1.jpg" alt=""></h2><h2 id="-8"><a href="#-8" class="headerlink" title=""></a><img src="https://i.imgur.com/GWnQ9hc.jpg" alt=""></h2><h2 id="-9"><a href="#-9" class="headerlink" title=""></a><img src="https://i.imgur.com/aj2GKVG.jpg" alt=""></h2><h2 id="-10"><a href="#-10" class="headerlink" title=""></a><img src="https://i.imgur.com/Hw1xLjs.jpg" alt=""></h2><h2 id="-11"><a href="#-11" class="headerlink" title=""></a><img src="https://i.imgur.com/muV0Zlf.jpg" alt=""></h2><h2 id="-12"><a href="#-12" class="headerlink" title=""></a><img src="https://i.imgur.com/iF3uc9e.jpg" alt=""></h2><h2 id="-13"><a href="#-13" class="headerlink" title=""></a><img src="https://i.imgur.com/FfP3Vbl.jpg" alt=""></h2><h2 id="-14"><a href="#-14" class="headerlink" title=""></a><img src="https://i.imgur.com/mAesOeV.jpg" alt=""></h2><h2 id="-15"><a href="#-15" class="headerlink" title=""></a><img src="https://i.imgur.com/u8B6fDv.jpg" alt=""></h2><h2 id="-16"><a href="#-16" class="headerlink" title=""></a><img src="https://i.imgur.com/Bez2Nad.jpg" alt=""></h2><p><img src="https://i.imgur.com/gjSwgcF.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/30/并行优化_CUDA编程基础/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1265,400 +1716,6 @@ mount -t ftfs /dev/loop0 mnt
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/27/ftrace/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="hb-lee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hb-lee 的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/27/ftrace/" itemprop="url">Ftrace跟踪open系统调用过程</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-27T18:59:37+08:00">
-                2018-06-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="涉及的ftrace文件说明"><a href="#涉及的ftrace文件说明" class="headerlink" title="涉及的ftrace文件说明"></a>涉及的ftrace文件说明</h3><blockquote>
-<p>available_filter_functions  包含所有可以追踪的系统调用<br>available_tracers 包含所有的追踪类型 （常用的是function_graph）<br>current_tracer  当前正在追踪的类型<br>set_graph_function  设置要进行追踪的系统调用<br>tracing_on  开启(1)/关闭(0)跟踪过程<br>trace 保存跟踪过程打印的输出</p>
-</blockquote>
-<h3 id="ftrace-for-track-the-open-system-call"><a href="#ftrace-for-track-the-open-system-call" class="headerlink" title="ftrace for track the open system call"></a>ftrace for track the open system call</h3><pre><code>挂载debugfs  
-    1. mkdir /mnt/debugfs  
-    2. mount -t debugfs nodev /mnt/debugfs  
-    3. cd /mnt/debugfs/tracing    
-关闭ftrace跟踪 ： echo 0 &gt; tracing_on  [最新的ftrace没有tracing_enable文件]  
-清空ring buffer ： echo nop &gt; current_tracer  
-设置跟踪类型 ： echo function_graph &gt; current_tracer  
-设置跟踪的函数 ： echo do_sys_open &gt; set_graph_function  
-开启ftrace跟踪 : echo 1 &gt; tracing_on
-</code></pre><p>之后运行涉及到文件的open操作的执行过程，trace文件中就会有跟踪的函数结果。</p>
-<h3 id="其他性能追踪工具ltrace-strace"><a href="#其他性能追踪工具ltrace-strace" class="headerlink" title="其他性能追踪工具ltrace, strace"></a>其他性能追踪工具ltrace, strace</h3><p><img src="https://i.imgur.com/jSUamGV.png" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/13/cmake/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="hb-lee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hb-lee 的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/13/cmake/" itemprop="url">cmake编译参数错误</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-13T16:12:27+08:00">
-                2018-06-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="cmake所需依赖表示"><a href="#cmake所需依赖表示" class="headerlink" title="cmake所需依赖表示"></a>cmake所需依赖表示</h3><pre><code>-D 参数
--D XX_INCLUDE_DIR [此处设置所需包的头文件目录]
--D XX_LIBRARY [此处设置所需动态链接库.so文件的路径]
-</code></pre><blockquote>
-<p>缺何种依赖可以根据所报错误来进行判断  </p>
-</blockquote>
-<h3 id="如下是一个完整的cmake编译命令："><a href="#如下是一个完整的cmake编译命令：" class="headerlink" title="如下是一个完整的cmake编译命令："></a>如下是一个完整的cmake编译命令：</h3><p><img src="https://i.imgur.com/kJJTSg4.png" alt=""></p>
-<h3 id="cmake编译举例"><a href="#cmake编译举例" class="headerlink" title="cmake编译举例"></a>cmake编译举例</h3><p><img src="https://i.imgur.com/uijh1XP.png" alt=""></p>
-<pre><code>上图的cmake编译报错：VALGRIND_INCLUDE_DIR variables are used in this project, but they are set to NOTFOUND.
-我们此时需要valgrind,若已经安装了valgrind，则可以通过**whereis valgrind** (which valgrind查找命令位置)来查找valgrind的安装目录；
-我们的安装目录为：/usr/software/valgrind，所以可设置 VALGRIND_INCLUDE_DIR=&quot;/usr/software/valgrind/include/&quot;。所以最终安装命令为：
-
-cmake -D CMAKE_BUILD_TYPE=$TYPE -D USE_BDB=OFF -D USE_TDB=ON -D BUILD_TESTING=OFF \
--D VALGRIND_INCLUDE_DIR=&quot;/usr/software/valgrind/include/&quot; -D CMAKE_INSTALL_PREFIX=../ft-install/ \
--D BUILD_FOR_LINUX_KERNEL_MODULE=ON ..
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/22/linux_develop/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="hb-lee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hb-lee 的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/22/linux_develop/" itemprop="url">Untitled</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-22T20:43:21+08:00">
-                2018-05-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>char* 字符（串）指针；<br>string 字符串；<br>char 字符；<br>u_char 无符号的char型；<br>size_t 可看成unsigned int；    // int<br>ssize_t signed size_t；<br>uint8_t 1字节；    // signed char<br>uint16_t 2字节；   // short int<br>uint32_t 4字节；   // int<br>uint64_t 8字节；   // long long int<br>mode_t 文件操作标志；    // O_CREAT | O_RDONLY</p>
-<p>void <em>memcpy(void </em>dest, const void <em>src, size_t n);    // n个字节内存拷贝<br>void </em>memset(void *s, int ch, size_t n);    // n个字节用 ch替换  </p>
-<blockquote>
-<p>头文件 ：memory.h</p>
-</blockquote>
-<h3 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h3><p>open<br>lseek<br>write<br>read  </p>
-<p>define likely(x)    <strong>builtin_expect(!!(x), 1)<br>define unlikely(x)  </strong>builtin_expect(!!(x), 0)</p>
-<p>posix_memalign    // 对齐操作</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1709,7 +1766,7 @@ cmake -D CMAKE_BUILD_TYPE=$TYPE -D USE_BDB=OFF -D USE_TDB=ON -D BUILD_TESTING=OF
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
