@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="nova（基于NVM的文件系统）安装NOVA简单介绍NOVA是一个基于日志结构的NVM文件系统；它用到了DAX和持久化内存pmem。源码在官方提供的地址：https://github.com/NVSL/linux-nova 笔者所用环境 系统：CentOS Linux release 7.3.1611 (Core) 硬件：Intel(R) Core(TM) i7-6700 CPU @ 3.40GH">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nova（基于NVM的文件系统）安装">
+<meta property="og:url" content="http://yoursite.com/2019/09/06/nova安装/index.html">
+<meta property="og:site_name" content="hb-lee 的博客">
+<meta property="og:description" content="nova（基于NVM的文件系统）安装NOVA简单介绍NOVA是一个基于日志结构的NVM文件系统；它用到了DAX和持久化内存pmem。源码在官方提供的地址：https://github.com/NVSL/linux-nova 笔者所用环境 系统：CentOS Linux release 7.3.1611 (Core) 硬件：Intel(R) Core(TM) i7-6700 CPU @ 3.40GH">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-09-06T06:29:29.505Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="nova（基于NVM的文件系统）安装">
+<meta name="twitter:description" content="nova（基于NVM的文件系统）安装NOVA简单介绍NOVA是一个基于日志结构的NVM文件系统；它用到了DAX和持久化内存pmem。源码在官方提供的地址：https://github.com/NVSL/linux-nova 笔者所用环境 系统：CentOS Linux release 7.3.1611 (Core) 硬件：Intel(R) Core(TM) i7-6700 CPU @ 3.40GH">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/06/nova安装/"/>
+
+
+
+
+
+  <title>nova（基于NVM的文件系统）安装 | hb-lee 的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">hb-lee 的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/06/nova安装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hb-lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hb-lee 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">nova（基于NVM的文件系统）安装</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-06T14:29:04+08:00">
+                2019-09-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="nova（基于NVM的文件系统）安装"><a href="#nova（基于NVM的文件系统）安装" class="headerlink" title="nova（基于NVM的文件系统）安装"></a>nova（基于NVM的文件系统）安装</h1><h3 id="NOVA简单介绍"><a href="#NOVA简单介绍" class="headerlink" title="NOVA简单介绍"></a>NOVA简单介绍</h3><p>NOVA是一个基于日志结构的NVM文件系统；它用到了DAX和持久化内存<code>pmem</code>。源码在官方提供的地址：<a href="https://github.com/NVSL/linux-nova" target="_blank" rel="noopener">https://github.com/NVSL/linux-nova</a></p>
+<h3 id="笔者所用环境"><a href="#笔者所用环境" class="headerlink" title="笔者所用环境"></a>笔者所用环境</h3><ul>
+<li>系统：CentOS Linux release 7.3.1611 (Core)</li>
+<li>硬件：Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz; DELL, OptiPlex 7040</li>
+<li>以最新的5.1版本为例，代码链接：<a href="https://github.com/NVSL/linux-nova/tree/5.1" target="_blank" rel="noopener">https://github.com/NVSL/linux-nova/tree/5.1</a></li>
+</ul>
+<blockquote>
+<p>最初的nova是只适合在4.3的内核上运行，后面nova更新后已经做到内核里去了；新的网址提供了很多不同内核的版本，经过笔者亲测，基本都可以下载下来直接编译可用！无不佩服其工程能力。</p>
+</blockquote>
+<h3 id="Nova安装"><a href="#Nova安装" class="headerlink" title="Nova安装"></a>Nova安装</h3><h5 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h5><pre><code>unzip linux-nova-5.1.zip
+cd linux-nova-5.1
+</code></pre><h5 id="配置内核编译选项"><a href="#配置内核编译选项" class="headerlink" title="配置内核编译选项"></a>配置内核编译选项</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@bogon linux-nova-5.1]# make nconfig</span><br><span class="line">    Device Drivers  ---&gt;</span><br><span class="line">        &lt;*&gt; NVDIMM (Non-Volatile Memory Device) Support  ---&gt;</span><br><span class="line">            &lt;*&gt;   PMEM: Persistent memory block device support (NEW)</span><br><span class="line">            &lt;*&gt;   BLK: Block data window (aperture) device support (NEW)</span><br><span class="line">            [*]   BTT: Block Translation Table (atomic sector updates)</span><br><span class="line">    Processor type and features  ---&gt;</span><br><span class="line">        &lt;*&gt; Support non-standard NVDIMMs and ADR protected memory</span><br><span class="line">    Memory Management options  ---&gt;</span><br><span class="line">        [*] Allow for memory hot-add</span><br><span class="line">        [*]   Online the newly added memory blocks by default</span><br><span class="line">        [*]   Allow for memory hot remove</span><br><span class="line">        [*] Device memory (pmem, HMM, etc...) hotplug support</span><br><span class="line">    File systems  ---&gt;</span><br><span class="line">        [*] Direct Access (DAX) support</span><br><span class="line">        &lt;*&gt;   NOVA: log-structured file system for non-volatile memories</span><br></pre></td></tr></table></figure>
+<h5 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">make -j4</span><br><span class="line">make modules_install</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<h5 id="设置pmem设备大小"><a href="#设置pmem设备大小" class="headerlink" title="设置pmem设备大小"></a>设置pmem设备大小</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/default/grub</span><br><span class="line">在`GRUB_CMDLINE_LINUX`这一行中加入`memmap=4G!12G`；表示将16GB的内存划分为12GB DRAM + 4GB的PMEM</span><br><span class="line">grub2-mkconfig -o /boot/grub2/grub.cfg 【更新grub】</span><br></pre></td></tr></table></figure>
+<h3 id="Nova使用"><a href="#Nova使用" class="headerlink" title="Nova使用"></a>Nova使用</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir /mnt/ramdisk</span><br><span class="line">modprobe nova</span><br><span class="line">mount -t NOVA -o init /dev/pmem0 /mnt/ramdisk</span><br></pre></td></tr></table></figure>
+<h3 id="安装过程中遇到的坑"><a href="#安装过程中遇到的坑" class="headerlink" title="安装过程中遇到的坑"></a>安装过程中遇到的坑</h3><h5 id="1-内核更新后启动不了，直接进行emergency-mode"><a href="#1-内核更新后启动不了，直接进行emergency-mode" class="headerlink" title="1. 内核更新后启动不了，直接进行emergency mode"></a>1. 内核更新后启动不了，直接进行<code>emergency mode</code></h5><blockquote>
+<p>分析</p>
+</blockquote>
+<p>在某种内核下进入<code>emergency mode</code>键盘可用，这时输入<code>journalctl</code>可以看到相关日志，发现<code>/sysroot</code>系统安装失败，进一步分析是由于这个挂载的是<code>xfs</code>文件系统，而编译内核的时候默认没有选上这个模块；按照以下方式选择这个模块编入即可！</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@bogon linux-nova-5.1]# make nconfig</span><br><span class="line">    File systems  ---&gt; </span><br><span class="line">        &lt;*&gt; XFS filesystem support</span><br><span class="line">        [*]   XFS Quota support</span><br><span class="line">        [*]   XFS POSIX ACL support</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
+<h5 id="2-按照nova官方文档，选择CONFIG-LIBNVDIMM-CONFIG-BLK-DEV-PMEM-CONFIG-FS-DAX-CONFIG-NOVA-FS-重启后-dev目录下没有看到pmem设备"><a href="#2-按照nova官方文档，选择CONFIG-LIBNVDIMM-CONFIG-BLK-DEV-PMEM-CONFIG-FS-DAX-CONFIG-NOVA-FS-重启后-dev目录下没有看到pmem设备" class="headerlink" title="2. 按照nova官方文档，选择CONFIG_LIBNVDIMM, CONFIG_BLK_DEV_PMEM, CONFIG_FS_DAX, CONFIG_NOVA_FS,重启后/dev目录下没有看到pmem设备"></a>2. 按照nova<a href="https://github.com/NVSL/linux-nova" target="_blank" rel="noopener">官方文档</a>，选择<code>CONFIG_LIBNVDIMM</code>, <code>CONFIG_BLK_DEV_PMEM</code>, <code>CONFIG_FS_DAX</code>, <code>CONFIG_NOVA_FS</code>,重启后<code>/dev</code>目录下没有看到<code>pmem</code>设备</h5><blockquote>
+<p>分析</p>
+</blockquote>
+<p>相关的配置选项没有选择完全；如以下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Processor type and features  ---&gt;</span><br><span class="line">        &lt;*&gt; Support non-standard NVDIMMs and ADR protected memory</span><br></pre></td></tr></table></figure>
+<h5 id="3-执行挂载nova的时候报错，dmesg-tail输出device-does-not-support-DAX"><a href="#3-执行挂载nova的时候报错，dmesg-tail输出device-does-not-support-DAX" class="headerlink" title="3. 执行挂载nova的时候报错，dmesg | tail输出device does not support DAX"></a>3. 执行挂载nova的时候报错，<code>dmesg | tail</code>输出<code>device does not support DAX</code></h5><blockquote>
+<p>分析</p>
+</blockquote>
+<p>是由于没有配置<code>MEMORY_HOTPLUG</code>，这一个编译选项在新的内核里已经移植到了<code>Memory Management options</code>中，如果找不到可以在编译选项配置中<strong>进行搜索</strong>；</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Memory Management options  ---&gt;</span><br><span class="line">       [*] Allow for memory hot-add</span><br><span class="line">       [*]   Online the newly added memory blocks by default</span><br><span class="line">       [*]   Allow for memory hot remove</span><br><span class="line">       [*] Device memory (pmem, HMM, etc...) hotplug support</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>基本都是内核编译选项没选择对。</p>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><blockquote>
+<p><a href="http://pmem.io/2016/02/22/pm-emulation.html" target="_blank" rel="noopener">http://pmem.io/2016/02/22/pm-emulation.html</a><br><a href="https://github.com/NVSL/linux-nova/blob/master/Documentation/filesystems/nova.txt" target="_blank" rel="noopener">https://github.com/NVSL/linux-nova/blob/master/Documentation/filesystems/nova.txt</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/04/指针智能指针/" rel="next" title="指针相关">
+                <i class="fa fa-chevron-left"></i> 指针相关
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">hb-lee</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#nova（基于NVM的文件系统）安装"><span class="nav-number">1.</span> <span class="nav-text">nova（基于NVM的文件系统）安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NOVA简单介绍"><span class="nav-number">1.0.1.</span> <span class="nav-text">NOVA简单介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#笔者所用环境"><span class="nav-number">1.0.2.</span> <span class="nav-text">笔者所用环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nova安装"><span class="nav-number">1.0.3.</span> <span class="nav-text">Nova安装</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#解压"><span class="nav-number">1.0.3.0.1.</span> <span class="nav-text">解压</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置内核编译选项"><span class="nav-number">1.0.3.0.2.</span> <span class="nav-text">配置内核编译选项</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#编译"><span class="nav-number">1.0.3.0.3.</span> <span class="nav-text">编译</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#设置pmem设备大小"><span class="nav-number">1.0.3.0.4.</span> <span class="nav-text">设置pmem设备大小</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nova使用"><span class="nav-number">1.0.4.</span> <span class="nav-text">Nova使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装过程中遇到的坑"><span class="nav-number">1.0.5.</span> <span class="nav-text">安装过程中遇到的坑</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-内核更新后启动不了，直接进行emergency-mode"><span class="nav-number">1.0.5.0.1.</span> <span class="nav-text">1. 内核更新后启动不了，直接进行emergency mode</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-按照nova官方文档，选择CONFIG-LIBNVDIMM-CONFIG-BLK-DEV-PMEM-CONFIG-FS-DAX-CONFIG-NOVA-FS-重启后-dev目录下没有看到pmem设备"><span class="nav-number">1.0.5.0.2.</span> <span class="nav-text">2. 按照nova官方文档，选择CONFIG_LIBNVDIMM, CONFIG_BLK_DEV_PMEM, CONFIG_FS_DAX, CONFIG_NOVA_FS,重启后/dev目录下没有看到pmem设备</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-执行挂载nova的时候报错，dmesg-tail输出device-does-not-support-DAX"><span class="nav-number">1.0.5.0.3.</span> <span class="nav-text">3. 执行挂载nova的时候报错，dmesg | tail输出device does not support DAX</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">1.0.5.1.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文献"><span class="nav-number">1.0.6.</span> <span class="nav-text">参考文献</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hb-lee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
