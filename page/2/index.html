@@ -229,6 +229,432 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/Ceph集群使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hb-lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hb-lee 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/08/Ceph集群使用/" itemprop="url">Ceph集群使用---常用命令</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-08T22:36:05+08:00">
+                2019-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Ceph集群使用—常用命令"><a href="#Ceph集群使用—常用命令" class="headerlink" title="Ceph集群使用—常用命令"></a>Ceph集群使用—常用命令</h1><h3 id="背景知识"><a href="#背景知识" class="headerlink" title="背景知识"></a>背景知识</h3><h5 id="ceph中的pool、PG、OSD的关系"><a href="#ceph中的pool、PG、OSD的关系" class="headerlink" title="ceph中的pool、PG、OSD的关系"></a>ceph中的pool、PG、OSD的关系</h5><p>Pool每个pool是逻辑上的隔离单位，不同的pool可以有完全不一样的数据处理方式，它规定了数据冗余的类型和对应的副本分布策略；支持两种类型：副本（replicated）和 纠删码（ Erasure Code）<br>PG（ placement group）是一个放置策略组，它是对象的集合，该集合里的所有对象都具有相同的放置策略；简单点说就是相同PG内的对象都会放到相同的硬盘上； PG是 ceph的核心概念， 服务端数据均衡和恢复的最小粒度就是PG；<br>OSD是负责物理存储的进程，一般配置成和磁盘一一对应，一块磁盘启动一个OSD进程；<br>关系如下：</p>
+<ul>
+<li>一个Pool里有很多PG</li>
+<li>一个PG里包含一堆对象；一个对象只能属于一个PG</li>
+<li>PG有主从之分，一个PG分布在不同的OSD上（针对三副本类型）</li>
+</ul>
+<p>下图来区别：</p>
+<p><img src="https://i.imgur.com/xJm9ITv.png" alt=""></p>
+<h5 id="Ceph架构"><a href="#Ceph架构" class="headerlink" title="Ceph架构"></a>Ceph架构</h5><p>其架构如下；</p>
+<p><img src="https://i.imgur.com/z1J3wrD.png" alt=""></p>
+<h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><pre><code>sudo ceph health  查看健康状况
+sudo ceph -s  查看集群状况
+sudo ceph osd tree  查看OSD信息
+</code></pre><h5 id="pool"><a href="#pool" class="headerlink" title="pool"></a>pool</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ceph osd pool create lhbpool 128 128</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>创建名为<code>lhbpool</code>的pool，这个pool中的pg，pgp都为128；</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ceph osd pool get lhbpool pg_num</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>获取<code>pg_num</code>，或<code>pgp_num</code>的大小；</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ceph osd pool rename rlhbpool lhbpool</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>重命名pool</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph osd pool set-quota test-pool max_objects 100</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>设置允许最大object数量为100<br>取消配额限制只需要把对应值设为0即可。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph osd pool set-quota test-pool max_bytes $((10 * 1024 * 1024 * 1024))</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>设置允许容量限制为10GB<br>取消配额限制只需要把对应值设为0即可。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ceph osd lspools</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>打印pool列表</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph osd pool delete test-pool test-pool  --yes-i-really-really-mean-it</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>删除pool，删除一个pool会同时清空pool的所有数据，因此非常危险。(和rm -rf /类似）。因此删除pool时ceph要求必须输入两次pool名称，同时加上–yes-i-really-really-mean-it选项。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo rados df</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>查看pool状态信息</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph osd pool set/get &#123;pool-name&#125; &#123;key&#125; &#123;value&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>通过上述语法设置获取pool的元数据</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph osd pool set test-pool size 3</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>设置pool的冗余副本数量为3</p>
+</blockquote>
+<h5 id="Crush-MAP-相关"><a href="#Crush-MAP-相关" class="headerlink" title="Crush MAP 相关"></a>Crush MAP 相关</h5><ul>
+<li>获取现有集群的crush map</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ceph osd getcrushmap -o crush.map</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>为二进制文件，需要反编译；反编译命令为：<code>crushtool -d crush.map -o crushmap-decompile</code></p>
+</blockquote>
+<ul>
+<li>运用新的crush map<br>当你修改了crush map后需要编译，如下命令：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crushtool -c crushmap-decompile -o crush.map</span><br></pre></td></tr></table></figure>
+<p>接着设置到集群中，用如下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ceph osd setcrushmap -i crush.map</span><br></pre></td></tr></table></figure>
+<h5 id="Ceph-管理接口-radosgw-admin"><a href="#Ceph-管理接口-radosgw-admin" class="headerlink" title="Ceph 管理接口 (radosgw-admin)"></a>Ceph 管理接口 (radosgw-admin)</h5><ul>
+<li>列出所有用户</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">radosgw-admin metadata list user</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>还可以列出桶：radosgw-admin metadata list bucket</p>
+</blockquote>
+<ul>
+<li>创建用户</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo radosgw-admin user create --uid=&quot;lhb&quot; --display-name=&quot;First User&quot;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>sudo radosgw-admin user create</p>
+</blockquote>
+<ul>
+<li>显示用户信息，以及可能存在的子用户和密钥</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo radosgw-admin user info --uid=testuser</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>sudo radosgw-admin user info</p>
+</blockquote>
+<ul>
+<li>显示配额子系统统计的用户状态</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo radosgw-admin user stats --uid=testuser</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>sudo radosgw-admin user stats</p>
+</blockquote>
+<ul>
+<li>其他功能</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">user rm  删除用户</span><br><span class="line">user suspend  暂停某用户</span><br><span class="line">user enable  重新允许暂停的用户</span><br><span class="line">user check  检查用户信息</span><br><span class="line">bucket list  罗列所有桶</span><br><span class="line">bucket rm  删除一个桶</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>ref: <a href="http://docs.ceph.org.cn/man/8/radosgw-admin/" target="_blank" rel="noopener">http://docs.ceph.org.cn/man/8/radosgw-admin/</a></p>
+</blockquote>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>摘自某处的一个图，是相关命令的总结，如下：</p>
+<p><img src="https://i.imgur.com/YUAqFpZ.png" alt=""></p>
+<p>另外还有一个知识树：</p>
+<p><img src="https://i.imgur.com/LmdlKW6.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/Ceph部署/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hb-lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hb-lee 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/08/Ceph部署/" itemprop="url">Ceph环境搭建 （Debian发行版为例）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-08T22:36:05+08:00">
+                2019-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Ceph环境搭建-（Debian发行版为例）"><a href="#Ceph环境搭建-（Debian发行版为例）" class="headerlink" title="Ceph环境搭建 （Debian发行版为例）"></a>Ceph环境搭建 （Debian发行版为例）</h1><blockquote>
+<p>ref:<a href="http://docs.ceph.com/docs/master/start" target="_blank" rel="noopener">http://docs.ceph.com/docs/master/start</a></p>
+</blockquote>
+<p>注：一个ceph存储集群需要至少一个Ceph Monitor和至少两个Ceph OSD Daemons  </p>
+<h3 id="安装前的了解"><a href="#安装前的了解" class="headerlink" title="安装前的了解"></a>安装前的了解</h3><h5 id="安装版本"><a href="#安装版本" class="headerlink" title="安装版本"></a>安装版本</h5><p>L版本安装：echo deb <a href="http://download.ceph.com/debian-luminous/" target="_blank" rel="noopener">http://download.ceph.com/debian-luminous/</a> $(lsb_release -sc) main | sudo tee /etc/apt/sources.list.d/ceph.list</p>
+<h5 id="普通用户免密码sudo设置"><a href="#普通用户免密码sudo设置" class="headerlink" title="普通用户免密码sudo设置"></a>普通用户免密码sudo设置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">su root</span><br><span class="line">chmod u+w /etc/sudoers</span><br><span class="line">vim /etc/sudoers</span><br><span class="line">添加 lihongbo01 ALL=(ALL) NOPASSWD: ALL这一行，替换`lihongbo01`为你的用户名即可；</span><br></pre></td></tr></table></figure>
+<h5 id="ssh默认端口号问题-（不是22"><a href="#ssh默认端口号问题-（不是22" class="headerlink" title="ssh默认端口号问题 （不是22)"></a>ssh默认端口号问题 （不是22)</h5><p>解决方案：编辑<code>~/.ssh/config</code>文件，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Port 32200</span><br><span class="line">Host cld-unknown212867</span><br><span class="line">    Hostname cld-unknown212867</span><br><span class="line">    User lihongbo01</span><br><span class="line">Host cld-unknown212868</span><br><span class="line">    Hostname cld-unknown212868</span><br><span class="line">    User lihongbo01</span><br><span class="line">Host cld-unknown212869</span><br><span class="line">    Hostname cld-unknown212869</span><br><span class="line">    User lihongbo01</span><br></pre></td></tr></table></figure>
+<h3 id="安装步骤-lt-在此之前请配置好免密登录和节点时间同步，参考官网Pre-flight-gt"><a href="#安装步骤-lt-在此之前请配置好免密登录和节点时间同步，参考官网Pre-flight-gt" class="headerlink" title="安装步骤 &lt;在此之前请配置好免密登录和节点时间同步，参考官网Pre-flight&gt;"></a>安装步骤 &lt;在此之前请配置好免密登录和节点时间同步，参考官网Pre-flight&gt;</h3><pre><code>wget -q -O- &apos;https://download.ceph.com/keys/release.asc&apos; | sudo apt-key add -
+echo deb http://download.ceph.com/debian-{ceph-stable-release}/ $(lsb_release -sc) main | sudo tee /etc/apt/sources.list.d/ceph.list 【版本如：luminous】
+sudo apt-get update &amp;&amp; sudo apt-get install ceph-deploy
+</code></pre><blockquote>
+<p>1.注意：debian安装mimic版本时，用ceph-deploy安装不能安装到最新的，只能安装到<code>Candidate: 10.2.11-2</code>的，可以通过<code>apt-cache policy ceph-common</code>查看；而lumious可以安装到<code>12.2.10</code>。</p>
+</blockquote>
+<blockquote>
+<p>2.软件不知道怎么安装可以用： apt-file search xxx</p>
+</blockquote>
+<p>接着执行：</p>
+<pre><code>mkdir my-cluster
+cd my-cluster
+ceph-deploy new cld-unknown212867
+vim ceph.conf
+添加：osd pool default size = 2 ## 放到ceph.conf中修改副本数为2
+ceph-deploy install --release luminous cld-unknown212867 cld-unknown212868 cld-unknown212869
+ceph-deploy mon create-initial
+ceph-deploy admin cld-unknown212867 cld-unknown212868 cld-unknown212869
+ceph-deploy mgr create cld-unknown212867 *Required only for luminous+ builds, i.e &gt;= 12.x builds*
+</code></pre><h5 id="1-以loop来做虚拟盘-lt-考虑到当前节点没有额外盘-gt-—-失败"><a href="#1-以loop来做虚拟盘-lt-考虑到当前节点没有额外盘-gt-—-失败" class="headerlink" title="1. 以loop来做虚拟盘&lt;考虑到当前节点没有额外盘&gt;   —- 失败"></a>1. 以loop来做虚拟盘&lt;考虑到当前节点没有额外盘&gt;   —- 失败</h5><p>接着我们来添加OSDs，我们首先虚拟一个块设备（用<code>dd</code>命令）：</p>
+<pre><code>dd if=/dev/zero of=1G.img bs=1M count=1000  # OSD节点上虚拟一个1G的块设备
+ceph-deploy osd create --data /home/lihongbo01/dev/1G.img cld-unknown212868 【MON节点上执行的】
+</code></pre><blockquote>
+<p>经过多次尝试，用loop来做设备失败。 【可能还没有完全支持】</p>
+</blockquote>
+<h5 id="2-【添加盘后添加OSD成功】-—-成功"><a href="#2-【添加盘后添加OSD成功】-—-成功" class="headerlink" title="2. 【添加盘后添加OSD成功】     —- 成功"></a>2. 【添加盘后添加OSD成功】     —- 成功</h5><pre><code>ceph-deploy osd create --data /dev/vdd cld-unknown212868 
+ceph-deploy osd create --data /dev/vdd cld-unknown212869
+</code></pre><blockquote>
+<p>创建OSD时最终会调用ceph-volume，这时<code>--data</code>已经不能是目录了，而须一个<code>disk</code>，可参见问题部分查看<code>disk.py</code>代码来理解。</p>
+</blockquote>
+<h5 id="查看成功"><a href="#查看成功" class="headerlink" title="查看成功"></a>查看成功</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212867:~/my-cluster$ sudo ceph health</span><br><span class="line">HEALTH_OK</span><br><span class="line">lihongbo01@cld-unknown212867:~/my-cluster$ sudo ceph -s</span><br><span class="line">  cluster:</span><br><span class="line">    id:     67170b2c-c545-4efb-80cb-810256529f34</span><br><span class="line">    health: HEALTH_OK</span><br><span class="line"> </span><br><span class="line">  services:</span><br><span class="line">    mon: 1 daemons, quorum cld-unknown212867</span><br><span class="line">    mgr: cld-unknown212867(active)</span><br><span class="line">    osd: 2 osds: 2 up, 2 in</span><br><span class="line"> </span><br><span class="line">  data:</span><br><span class="line">    pools:   0 pools, 0 pgs</span><br><span class="line">    objects: 0 objects, 0B</span><br><span class="line">    usage:   2.00GiB used, 98.0GiB / 100GiB avail</span><br><span class="line">    pgs:</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>一定要加sudo查看</p>
+</blockquote>
+<h5 id="中途安装失败删除命令："><a href="#中途安装失败删除命令：" class="headerlink" title="中途安装失败删除命令："></a>中途安装失败删除命令：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ceph-deploy purge &#123;ceph-node&#125; [&#123;ceph-node&#125;]</span><br><span class="line">ceph-deploy purgedata &#123;ceph-node&#125; [&#123;ceph-node&#125;]</span><br><span class="line">ceph-deploy forgetkeys</span><br><span class="line">rm ceph.*</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意要加上–release luminous才会安装该版本的，不然就安装默认的了，当前<code>ceph-deploy</code>是2.0.1版本，Debian上默认安装Ceph是10.2.11版本的。</p>
+</blockquote>
+<p><hr><br>以下是以loop虚拟设备来做OSD时遇到的问题即解决方法：</p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><blockquote>
+<p>添加OSD不成功</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">[node4][DEBUG ]  stderr: 12: (main()+0x2c58) [0x7f8e8dc18c18]</span><br><span class="line">[node4][DEBUG ]  stderr: 13: (__libc_start_main()+0xf5) [0x7f8e808c03d5]</span><br><span class="line">[node4][DEBUG ]  stderr: 14: (()+0x384ab0) [0x7f8e8dcf0ab0]</span><br><span class="line">[node4][DEBUG ]  stderr: NOTE: a copy of the executable, or `objdump -rdS &lt;executable&gt;` is needed to interpret this.</span><br><span class="line">[node4][DEBUG ] --&gt; Was unable to complete a new OSD, will rollback changes</span><br><span class="line">[node4][DEBUG ] Running command: /bin/ceph --cluster ceph --name client.bootstrap-osd --keyring /var/lib/ceph/bootstrap-osd/ceph.keyring osd purge-new osd.3 --yes-i-really-mean-it</span><br><span class="line">[node4][DEBUG ]  stderr: purged osd.3</span><br><span class="line">[node4][ERROR ] RuntimeError: command returned non-zero exit status: 1</span><br><span class="line">[ceph_deploy.osd][ERROR ] Failed to execute command: /usr/sbin/ceph-volume --cluster ceph lvm create --bluestore --data /dev/sdc --block.wal /dev/sdb2 --block.db /dev/sdb1</span><br><span class="line">[ceph_deploy][ERROR ] GenericError: Failed to create 1 OSDs</span><br><span class="line"></span><br><span class="line">修复：</span><br><span class="line">node节点卸载挂载分区</span><br><span class="line">[root@node4 ~]# umount /var/lib/ceph/osd/ceph-3</span><br><span class="line">查看lvs</span><br><span class="line"></span><br><span class="line">[root@node4 ~]# lvs</span><br><span class="line">  LV                                             VG                                        Attr       LSize  Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert</span><br><span class="line">  osd-block-ab4df89f-8682-4233-b683-e05c161089a4 ceph-183df03c-83fb-441c-a82e-d7b560e1a611 -wi-a----- 50.00g                                                    </span><br><span class="line">  root                                           cl                                        -wi-ao---- 35.12g                                                    </span><br><span class="line">  swap                                           cl                                        -wi-ao----  3.88g        </span><br><span class="line"></span><br><span class="line">删除lv，vg，pv</span><br><span class="line">[root@node4 ~]# lvremove osd-block-ab4df89f-8682-4233-b683-e05c161089a4 ceph-183df03c-83fb-441c-a82e-d7b560e1a611</span><br><span class="line">  Volume group &quot;osd-block-ab4df89f-8682-4233-b683-e05c161089a4&quot; not found</span><br><span class="line">  Cannot process volume group osd-block-ab4df89f-8682-4233-b683-e05c161089a4</span><br><span class="line">Do you really want to remove active logical volume ceph-183df03c-83fb-441c-a82e-d7b560e1a611/osd-block-ab4df89f-8682-4233-b683-e05c161089a4? [y/n]: y</span><br><span class="line">  Logical volume &quot;osd-block-ab4df89f-8682-4233-b683-e05c161089a4&quot; successfully removed</span><br><span class="line"></span><br><span class="line">[root@node4 ~]# vgremove  ceph-183df03c-83fb-441c-a82e-d7b560e1a611</span><br><span class="line">  Volume group &quot;ceph-183df03c-83fb-441c-a82e-d7b560e1a611&quot; successfully removed</span><br><span class="line"></span><br><span class="line">[root@node4 ~]# pvremove /dev/sdc</span><br><span class="line">  Labels on physical volume &quot;/dev/sdc&quot; successfully wiped.</span><br><span class="line"></span><br><span class="line">删除/var/lib/ceph/osd/ 所有</span><br><span class="line">[root@node4 ~]# rm /var/log/ceph/ceph-* -rf</span><br><span class="line"></span><br><span class="line">删除 ceph 日志</span><br><span class="line">[root@node4 ~]# rm -rf /var/lib/ceph/*</span><br><span class="line"></span><br><span class="line">monitor1 上重置node4 的sdc分区</span><br><span class="line">[root@monitor1 ceph-cluster]# ceph-deploy disk zap node4 /dev/sdc</span><br><span class="line"></span><br><span class="line">monitor1 上重新创建osd节点</span><br><span class="line">[root@monitor1 ceph-cluster]# ceph-deploy osd create node4 --bluestore --data /dev/sdc --block-db /dev/sdb1 --block-wal /dev/sdb2</span><br></pre></td></tr></table></figure>
+<h3 id="【实践失败】"><a href="#【实践失败】" class="headerlink" title="【实践失败】"></a>【实践失败】</h3><h3 id="loop设备做块设备"><a href="#loop设备做块设备" class="headerlink" title="loop设备做块设备"></a>loop设备做块设备</h3><p>需要修改两处：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/lib/python2.7/dist-packages/ceph_volume/util/disk.py +332  修改为：return TYPE == &apos;disk&apos; or &apos;loop&apos;</span><br><span class="line">vim /usr/lib/python2.7/dist-packages/ceph_volume/util/disk.py +417  True ==&gt; False</span><br></pre></td></tr></table></figure></p>
+<p>ref:<a href="https://www.netways.de/blog/2018/11/14/ceph-mimic-using-loop-devices-as-osd/" target="_blank" rel="noopener">https://www.netways.de/blog/2018/11/14/ceph-mimic-using-loop-devices-as-osd/</a></p>
+<h4 id="清理操作"><a href="#清理操作" class="headerlink" title="清理操作"></a>清理操作</h4><pre><code>sudo lvs (vgscan)
+sudo vgremove ceph-9eee83f3-8b17-4b3f-b53e-62bf4977733b -y
+lsblk
+</code></pre><p><hr><br>华丽的分割线</p>
+<hr>
+
+<h3 id="Ceph对象网关部署-可部署多个"><a href="#Ceph对象网关部署-可部署多个" class="headerlink" title="Ceph对象网关部署 (可部署多个)"></a>Ceph对象网关部署 (可部署多个)</h3><p>使用命令在 Ceph 对象网关节点上新建一个 Ceph对象网关实例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph-deploy rgw create cld-unknown212868</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>需要开放7480端口：iptables -I INPUT 1 -p tcp -m tcp –dport 7480 -j ACCEPT</p>
+</blockquote>
+<p>测试及效果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">curl http://cld-unknown212868:7480</span><br><span class="line"></span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;ListAllMyBucketsResult xmlns=&quot;http://s3.amazonaws.com/doc/2006-03-01/&quot;&gt;</span><br><span class="line">  &lt;Owner&gt;</span><br><span class="line">    &lt;ID&gt;anonymous&lt;/ID&gt;</span><br><span class="line">    &lt;DisplayName&gt;&lt;/DisplayName&gt;</span><br><span class="line">  &lt;/Owner&gt;</span><br><span class="line">  &lt;Buckets&gt;</span><br><span class="line">  &lt;/Buckets&gt;</span><br><span class="line">&lt;/ListAllMyBucketsResult&gt;</span><br></pre></td></tr></table></figure>
+<p>即表示安装成功。</p>
+<h5 id="创建S3用户"><a href="#创建S3用户" class="headerlink" title="创建S3用户"></a>创建S3用户</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212867:~/my-cluster$ sudo radosgw-admin user create --uid=&quot;lhb&quot; --display-name=&quot;First User&quot;</span><br><span class="line">&#123;</span><br><span class="line">    &quot;user_id&quot;: &quot;lhb&quot;,</span><br><span class="line">    &quot;display_name&quot;: &quot;First User&quot;,</span><br><span class="line">    &quot;email&quot;: &quot;&quot;,</span><br><span class="line">    &quot;suspended&quot;: 0,</span><br><span class="line">    &quot;max_buckets&quot;: 1000,</span><br><span class="line">    &quot;auid&quot;: 0,</span><br><span class="line">    &quot;subusers&quot;: [],</span><br><span class="line">    &quot;keys&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;user&quot;: &quot;lhb&quot;,</span><br><span class="line">            &quot;access_key&quot;: &quot;KSOF3PIEDDNI7KP4I1HC&quot;,</span><br><span class="line">            &quot;secret_key&quot;: &quot;f6N9wvBWbfviV0R5TaGUHYCXZKWCTfmMPDIQf4hF&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    &quot;swift_keys&quot;: [],</span><br><span class="line">    &quot;caps&quot;: [],</span><br><span class="line">    &quot;op_mask&quot;: &quot;read, write, delete&quot;,</span><br><span class="line">    &quot;default_placement&quot;: &quot;&quot;,</span><br><span class="line">    &quot;placement_tags&quot;: [],</span><br><span class="line">    &quot;bucket_quota&quot;: &#123;</span><br><span class="line">        &quot;enabled&quot;: false,</span><br><span class="line">        &quot;check_on_raw&quot;: false,</span><br><span class="line">        &quot;max_size&quot;: -1,</span><br><span class="line">        &quot;max_size_kb&quot;: 0,</span><br><span class="line">        &quot;max_objects&quot;: -1</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;user_quota&quot;: &#123;</span><br><span class="line">        &quot;enabled&quot;: false,</span><br><span class="line">        &quot;check_on_raw&quot;: false,</span><br><span class="line">        &quot;max_size&quot;: -1,</span><br><span class="line">        &quot;max_size_kb&quot;: 0,</span><br><span class="line">        &quot;max_objects&quot;: -1</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;temp_url_keys&quot;: [],</span><br><span class="line">    &quot;type&quot;: &quot;rgw&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>目前只能使用path-style来访问，hosted-style需要另外配置。</p>
+</blockquote>
+<h5 id="修改了配置文件（如网关端口号）"><a href="#修改了配置文件（如网关端口号）" class="headerlink" title="修改了配置文件（如网关端口号）"></a>修改了配置文件（如网关端口号）</h5><pre><code>ceph-deploy --overwrite-conf config push &lt;gateway-node&gt; [&lt;other-nodes&gt;] # 将该配置文件推送到你的 Ceph 对象网关节点
+sudo service radosgw restart id=rgw.&lt;short-hostname&gt;  # 重启Ceph对象网关
+</code></pre><h5 id="提供泛域名解析能力"><a href="#提供泛域名解析能力" class="headerlink" title="提供泛域名解析能力"></a>提供泛域名解析能力</h5><p>Ceph对象存储网关支持两种访问模式：<code>path-style</code>和<code>host-style</code>；默认的支持<code>path-style</code>，即<code>http://cld-unknown212868/bucket</code>；要想以类似S3的<code>host-style</code>进行访问，即用<code>http://bucket.cld-unknown212868/obj</code>来进行访问，需要配置泛域名解析，此处用到<code>dnsmasq</code>工具。</p>
+<pre><code>sudo apt-get install dnsmasq -y
+vim /etc/resolv.conf    【改为：nameserver 127.0.0.1】
+vim /etc/resolv.dnsmasq.conf    【将原来resolv.conf的内容写在这个文件里面】
+</code></pre><p>接着编辑dnsmqsq配置文件，在<code>/etc/dnsmasq.conf</code>中加入一下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">address=/.cld-unknown212868/10.202.42.147</span><br><span class="line">address=/.cld-unknown212868.i.nease.net/10.202.42.147</span><br><span class="line">resolv-file=/etc/resolv.dnsmasq.conf</span><br><span class="line">conf-dir=/etc/dnsmasq.d</span><br><span class="line">conf-dir=/etc/dnsmasq.d/,*.conf</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>此配置的含义是将<code>xxx.cld-unknown212868</code>的路径都转到10.202.42.147这个地址；</p>
+</blockquote>
+<p>然后重启dnsmasq服务：<code>/etc/init.d/dnsmasq restart</code></p>
+<h6 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212868:~/workspace/ceph_workspace$ ping bucket.cld-unknown212868</span><br><span class="line">PING bucket.cld-unknown212868 (10.202.42.147) 56(84) bytes of data.</span><br><span class="line">64 bytes from cld-unknown212868.i.nease.net (10.202.42.147): icmp_seq=1 ttl=64 time=0.045 ms</span><br><span class="line">64 bytes from cld-unknown212868.i.nease.net (10.202.42.147): icmp_seq=2 ttl=64 time=0.064 ms</span><br><span class="line">64 bytes from cld-unknown212868.i.nease.net (10.202.42.147): icmp_seq=3 ttl=64 time=0.065 ms</span><br><span class="line">64 bytes from cld-unknown212868.i.nease.net (10.202.42.147): icmp_seq=4 ttl=64 time=0.043 ms</span><br><span class="line">^C</span><br><span class="line">--- bucket.cld-unknown212868 ping statistics ---</span><br><span class="line">4 packets transmitted, 4 received, 0% packet loss, time 3075ms</span><br><span class="line">rtt min/avg/max/mdev = 0.043/0.054/0.065/0.011 ms</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/23/tmux一个神奇的linux工具/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -431,8 +857,7 @@ tmux kill-server    关闭所有会话
       
         
           
-            <h3 id="Gramfs简介"><a href="#Gramfs简介" class="headerlink" title="Gramfs简介"></a>Gramfs简介</h3><p>gramfs的分布式实现</p>
-<h3 id="依赖的库及下载地址"><a href="#依赖的库及下载地址" class="headerlink" title="依赖的库及下载地址"></a>依赖的库及下载地址</h3><pre><code>glog    [https://github.com/hb-lee/attachment/glog-0.3.3.tar.gz]
+            <h3 id="依赖的库及下载地址"><a href="#依赖的库及下载地址" class="headerlink" title="依赖的库及下载地址"></a>依赖的库及下载地址</h3><pre><code>glog    [https://github.com/hb-lee/attachment/glog-0.3.3.tar.gz]
 gflag    [https://github.com/gflags/gflags]
 kyotocabinet    [https://github.com/hb-lee/attachment/kyotocabinet-1.2.77.tar.gz]
 boost_system    [https://github.com/hb-lee/attachment/boost_1_53_0.tar.gz]
@@ -495,7 +920,7 @@ cd boost_1_53_0
 sudo ./b2 install
 cd ..
 
-wget http://mirrors.hust.edu.cn/apache/thrift/0.12.0thrift-0.12.0.tar.gz
+wget http://mirrors.hust.edu.cn/apache/thrift/0.12.0/thrift-0.12.0.tar.gz
 tar xvf thrift-0.12.0.tar.gz
 cd thrift
 ./configure --with-lua=no
@@ -1380,284 +1805,6 @@ make &amp;&amp; make install
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/16/matlab-to-c/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="hb-lee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hb-lee 的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/16/matlab-to-c/" itemprop="url">C语言里面调用matlab程序</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-16T09:15:33+08:00">
-                2018-10-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="命令行调用"><a href="#命令行调用" class="headerlink" title="命令行调用"></a>命令行调用</h3><pre><code>matlab -nodesktop -nosplash -r &quot;codename&quot;   
-</code></pre><p>此命令linux下调用matlab程序的命令，因此可以使用 C 语言的系统调用函数system()或者exec()来进行调用</p>
-<blockquote>
-<p>对于matlab软件的安装，如果没有root权限，安装程序需要使用编译安装的方式进行软件的安装；</p>
-</blockquote>
-<h3 id="利用MCR-Matlab-Compiler-Runtime-来编写可移植的C语言调用matlab的程序"><a href="#利用MCR-Matlab-Compiler-Runtime-来编写可移植的C语言调用matlab的程序" class="headerlink" title="利用MCR (Matlab Compiler Runtime)来编写可移植的C语言调用matlab的程序"></a>利用MCR (Matlab Compiler Runtime)来编写可移植的C语言调用matlab的程序</h3><blockquote>
-<p>这种方法只需要使用者安装MCR包实现matlab软件想要的功能，可以实现matlab程序在其他未安装的matlab软件上的运行  </p>
-</blockquote>
-<pre><code>下载地址： https://www.mathworks.com/products/compiler/matlab-runtime.html  
-</code></pre><p><strong>此处介绍一下通用的软件安装方式 ------ 编译安装</strong>  </p>
-<pre><code>解压：unzip MCR_R2016a_glnxa64_installer.zip
-编译：./install -mode silent -agreeToLicense yes -destinationFolder &lt;folder : /home/tools/matlab (matlab目录要存在)&gt;
-</code></pre><blockquote>
-<p>-agreeToLicense yes这个选项必须有，其他的则根据自己的环境进行选择 （–help可以查看有哪些可用选项） </p>
-</blockquote>
-<pre><code>安装： make &amp;&amp; make install
-</code></pre><p><strong>运行示例</strong>  </p>
-<pre><code>首先按照matlab程序的编写方式编写了matlab程序： init.m    
-Linux 平台使用MCR编译该程序：  mcc -mv init.m
-</code></pre><blockquote>
-<p>经过mcc编译之后会产生两个运行文件 init和run_init.sh，这两个程序都可以运行init.m的功能    </p>
-</blockquote>
-<pre><code>运行： ./run_init.sh /home/tools/matlab/mcr_2017b/v93
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/10/blktrace/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="hb-lee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hb-lee 的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/10/blktrace/" itemprop="url">Blktrace 介绍及使用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-10T09:59:34+08:00">
-                2018-10-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="blktrace-介绍"><a href="#blktrace-介绍" class="headerlink" title="blktrace 介绍"></a>blktrace 介绍</h3><p>blktrace 是针对linux内核中块设备I/O层的跟踪工具，是由Linux内核块设备层维护者开发的。下图是一个I/O的流通图：</p>
-<p><img src="https://i.imgur.com/CxQVyiF.png" alt=""></p>
-<p>可见，使用这个工具，我们可以获取I/O请求队列的各种详细情况，包括进行读写的进程名称，进程号，执行时间，读写的物理块号，读写的块大小等等。</p>
-<blockquote>
-<p>2.6.23后的内核版本都会集成bltrace，如果没有，则安装blktrace后采用类似与ftrace相同的方式挂载debugfs即可！</p>
-</blockquote>
-<h3 id="bltrace-使用"><a href="#bltrace-使用" class="headerlink" title="bltrace 使用"></a>bltrace 使用</h3><pre><code>blktrace -d /dev/sda -o -
-</code></pre><blockquote>
-<p>-d 表示device<br>-o 表示输出<br>- 表示输出到标准输出（直接显示在屏幕）<br>产生结果为sda.blktrace.xx ,xx表示cpu 的id，里面的内容需要用blkparse来看  </p>
-</blockquote>
-<pre><code>blkparse -i trace -o trace.txt
-</code></pre><blockquote>
-<p>-i 输入（trace.blktrace.xx…）<br>-o 输出  </p>
-</blockquote>
-<h3 id="输出内容分析"><a href="#输出内容分析" class="headerlink" title="输出内容分析"></a>输出内容分析</h3><blockquote>
-<p>见：<a href="http://linuxperf.com/?p=161" target="_blank" rel="noopener">http://linuxperf.com/?p=161</a>  </p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1708,7 +1855,7 @@ Linux 平台使用MCR编译该程序：  mcc -mv init.m
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1749,7 +1896,7 @@ Linux 平台使用MCR编译该程序：  mcc -mv init.m
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

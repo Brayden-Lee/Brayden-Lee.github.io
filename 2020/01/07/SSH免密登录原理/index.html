@@ -79,17 +79,19 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="SSH 免密登录原理SSH登录过程下面一张图解密SSH登录的过程： 先在自己的机器上生成一份公钥和私钥（ssh-keygen -t rsa），然后将公钥放在目标服务器的授权列表中；这个就是authorized_keys文件；验证过程：当你在自己机器上申请连接服务器时，目标服务器在authorized_keys中查找，若存在则利用这个公钥进行加密并返回给你所在机器，你自己的机器上会利用私钥进行解密">
 <meta property="og:type" content="article">
-<meta property="og:title" content="GUIDELINE">
-<meta property="og:url" content="http://yoursite.com/2018/04/03/hello-world/index.html">
+<meta property="og:title" content="SSH 免密登录原理">
+<meta property="og:url" content="http://yoursite.com/2020/01/07/SSH免密登录原理/index.html">
 <meta property="og:site_name" content="hb-lee 的博客">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="SSH 免密登录原理SSH登录过程下面一张图解密SSH登录的过程： 先在自己的机器上生成一份公钥和私钥（ssh-keygen -t rsa），然后将公钥放在目标服务器的授权列表中；这个就是authorized_keys文件；验证过程：当你在自己机器上申请连接服务器时，目标服务器在authorized_keys中查找，若存在则利用这个公钥进行加密并返回给你所在机器，你自己的机器上会利用私钥进行解密">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-08T01:40:11.078Z">
+<meta property="og:image" content="https://i.imgur.com/BYtjrQ5.png">
+<meta property="og:updated_time" content="2020-01-07T07:09:45.369Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="GUIDELINE">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="SSH 免密登录原理">
+<meta name="twitter:description" content="SSH 免密登录原理SSH登录过程下面一张图解密SSH登录的过程： 先在自己的机器上生成一份公钥和私钥（ssh-keygen -t rsa），然后将公钥放在目标服务器的授权列表中；这个就是authorized_keys文件；验证过程：当你在自己机器上申请连接服务器时，目标服务器在authorized_keys中查找，若存在则利用这个公钥进行加密并返回给你所在机器，你自己的机器上会利用私钥进行解密">
+<meta name="twitter:image" content="https://i.imgur.com/BYtjrQ5.png">
 
 
 
@@ -119,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/03/hello-world/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/01/07/SSH免密登录原理/"/>
 
 
 
 
 
-  <title>GUIDELINE | hb-lee 的博客</title>
+  <title>SSH 免密登录原理 | hb-lee 的博客</title>
   
 
 
@@ -232,7 +234,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/03/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/07/SSH免密登录原理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hb-lee">
@@ -249,7 +251,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">GUIDELINE</h1>
+          <h1 class="post-title" itemprop="name headline">SSH 免密登录原理</h1>
         
 
         <div class="post-meta">
@@ -261,8 +263,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-03T19:56:39+08:00">
-                2018-04-03
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-07T14:55:08+08:00">
+                2020-01-07
               </time>
             
 
@@ -299,15 +301,14 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <h1 id="SSH-免密登录原理"><a href="#SSH-免密登录原理" class="headerlink" title=" SSH 免密登录原理"></a> SSH 免密登录原理</h1><h3 id="SSH登录过程"><a href="#SSH登录过程" class="headerlink" title="SSH登录过程"></a>SSH登录过程</h3><p>下面一张图解密SSH登录的过程：<br><img src="https://i.imgur.com/BYtjrQ5.png" alt=""></p>
+<p>先在自己的机器上生成一份公钥和私钥（<code>ssh-keygen -t rsa</code>），然后将公钥放在目标服务器的授权列表中；这个就是<code>authorized_keys</code>文件；<br>验证过程：当你在自己机器上申请连接服务器时，目标服务器在<code>authorized_keys</code>中查找，若存在则利用这个公钥进行加密并返回给你所在机器，你自己的机器上会利用私钥进行解密，然后返回给要连接的机器，然后完成验证的过程。</p>
+<h3 id="免密登录配置"><a href="#免密登录配置" class="headerlink" title="免密登录配置"></a>免密登录配置</h3><h5 id="在源服务器上生成公钥和私钥"><a href="#在源服务器上生成公钥和私钥" class="headerlink" title="在源服务器上生成公钥和私钥"></a>在源服务器上生成公钥和私钥</h5><pre><code>ssh-keygen -t rsa
+</code></pre><blockquote>
+<p>默认会在<code>/root/.ssh</code>下生成<code>id_rsa</code>, <code>id_rsa_pub</code>文件</p>
+</blockquote>
+<h5 id="拷贝公钥到要登录的服务器"><a href="#拷贝公钥到要登录的服务器" class="headerlink" title="拷贝公钥到要登录的服务器"></a>拷贝公钥到要登录的服务器</h5><pre><code>ssh-copy-id [目标服务器IP]
+</code></pre><p>至此已经完成了源服务器到目标服务器上的免密登录。为了让一个集群中的节点相互之间互相免密登录，可以将<code>id_rsa</code>, <code>id_rsa.pub</code>拷贝一份到所有节点即可。</p>
 
       
     </div>
@@ -332,15 +333,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/11/19/mdtest测试/" rel="next" title="Mdtest测试工具使用">
+                <i class="fa fa-chevron-left"></i> Mdtest测试工具使用
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/08/mpi/" rel="prev" title="MPIRUN命令手册">
-                MPIRUN命令手册 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -454,7 +455,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SSH-免密登录原理"><span class="nav-number">1.</span> <span class="nav-text"> SSH 免密登录原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SSH登录过程"><span class="nav-number">1.0.1.</span> <span class="nav-text">SSH登录过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#免密登录配置"><span class="nav-number">1.0.2.</span> <span class="nav-text">免密登录配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#在源服务器上生成公钥和私钥"><span class="nav-number">1.0.2.0.1.</span> <span class="nav-text">在源服务器上生成公钥和私钥</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#拷贝公钥到要登录的服务器"><span class="nav-number">1.0.2.0.2.</span> <span class="nav-text">拷贝公钥到要登录的服务器</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>

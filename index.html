@@ -229,6 +229,310 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/07/SSH免密登录原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hb-lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hb-lee 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/01/07/SSH免密登录原理/" itemprop="url">SSH 免密登录原理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-07T14:55:08+08:00">
+                2020-01-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="SSH-免密登录原理"><a href="#SSH-免密登录原理" class="headerlink" title=" SSH 免密登录原理"></a> SSH 免密登录原理</h1><h3 id="SSH登录过程"><a href="#SSH登录过程" class="headerlink" title="SSH登录过程"></a>SSH登录过程</h3><p>下面一张图解密SSH登录的过程：<br><img src="https://i.imgur.com/BYtjrQ5.png" alt=""></p>
+<p>先在自己的机器上生成一份公钥和私钥（<code>ssh-keygen -t rsa</code>），然后将公钥放在目标服务器的授权列表中；这个就是<code>authorized_keys</code>文件；<br>验证过程：当你在自己机器上申请连接服务器时，目标服务器在<code>authorized_keys</code>中查找，若存在则利用这个公钥进行加密并返回给你所在机器，你自己的机器上会利用私钥进行解密，然后返回给要连接的机器，然后完成验证的过程。</p>
+<h3 id="免密登录配置"><a href="#免密登录配置" class="headerlink" title="免密登录配置"></a>免密登录配置</h3><h5 id="在源服务器上生成公钥和私钥"><a href="#在源服务器上生成公钥和私钥" class="headerlink" title="在源服务器上生成公钥和私钥"></a>在源服务器上生成公钥和私钥</h5><pre><code>ssh-keygen -t rsa
+</code></pre><blockquote>
+<p>默认会在<code>/root/.ssh</code>下生成<code>id_rsa</code>, <code>id_rsa_pub</code>文件</p>
+</blockquote>
+<h5 id="拷贝公钥到要登录的服务器"><a href="#拷贝公钥到要登录的服务器" class="headerlink" title="拷贝公钥到要登录的服务器"></a>拷贝公钥到要登录的服务器</h5><pre><code>ssh-copy-id [目标服务器IP]
+</code></pre><p>至此已经完成了源服务器到目标服务器上的免密登录。为了让一个集群中的节点相互之间互相免密登录，可以将<code>id_rsa</code>, <code>id_rsa.pub</code>拷贝一份到所有节点即可。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/19/mdtest测试/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hb-lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hb-lee 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/11/19/mdtest测试/" itemprop="url">Mdtest测试工具使用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-19T16:20:48+08:00">
+                2019-11-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Mdtest参数说明"><a href="#Mdtest参数说明" class="headerlink" title="Mdtest参数说明"></a>Mdtest参数说明</h3><table>
+<thead>
+<tr>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-F</td>
+<td>只创建文件</td>
+</tr>
+<tr>
+<td>-D</td>
+<td>只针对目录进行测试</td>
+</tr>
+<tr>
+<td>-L</td>
+<td>只在目录树的子目录层创建文件/目录</td>
+</tr>
+<tr>
+<td>-z</td>
+<td>目录树深度（从根到叶子节点的深度）</td>
+</tr>
+<tr>
+<td>-b</td>
+<td>目录树的分支数（非叶子节点的分支）</td>
+</tr>
+<tr>
+<td>-I</td>
+<td>每个节点下的目录或文件数</td>
+</tr>
+<tr>
+<td>-u</td>
+<td>为每个工作任务指定工作目录</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>指出测试运行的目录</td>
+</tr>
+<tr>
+<td>-i</td>
+<td>c测试循环的次数</td>
+</tr>
+<tr>
+<td>-n</td>
+<td>每个进程将要创建/统计/删除的目录和文件数目</td>
+</tr>
+<tr>
+<td>-w</td>
+<td>文件创建以后写入多少bytes</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>循环前的时间延迟</td>
+</tr>
+</tbody>
+</table>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/06/nova安装/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -789,250 +1093,6 @@ cd linux-nova-5.1
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/S3接口特点/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="hb-lee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hb-lee 的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/08/S3接口特点/" itemprop="url">S3的RESTful接口特点总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-08T22:36:24+08:00">
-                2019-07-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="S3的RESTful接口特点总结"><a href="#S3的RESTful接口特点总结" class="headerlink" title="S3的RESTful接口特点总结"></a>S3的RESTful接口特点总结</h1><ul>
-<li>删除桶</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DELETE /</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>分析：request无必要参数</p>
-</blockquote>
-<ul>
-<li>删除对象</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DELETE /obj</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>分析：request无必要参数</p>
-</blockquote>
-<ul>
-<li>列举桶中对象</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /  | GET /?xx</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>分析：request后面有可选参数</p>
-</blockquote>
-<ul>
-<li>删除多个对象（批量删）</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">POST /?delete</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>分析：request参数中带delete</p>
-</blockquote>
-<ul>
-<li>上传对象</li>
-</ul>
-<p>PUT 方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PUT /obj</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>分析：request无必要参数</p>
-</blockquote>
-<p>POST 方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">POST /</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>分析：待定，暂不考虑</p>
-</blockquote>
-<p>COPY 方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PUT /obj</span><br><span class="line">Host bucket.endpoint</span><br><span class="line">x-amz-copy-source /srcbucket/srcobj</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>分析：含有x-amz-copy-source选项，mv是会多一个Delete</p>
-</blockquote>
-<ul>
-<li>下载对象</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /obj</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>分析：request无必要参数</p>
-</blockquote>
-<ul>
-<li>分块上传</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PUT /obj?partNumber=xx&amp;uploadId=xx</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>分析：可以用带有uploadId参数来进行区分</p>
-</blockquote>
-<p><hr><br>Other</p>
-<hr>
-
-<ul>
-<li>删除Bucket的一些配置</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DELETE /&lt;bucket-name&gt;?someconfopt</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><bucket-name>是可选的，有一些要带这个，只要不是<code>/</code>则说明都不是删除桶</bucket-name></p>
-</blockquote>
-<ul>
-<li>获取Bucket的一些配置</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /?someconfopt</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>需要区别于<code>列举桶中对象</code>的请求</p>
-</blockquote>
-<ul>
-<li>HEAD 判断bucket是否存在和是否有访问权限</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HEAD /</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>HEAD标志</p>
-</blockquote>
-<ul>
-<li>设置Bucket的一些配置 (对象也是一致)</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PUT /?someconfopt</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>只要不是<code>/</code>则说明都不是创建桶</p>
-</blockquote>
-<ul>
-<li>创建桶</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PUT /</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>一定是<code>/</code></p>
-</blockquote>
-<ul>
-<li>获取对象属性</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /obj?attr</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>后面有参数</p>
-</blockquote>
-<ul>
-<li>HEAD返回对象元数据信息</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HEAD /obj</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>Head 标志，不是<code>/</code></p>
-</blockquote>
-<ul>
-<li>终止分段上传 （分段上传的都有<code>uploadId</code>这个参数）</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DELETE /obj?uploadId=xxx</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>需要用<code>uploadId</code>来区别其他的DELETE操作，比如区别删除对象操作</p>
-</blockquote>
-<h3 id="Ceph-Admin-API-管理接口"><a href="#Ceph-Admin-API-管理接口" class="headerlink" title="Ceph Admin API 管理接口"></a>Ceph Admin API 管理接口</h3><ul>
-<li>创建用户<blockquote>
-<p>PUT /admin/user?format=json&amp;uid=<uid>&amp;display-name=<name></name></uid></p>
-</blockquote>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/S3版本控制与生命周期/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1123,206 +1183,6 @@ cd linux-nova-5.1
 <li>如果一些对象数据在一段限定的时间内需要频繁访问，之后这些不再需要访问，可以通过指定对象的生命周期策略，实现后台存储数据从热存储向冷存储（存储成本更低）的自动迁移，从而降低存储成本。</li>
 </ul>
 
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/S3对象存储/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="hb-lee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hb-lee 的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/08/S3对象存储/" itemprop="url">S3（Simple Storage Service）对象存储简介及使用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-08T22:36:24+08:00">
-                2019-07-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="S3（Simple-Storage-Service）对象存储简介及使用"><a href="#S3（Simple-Storage-Service）对象存储简介及使用" class="headerlink" title="S3（Simple Storage Service）对象存储简介及使用"></a>S3（Simple Storage Service）对象存储简介及使用</h1><h3 id="什么是S3服务"><a href="#什么是S3服务" class="headerlink" title="什么是S3服务"></a>什么是S3服务</h3><p>S3是一套基于HTTP协议并采用RESTful风格构建起来的Web存储管理服务</p>
-<h3 id="S3的一些特点"><a href="#S3的一些特点" class="headerlink" title="S3的一些特点"></a>S3的一些特点</h3><ul>
-<li>存储桶是S3用于数据存储的基础容器</li>
-<li>存储桶中可以存储无限量的数据，每个对象最多5TB数据，使用开发人员分配的唯一密钥存储和检索每个对象</li>
-<li>身份验证机制</li>
-<li>访问接口使用基于标准的REST和SOAP接口，可以与任何Internet开发工具搭配使用</li>
-</ul>
-<h3 id="S3基本存储模型"><a href="#S3基本存储模型" class="headerlink" title="S3基本存储模型"></a>S3基本存储模型</h3><p>两种存储单元：Bucket和Object，扁平化存储结构，可以横向增加Bucket和Object，理论上可以存储无数个Object。</p>
-<p><img src="https://i.imgur.com/acPjn1t.png" alt=""></p>
-<ul>
-<li>对象（Object）</li>
-</ul>
-<p>S3存储的最小单位，数据不透明，元数据透明，数据和元数据一起存，还可以指定自定义元数据。在存储桶中，对象将由密钥（名称）和版本 ID 进行唯一地标识。</p>
-<ul>
-<li>存储桶（Bucket）</li>
-</ul>
-<p>存储对象的容器，名称要全局唯一，并且命名需要符合英文国际域名的命名规则。对象名为<code>mybucket</code>组成的URL为<code>http://mybucket.s3.cephbook.com</code>。</p>
-<h3 id="传统文件系统向S3的转变"><a href="#传统文件系统向S3的转变" class="headerlink" title="传统文件系统向S3的转变"></a>传统文件系统向S3的转变</h3><ul>
-<li>文件路径和数据存储</li>
-<li>文件元数据存储</li>
-</ul>
-<h5 id="解决文件路径和数据存储"><a href="#解决文件路径和数据存储" class="headerlink" title="解决文件路径和数据存储"></a>解决文件路径和数据存储</h5><p><img src="https://i.imgur.com/lhQgMNV.png" alt=""></p>
-<ul>
-<li>所有数据都存放在Bucket中，文件都是Object。</li>
-</ul>
-<blockquote>
-<p>个人理解文件夹不需要管，在路径中直接用”/“区分就行了（这个分割符可以指定），因此也没有了文件夹的元数据信息。目录样式演示是模拟出来的对象的层次结构。删除目录可以理解为删除具有该前缀的所有对象。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$ s3cmd ls s3://mybucket/in</span><br><span class="line">                       DIR   s3://mybucket/in/</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$ s3cmd ls s3://mybucket/in/mybucket</span><br><span class="line">                       DIR   s3://mybucket/in/mybucket/</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$ s3cmd ls s3://mybucket/in/mybucket/s3sdk.py</span><br><span class="line">2019-06-17 07:05      1094   s3://mybucket/in/mybucket/s3sdk.py</span><br></pre></td></tr></table></figure>
-<ul>
-<li>在key name中加上”/”来区分“文件夹”。</li>
-<li>文件数据内容作为Content存储在Object内。</li>
-</ul>
-<h5 id="解决文件元数据存储"><a href="#解决文件元数据存储" class="headerlink" title="解决文件元数据存储"></a>解决文件元数据存储</h5><p><img src="https://i.imgur.com/meDxXFV.png" alt=""></p>
-<p><img src="https://i.imgur.com/oTJd9Xk.png" alt=""></p>
-<p>两种存储的元数据对应关系： </p>
-<ul>
-<li>key name -&gt; 文件路径  </li>
-<li>etag -&gt; 文件md5  </li>
-<li>metadata(File size, Last mode, MIME type) -&gt; 文件的size/x-time这些</li>
-<li>ACL -&gt; 文件的acl/uid/gid这些</li>
-<li>Content-Type -&gt; MIME</li>
-</ul>
-<blockquote>
-<p>MIME用于设定某种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，浏览器会自动使用指定应用程序来打开。</p>
-</blockquote>
-<h3 id="S3的使用"><a href="#S3的使用" class="headerlink" title="S3的使用"></a>S3的使用</h3><h4 id="s3cmd-命令行形式访问（连接到其他第三方S3服务为例）"><a href="#s3cmd-命令行形式访问（连接到其他第三方S3服务为例）" class="headerlink" title="s3cmd 命令行形式访问（连接到其他第三方S3服务为例）"></a>s3cmd 命令行形式访问（连接到其他第三方S3服务为例）</h4><h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><pre><code>pip install s3cmd
-</code></pre><blockquote>
-<p>默认s3cmd会读取当前用户的$HOME/.s3cfg，可以使用-c参数手工指定配置文件路径。</p>
-</blockquote>
-<h5 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[default]</span><br><span class="line">access_key = XXXXXXX <span class="comment"># 填写access_key</span></span><br><span class="line">secret_key = XXXXXXX <span class="comment"># 填写secret_key</span></span><br><span class="line">default_mime_type = binary/octet-stream</span><br><span class="line">enable_multipart = True <span class="comment"># 启动分块上传</span></span><br><span class="line">encoding = UTF-8</span><br><span class="line">encrypt = False</span><br><span class="line">host_base = s3dev.nie.netease.com <span class="comment"># 接入点</span></span><br><span class="line">host_bucket = %(bucket)s.s3dev.nie.netease.com</span><br><span class="line">multipart_chunk_size_mb = 15 <span class="comment"># 分块上传大小</span></span><br><span class="line">socket_timeout = 300 <span class="comment"># 超时时长</span></span><br><span class="line">stop_on_error = False</span><br><span class="line">use_https = False <span class="comment"># 是否使用HTTPs</span></span><br><span class="line">use_mime_magic = True</span><br><span class="line">verbosity = WARNING</span><br><span class="line">signature_v2 = True <span class="comment"># 强制使用AWS2签名认证</span></span><br></pre></td></tr></table></figure>
-<h5 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h5><blockquote>
-<p>s3cmd –help 查看帮助</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd ls</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd mb s3://mybucket</span><br><span class="line">Bucket <span class="string">'s3://mybucket/'</span> created</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd rb s3://mybucket</span><br><span class="line">Bucket <span class="string">'s3://mybucket/'</span> removed</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd mb s3://mybucket</span><br><span class="line">Bucket <span class="string">'s3://mybucket/'</span> created</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd put hello.lua s3://mybucket</span><br><span class="line">upload: <span class="string">'hello.lua'</span> -&gt; <span class="string">'s3://mybucket/hello.lua'</span>  [1 of 1]</span><br><span class="line"> 15 of 15   100% <span class="keyword">in</span>    0s   120.37 B/s  <span class="keyword">done</span></span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd rb s3://mybucket</span><br><span class="line">ERROR: S3 error: 409 (BucketNotEmpty)    <span class="comment"># rb是删除空bucket，加--force可以删除（未启用版本控制）</span></span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd del s3://mybucket</span><br><span class="line">ERROR: Parameter problem: File name required, not only the bucket name. Alternatively use --recursive</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd del s3://mybucket/hello.lua</span><br><span class="line">delete: <span class="string">'s3://mybucket/hello.lua'</span></span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd ls s3://mybucket</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$</span><br></pre></td></tr></table></figure>
-<p>其他常用命令如：</p>
-<pre><code>s3cmd get s3://new_bucket/file # 下载file到本地
-s3cmd setacl s3://new_bucket/file --acl-public # 开启file的匿名访问权限,注意权限控制
-s3cmd info s3://new_bucket/file # 查看object属性信息
-s3cmd del s3://new_bucket --recursive --force # 递归删除bucket内的所有内容，慎用！
-s3cmd signurl s3://new_bucket/file +30 # 生成临时的url访问链接（30s有效时长）。
-s3cmd du s3://new_bucket # 查看bucket的信息
-s3cmd cp src dst # 复制
-s3cmd mv src dst # 移动
-</code></pre><h4 id="Python-SDK使用S3"><a href="#Python-SDK使用S3" class="headerlink" title="Python SDK使用S3"></a>Python SDK使用S3</h4><h5 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h5><pre><code>pip install boto
-</code></pre><blockquote>
-<p>boto 适用于Python 2.6 and 2.7环境，python 3.x推荐使用boto3</p>
-</blockquote>
-<p>新建、删除bucket实例：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> boto.s3.connection <span class="keyword">import</span> S3Connection</span><br><span class="line"><span class="keyword">import</span> boto</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启下面则启用AWS4认证,默认使用AWS2</span></span><br><span class="line"><span class="comment"># os.environ['S3_USE_SIGV4'] = 'True'</span></span><br><span class="line"></span><br><span class="line">endpoint = <span class="string">'s3dev.nie.netease.com'</span> <span class="comment">#S3服务的endpoint地址</span></span><br><span class="line">bucket_name = <span class="string">'mk_by_python'</span> <span class="comment">#bucket名称</span></span><br><span class="line">access_key = <span class="string">'XXXXXXX'</span> <span class="comment">#access-key</span></span><br><span class="line">secret_key = <span class="string">'XXXXXXX'</span> <span class="comment">#secret key</span></span><br><span class="line"></span><br><span class="line">conn = boto.connect_s3(</span><br><span class="line">    aws_access_key_id=access_key,</span><br><span class="line">    aws_secret_access_key=secret_key,</span><br><span class="line">    host=endpoint,</span><br><span class="line">    is_secure=<span class="keyword">False</span>, <span class="comment">#不使用HTTPS</span></span><br><span class="line">    calling_format=boto.s3.connection.SubdomainCallingFormat(), <span class="comment">#使用virtual-hosted-style,推荐使用</span></span><br><span class="line">    <span class="comment"># calling_format=boto.s3.connection.OrdinaryCallingFormat(), #使用path-style</span></span><br><span class="line">    validate_certs=<span class="keyword">True</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">buckets = conn.get_all_buckets() <span class="comment">#获取当前bucket列表</span></span><br><span class="line"><span class="keyword">print</span> buckets</span><br><span class="line">bucket = conn.create_bucket(bucket_name) <span class="comment">#新建bucket</span></span><br><span class="line">buckets = conn.get_all_buckets() <span class="comment">#获取当前bucket列表</span></span><br><span class="line"><span class="keyword">print</span> buckets</span><br><span class="line">conn.delete_bucket(bucket_name) <span class="comment">#删除bucket</span></span><br><span class="line">buckets = conn.get_all_buckets()</span><br><span class="line"><span class="keyword">print</span> buckets</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>输出</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$ python s3sdk.py </span><br><span class="line">[&lt;Bucket: mybucket&gt;]</span><br><span class="line">[&lt;Bucket: mk_by_python&gt;, &lt;Bucket: mybucket&gt;]</span><br><span class="line">[&lt;Bucket: mybucket&gt;]</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$</span><br></pre></td></tr></table></figure>
-<h5 id="Python接口"><a href="#Python接口" class="headerlink" title="Python接口"></a>Python接口</h5><blockquote>
-<p>bucket相关</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">conn.create_bucket(bucket_name)  <span class="comment"># 新建bucket</span></span><br><span class="line">conn.get_all_buckets()  <span class="comment"># 获取当前bucket列表</span></span><br><span class="line">conn.delete_bucket(bucket_name)  <span class="comment"># 删除bucket</span></span><br><span class="line">bucket.get_acl()  <span class="comment"># 获取bucket ACL</span></span><br><span class="line">bucket.get_xml_acl()  <span class="comment"># 获取bucket ACL的xml格式描述</span></span><br><span class="line">bucket.set_acl(<span class="string">'private'</span>)  <span class="comment"># 设置bucket ACL，可以选:private,public-read,public-read-write,authenticated-read这些</span></span><br><span class="line">bucket.set_xml_acl(xml_acl)  <span class="comment"># 以XML格式进行设置</span></span><br><span class="line">bucket.add_user_grant(<span class="string">'WRITE'</span>,<span class="string">'test1'</span>) <span class="comment"># 对‘test1’这个用户赋予‘WRITE’权限 # bucket新增用户ACL，可选:READ, WRITE, READ_ACP, WRITE_ACP, FULL_CONTROL</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>object相关</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">key_ = bucket.new_key(key_name)  <span class="comment"># 生成一个key</span></span><br><span class="line">key_.set_contents_from_filename(local_file)  <span class="comment"># 上传文件 [与上一条命令一起用]</span></span><br><span class="line"><span class="comment"># 两种删除方式</span></span><br><span class="line">key_.delete()</span><br><span class="line">bucket.delete_key(key_name)</span><br><span class="line">bucket.get_all_keys(prefix=<span class="string">'user1_23695/'</span>)  <span class="comment"># 按指定prefix查询bucket中对应的Object列表,注意默认最多返回1000条记录</span></span><br><span class="line">bucket.delete_keys(file_list)  <span class="comment"># 批量删除Object</span></span><br><span class="line">key_.get_xml_acl()  <span class="comment"># 获取XML格式的Object的ACL信息 </span></span><br><span class="line">key_.get_acl()  <span class="comment"># 获取Object的ACL</span></span><br><span class="line">key_.set_acl(<span class="string">'public-read'</span>)  <span class="comment"># 方式1，设置Object的ACL</span></span><br><span class="line">key_.set_canned_acl(<span class="string">'public-read'</span>)  <span class="comment"># 方式2，设置Object的ACL</span></span><br><span class="line">key_.set_xml_acl(acl_xml)  <span class="comment"># 方式3，设置Object的ACL</span></span><br><span class="line">key_.add_user_grant(<span class="string">'READ'</span>,<span class="string">'test1'</span>)  <span class="comment"># 对‘test1’这个用户添加READ权限。 #添加用户授权，可选权限有:READ, WRITE, READ_ACP, WRITE_ACP, FULL_CONTROL</span></span><br><span class="line">key_.set_metadata(<span class="string">'key'</span>,<span class="string">'value'</span>)  <span class="comment"># 设置Object的metadata，注意必须在上传Object之前做好初始化设置</span></span><br><span class="line"><span class="comment">#获取Object的metadata</span></span><br><span class="line">key_ = bucket.get_key(key_name)</span><br><span class="line"><span class="keyword">print</span> key_.get_metadata(<span class="string">'key'</span>)</span><br><span class="line">key_.get_contents_to_filename(down_file)  <span class="comment"># 下载Object，保存为本地的‘/tmp/download.file’</span></span><br></pre></td></tr></table></figure>
           
         
       
@@ -1583,7 +1443,7 @@ s3cmd mv src dst # 移动
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/Ceph部署/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/S3接口特点/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hb-lee">
@@ -1602,7 +1462,7 @@ s3cmd mv src dst # 移动
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/07/08/Ceph部署/" itemprop="url">Ceph环境搭建 （Debian发行版为例）</a></h1>
+                <a class="post-title-link" href="/2019/07/08/S3接口特点/" itemprop="url">S3的RESTful接口特点总结</a></h1>
         
 
         <div class="post-meta">
@@ -1614,7 +1474,7 @@ s3cmd mv src dst # 移动
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-08T22:36:05+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-08T22:36:24+08:00">
                 2019-07-08
               </time>
             
@@ -1654,90 +1514,132 @@ s3cmd mv src dst # 移动
       
         
           
-            <h1 id="Ceph环境搭建-（Debian发行版为例）"><a href="#Ceph环境搭建-（Debian发行版为例）" class="headerlink" title="Ceph环境搭建 （Debian发行版为例）"></a>Ceph环境搭建 （Debian发行版为例）</h1><blockquote>
-<p>ref:<a href="http://docs.ceph.com/docs/master/start" target="_blank" rel="noopener">http://docs.ceph.com/docs/master/start</a></p>
-</blockquote>
-<p>注：一个ceph存储集群需要至少一个Ceph Monitor和至少两个Ceph OSD Daemons  </p>
-<h3 id="安装前的了解"><a href="#安装前的了解" class="headerlink" title="安装前的了解"></a>安装前的了解</h3><h5 id="安装版本"><a href="#安装版本" class="headerlink" title="安装版本"></a>安装版本</h5><p>L版本安装：echo deb <a href="http://download.ceph.com/debian-luminous/" target="_blank" rel="noopener">http://download.ceph.com/debian-luminous/</a> $(lsb_release -sc) main | sudo tee /etc/apt/sources.list.d/ceph.list</p>
-<h5 id="普通用户免密码sudo设置"><a href="#普通用户免密码sudo设置" class="headerlink" title="普通用户免密码sudo设置"></a>普通用户免密码sudo设置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">su root</span><br><span class="line">chmod u+w /etc/sudoers</span><br><span class="line">vim /etc/sudoers</span><br><span class="line">添加 lihongbo01 ALL=(ALL) NOPASSWD: ALL这一行，替换`lihongbo01`为你的用户名即可；</span><br></pre></td></tr></table></figure>
-<h5 id="ssh默认端口号问题-（不是22"><a href="#ssh默认端口号问题-（不是22" class="headerlink" title="ssh默认端口号问题 （不是22)"></a>ssh默认端口号问题 （不是22)</h5><p>解决方案：编辑<code>~/.ssh/config</code>文件，内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Port 32200</span><br><span class="line">Host cld-unknown212867</span><br><span class="line">    Hostname cld-unknown212867</span><br><span class="line">    User lihongbo01</span><br><span class="line">Host cld-unknown212868</span><br><span class="line">    Hostname cld-unknown212868</span><br><span class="line">    User lihongbo01</span><br><span class="line">Host cld-unknown212869</span><br><span class="line">    Hostname cld-unknown212869</span><br><span class="line">    User lihongbo01</span><br></pre></td></tr></table></figure>
-<h3 id="安装步骤-lt-在此之前请配置好免密登录和节点时间同步，参考官网Pre-flight-gt"><a href="#安装步骤-lt-在此之前请配置好免密登录和节点时间同步，参考官网Pre-flight-gt" class="headerlink" title="安装步骤 &lt;在此之前请配置好免密登录和节点时间同步，参考官网Pre-flight&gt;"></a>安装步骤 &lt;在此之前请配置好免密登录和节点时间同步，参考官网Pre-flight&gt;</h3><pre><code>wget -q -O- &apos;https://download.ceph.com/keys/release.asc&apos; | sudo apt-key add -
-echo deb http://download.ceph.com/debian-{ceph-stable-release}/ $(lsb_release -sc) main | sudo tee /etc/apt/sources.list.d/ceph.list 【版本如：luminous】
-sudo apt-get update &amp;&amp; sudo apt-get install ceph-deploy
-</code></pre><blockquote>
-<p>1.注意：debian安装mimic版本时，用ceph-deploy安装不能安装到最新的，只能安装到<code>Candidate: 10.2.11-2</code>的，可以通过<code>apt-cache policy ceph-common</code>查看；而lumious可以安装到<code>12.2.10</code>。</p>
-</blockquote>
+            <h1 id="S3的RESTful接口特点总结"><a href="#S3的RESTful接口特点总结" class="headerlink" title="S3的RESTful接口特点总结"></a>S3的RESTful接口特点总结</h1><ul>
+<li>删除桶</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DELETE /</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>2.软件不知道怎么安装可以用： apt-file search xxx</p>
+<p>分析：request无必要参数</p>
 </blockquote>
-<p>接着执行：</p>
-<pre><code>mkdir my-cluster
-cd my-cluster
-ceph-deploy new cld-unknown212867
-vim ceph.conf
-添加：osd pool default size = 2 ## 放到ceph.conf中修改副本数为2
-ceph-deploy install --release luminous cld-unknown212867 cld-unknown212868 cld-unknown212869
-ceph-deploy mon create-initial
-ceph-deploy admin cld-unknown212867 cld-unknown212868 cld-unknown212869
-ceph-deploy mgr create cld-unknown212867 *Required only for luminous+ builds, i.e &gt;= 12.x builds*
-</code></pre><h5 id="1-以loop来做虚拟盘-lt-考虑到当前节点没有额外盘-gt-—-失败"><a href="#1-以loop来做虚拟盘-lt-考虑到当前节点没有额外盘-gt-—-失败" class="headerlink" title="1. 以loop来做虚拟盘&lt;考虑到当前节点没有额外盘&gt;   —- 失败"></a>1. 以loop来做虚拟盘&lt;考虑到当前节点没有额外盘&gt;   —- 失败</h5><p>接着我们来添加OSDs，我们首先虚拟一个块设备（用<code>dd</code>命令）：</p>
-<pre><code>dd if=/dev/zero of=1G.img bs=1M count=1000  # OSD节点上虚拟一个1G的块设备
-ceph-deploy osd create --data /home/lihongbo01/dev/1G.img cld-unknown212868 【MON节点上执行的】
-</code></pre><blockquote>
-<p>经过多次尝试，用loop来做设备失败。 【可能还没有完全支持】</p>
-</blockquote>
-<h5 id="2-【添加盘后添加OSD成功】-—-成功"><a href="#2-【添加盘后添加OSD成功】-—-成功" class="headerlink" title="2. 【添加盘后添加OSD成功】     —- 成功"></a>2. 【添加盘后添加OSD成功】     —- 成功</h5><pre><code>ceph-deploy osd create --data /dev/vdd cld-unknown212868 
-ceph-deploy osd create --data /dev/vdd cld-unknown212869
-</code></pre><blockquote>
-<p>创建OSD时最终会调用ceph-volume，这时<code>--data</code>已经不能是目录了，而须一个<code>disk</code>，可参见问题部分查看<code>disk.py</code>代码来理解。</p>
-</blockquote>
-<h5 id="查看成功"><a href="#查看成功" class="headerlink" title="查看成功"></a>查看成功</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212867:~/my-cluster$ sudo ceph health</span><br><span class="line">HEALTH_OK</span><br><span class="line">lihongbo01@cld-unknown212867:~/my-cluster$ sudo ceph -s</span><br><span class="line">  cluster:</span><br><span class="line">    id:     67170b2c-c545-4efb-80cb-810256529f34</span><br><span class="line">    health: HEALTH_OK</span><br><span class="line"> </span><br><span class="line">  services:</span><br><span class="line">    mon: 1 daemons, quorum cld-unknown212867</span><br><span class="line">    mgr: cld-unknown212867(active)</span><br><span class="line">    osd: 2 osds: 2 up, 2 in</span><br><span class="line"> </span><br><span class="line">  data:</span><br><span class="line">    pools:   0 pools, 0 pgs</span><br><span class="line">    objects: 0 objects, 0B</span><br><span class="line">    usage:   2.00GiB used, 98.0GiB / 100GiB avail</span><br><span class="line">    pgs:</span><br></pre></td></tr></table></figure>
+<ul>
+<li>删除对象</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DELETE /obj</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>一定要加sudo查看</p>
+<p>分析：request无必要参数</p>
 </blockquote>
-<h5 id="中途安装失败删除命令："><a href="#中途安装失败删除命令：" class="headerlink" title="中途安装失败删除命令："></a>中途安装失败删除命令：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ceph-deploy purge &#123;ceph-node&#125; [&#123;ceph-node&#125;]</span><br><span class="line">ceph-deploy purgedata &#123;ceph-node&#125; [&#123;ceph-node&#125;]</span><br><span class="line">ceph-deploy forgetkeys</span><br><span class="line">rm ceph.*</span><br></pre></td></tr></table></figure>
+<ul>
+<li>列举桶中对象</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /  | GET /?xx</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>注意要加上–release luminous才会安装该版本的，不然就安装默认的了，当前<code>ceph-deploy</code>是2.0.1版本，Debian上默认安装Ceph是10.2.11版本的。</p>
+<p>分析：request后面有可选参数</p>
 </blockquote>
-<p><hr><br>以下是以loop虚拟设备来做OSD时遇到的问题即解决方法：</p>
-<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><blockquote>
-<p>添加OSD不成功</p>
+<ul>
+<li>删除多个对象（批量删）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">POST /?delete</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>分析：request参数中带delete</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">[node4][DEBUG ]  stderr: 12: (main()+0x2c58) [0x7f8e8dc18c18]</span><br><span class="line">[node4][DEBUG ]  stderr: 13: (__libc_start_main()+0xf5) [0x7f8e808c03d5]</span><br><span class="line">[node4][DEBUG ]  stderr: 14: (()+0x384ab0) [0x7f8e8dcf0ab0]</span><br><span class="line">[node4][DEBUG ]  stderr: NOTE: a copy of the executable, or `objdump -rdS &lt;executable&gt;` is needed to interpret this.</span><br><span class="line">[node4][DEBUG ] --&gt; Was unable to complete a new OSD, will rollback changes</span><br><span class="line">[node4][DEBUG ] Running command: /bin/ceph --cluster ceph --name client.bootstrap-osd --keyring /var/lib/ceph/bootstrap-osd/ceph.keyring osd purge-new osd.3 --yes-i-really-mean-it</span><br><span class="line">[node4][DEBUG ]  stderr: purged osd.3</span><br><span class="line">[node4][ERROR ] RuntimeError: command returned non-zero exit status: 1</span><br><span class="line">[ceph_deploy.osd][ERROR ] Failed to execute command: /usr/sbin/ceph-volume --cluster ceph lvm create --bluestore --data /dev/sdc --block.wal /dev/sdb2 --block.db /dev/sdb1</span><br><span class="line">[ceph_deploy][ERROR ] GenericError: Failed to create 1 OSDs</span><br><span class="line"></span><br><span class="line">修复：</span><br><span class="line">node节点卸载挂载分区</span><br><span class="line">[root@node4 ~]# umount /var/lib/ceph/osd/ceph-3</span><br><span class="line">查看lvs</span><br><span class="line"></span><br><span class="line">[root@node4 ~]# lvs</span><br><span class="line">  LV                                             VG                                        Attr       LSize  Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert</span><br><span class="line">  osd-block-ab4df89f-8682-4233-b683-e05c161089a4 ceph-183df03c-83fb-441c-a82e-d7b560e1a611 -wi-a----- 50.00g                                                    </span><br><span class="line">  root                                           cl                                        -wi-ao---- 35.12g                                                    </span><br><span class="line">  swap                                           cl                                        -wi-ao----  3.88g        </span><br><span class="line"></span><br><span class="line">删除lv，vg，pv</span><br><span class="line">[root@node4 ~]# lvremove osd-block-ab4df89f-8682-4233-b683-e05c161089a4 ceph-183df03c-83fb-441c-a82e-d7b560e1a611</span><br><span class="line">  Volume group &quot;osd-block-ab4df89f-8682-4233-b683-e05c161089a4&quot; not found</span><br><span class="line">  Cannot process volume group osd-block-ab4df89f-8682-4233-b683-e05c161089a4</span><br><span class="line">Do you really want to remove active logical volume ceph-183df03c-83fb-441c-a82e-d7b560e1a611/osd-block-ab4df89f-8682-4233-b683-e05c161089a4? [y/n]: y</span><br><span class="line">  Logical volume &quot;osd-block-ab4df89f-8682-4233-b683-e05c161089a4&quot; successfully removed</span><br><span class="line"></span><br><span class="line">[root@node4 ~]# vgremove  ceph-183df03c-83fb-441c-a82e-d7b560e1a611</span><br><span class="line">  Volume group &quot;ceph-183df03c-83fb-441c-a82e-d7b560e1a611&quot; successfully removed</span><br><span class="line"></span><br><span class="line">[root@node4 ~]# pvremove /dev/sdc</span><br><span class="line">  Labels on physical volume &quot;/dev/sdc&quot; successfully wiped.</span><br><span class="line"></span><br><span class="line">删除/var/lib/ceph/osd/ 所有</span><br><span class="line">[root@node4 ~]# rm /var/log/ceph/ceph-* -rf</span><br><span class="line"></span><br><span class="line">删除 ceph 日志</span><br><span class="line">[root@node4 ~]# rm -rf /var/lib/ceph/*</span><br><span class="line"></span><br><span class="line">monitor1 上重置node4 的sdc分区</span><br><span class="line">[root@monitor1 ceph-cluster]# ceph-deploy disk zap node4 /dev/sdc</span><br><span class="line"></span><br><span class="line">monitor1 上重新创建osd节点</span><br><span class="line">[root@monitor1 ceph-cluster]# ceph-deploy osd create node4 --bluestore --data /dev/sdc --block-db /dev/sdb1 --block-wal /dev/sdb2</span><br></pre></td></tr></table></figure>
-<h3 id="【实践失败】"><a href="#【实践失败】" class="headerlink" title="【实践失败】"></a>【实践失败】</h3><h3 id="loop设备做块设备"><a href="#loop设备做块设备" class="headerlink" title="loop设备做块设备"></a>loop设备做块设备</h3><p>需要修改两处：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/lib/python2.7/dist-packages/ceph_volume/util/disk.py +332  修改为：return TYPE == &apos;disk&apos; or &apos;loop&apos;</span><br><span class="line">vim /usr/lib/python2.7/dist-packages/ceph_volume/util/disk.py +417  True ==&gt; False</span><br></pre></td></tr></table></figure></p>
-<p>ref:<a href="https://www.netways.de/blog/2018/11/14/ceph-mimic-using-loop-devices-as-osd/" target="_blank" rel="noopener">https://www.netways.de/blog/2018/11/14/ceph-mimic-using-loop-devices-as-osd/</a></p>
-<h4 id="清理操作"><a href="#清理操作" class="headerlink" title="清理操作"></a>清理操作</h4><pre><code>sudo lvs (vgscan)
-sudo vgremove ceph-9eee83f3-8b17-4b3f-b53e-62bf4977733b -y
-lsblk
-</code></pre><p><hr><br>华丽的分割线</p>
+<ul>
+<li>上传对象</li>
+</ul>
+<p>PUT 方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PUT /obj</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>分析：request无必要参数</p>
+</blockquote>
+<p>POST 方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">POST /</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>分析：待定，暂不考虑</p>
+</blockquote>
+<p>COPY 方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PUT /obj</span><br><span class="line">Host bucket.endpoint</span><br><span class="line">x-amz-copy-source /srcbucket/srcobj</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>分析：含有x-amz-copy-source选项，mv是会多一个Delete</p>
+</blockquote>
+<ul>
+<li>下载对象</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /obj</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>分析：request无必要参数</p>
+</blockquote>
+<ul>
+<li>分块上传</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PUT /obj?partNumber=xx&amp;uploadId=xx</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>分析：可以用带有uploadId参数来进行区分</p>
+</blockquote>
+<p><hr><br>Other</p>
 <hr>
 
-<h3 id="Ceph对象网关部署-可部署多个"><a href="#Ceph对象网关部署-可部署多个" class="headerlink" title="Ceph对象网关部署 (可部署多个)"></a>Ceph对象网关部署 (可部署多个)</h3><p>使用命令在 Ceph 对象网关节点上新建一个 Ceph对象网关实例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph-deploy rgw create cld-unknown212868</span><br></pre></td></tr></table></figure>
+<ul>
+<li>删除Bucket的一些配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DELETE /&lt;bucket-name&gt;?someconfopt</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>需要开放7480端口：iptables -I INPUT 1 -p tcp -m tcp –dport 7480 -j ACCEPT</p>
+<p><bucket-name>是可选的，有一些要带这个，只要不是<code>/</code>则说明都不是删除桶</bucket-name></p>
 </blockquote>
-<p>测试及效果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">curl http://cld-unknown212868:7480</span><br><span class="line"></span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;ListAllMyBucketsResult xmlns=&quot;http://s3.amazonaws.com/doc/2006-03-01/&quot;&gt;</span><br><span class="line">  &lt;Owner&gt;</span><br><span class="line">    &lt;ID&gt;anonymous&lt;/ID&gt;</span><br><span class="line">    &lt;DisplayName&gt;&lt;/DisplayName&gt;</span><br><span class="line">  &lt;/Owner&gt;</span><br><span class="line">  &lt;Buckets&gt;</span><br><span class="line">  &lt;/Buckets&gt;</span><br><span class="line">&lt;/ListAllMyBucketsResult&gt;</span><br></pre></td></tr></table></figure>
-<p>即表示安装成功。</p>
-<h5 id="创建S3用户"><a href="#创建S3用户" class="headerlink" title="创建S3用户"></a>创建S3用户</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212867:~/my-cluster$ sudo radosgw-admin user create --uid=&quot;lhb&quot; --display-name=&quot;First User&quot;</span><br><span class="line">&#123;</span><br><span class="line">    &quot;user_id&quot;: &quot;lhb&quot;,</span><br><span class="line">    &quot;display_name&quot;: &quot;First User&quot;,</span><br><span class="line">    &quot;email&quot;: &quot;&quot;,</span><br><span class="line">    &quot;suspended&quot;: 0,</span><br><span class="line">    &quot;max_buckets&quot;: 1000,</span><br><span class="line">    &quot;auid&quot;: 0,</span><br><span class="line">    &quot;subusers&quot;: [],</span><br><span class="line">    &quot;keys&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;user&quot;: &quot;lhb&quot;,</span><br><span class="line">            &quot;access_key&quot;: &quot;KSOF3PIEDDNI7KP4I1HC&quot;,</span><br><span class="line">            &quot;secret_key&quot;: &quot;f6N9wvBWbfviV0R5TaGUHYCXZKWCTfmMPDIQf4hF&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    &quot;swift_keys&quot;: [],</span><br><span class="line">    &quot;caps&quot;: [],</span><br><span class="line">    &quot;op_mask&quot;: &quot;read, write, delete&quot;,</span><br><span class="line">    &quot;default_placement&quot;: &quot;&quot;,</span><br><span class="line">    &quot;placement_tags&quot;: [],</span><br><span class="line">    &quot;bucket_quota&quot;: &#123;</span><br><span class="line">        &quot;enabled&quot;: false,</span><br><span class="line">        &quot;check_on_raw&quot;: false,</span><br><span class="line">        &quot;max_size&quot;: -1,</span><br><span class="line">        &quot;max_size_kb&quot;: 0,</span><br><span class="line">        &quot;max_objects&quot;: -1</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;user_quota&quot;: &#123;</span><br><span class="line">        &quot;enabled&quot;: false,</span><br><span class="line">        &quot;check_on_raw&quot;: false,</span><br><span class="line">        &quot;max_size&quot;: -1,</span><br><span class="line">        &quot;max_size_kb&quot;: 0,</span><br><span class="line">        &quot;max_objects&quot;: -1</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;temp_url_keys&quot;: [],</span><br><span class="line">    &quot;type&quot;: &quot;rgw&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>获取Bucket的一些配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /?someconfopt</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>目前只能使用path-style来访问，hosted-style需要另外配置。</p>
+<p>需要区别于<code>列举桶中对象</code>的请求</p>
 </blockquote>
-<h5 id="修改了配置文件（如网关端口号）"><a href="#修改了配置文件（如网关端口号）" class="headerlink" title="修改了配置文件（如网关端口号）"></a>修改了配置文件（如网关端口号）</h5><pre><code>ceph-deploy --overwrite-conf config push &lt;gateway-node&gt; [&lt;other-nodes&gt;] # 将该配置文件推送到你的 Ceph 对象网关节点
-sudo service radosgw restart id=rgw.&lt;short-hostname&gt;  # 重启Ceph对象网关
-</code></pre><h5 id="提供泛域名解析能力"><a href="#提供泛域名解析能力" class="headerlink" title="提供泛域名解析能力"></a>提供泛域名解析能力</h5><p>Ceph对象存储网关支持两种访问模式：<code>path-style</code>和<code>host-style</code>；默认的支持<code>path-style</code>，即<code>http://cld-unknown212868/bucket</code>；要想以类似S3的<code>host-style</code>进行访问，即用<code>http://bucket.cld-unknown212868/obj</code>来进行访问，需要配置泛域名解析，此处用到<code>dnsmasq</code>工具。</p>
-<pre><code>sudo apt-get install dnsmasq -y
-vim /etc/resolv.conf    【改为：nameserver 127.0.0.1】
-vim /etc/resolv.dnsmasq.conf    【将原来resolv.conf的内容写在这个文件里面】
-</code></pre><p>接着编辑dnsmqsq配置文件，在<code>/etc/dnsmasq.conf</code>中加入一下内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">address=/.cld-unknown212868/10.202.42.147</span><br><span class="line">address=/.cld-unknown212868.i.nease.net/10.202.42.147</span><br><span class="line">resolv-file=/etc/resolv.dnsmasq.conf</span><br><span class="line">conf-dir=/etc/dnsmasq.d</span><br><span class="line">conf-dir=/etc/dnsmasq.d/,*.conf</span><br></pre></td></tr></table></figure>
+<ul>
+<li>HEAD 判断bucket是否存在和是否有访问权限</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HEAD /</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>此配置的含义是将<code>xxx.cld-unknown212868</code>的路径都转到10.202.42.147这个地址；</p>
+<p>HEAD标志</p>
 </blockquote>
-<p>然后重启dnsmasq服务：<code>/etc/init.d/dnsmasq restart</code></p>
-<h6 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212868:~/workspace/ceph_workspace$ ping bucket.cld-unknown212868</span><br><span class="line">PING bucket.cld-unknown212868 (10.202.42.147) 56(84) bytes of data.</span><br><span class="line">64 bytes from cld-unknown212868.i.nease.net (10.202.42.147): icmp_seq=1 ttl=64 time=0.045 ms</span><br><span class="line">64 bytes from cld-unknown212868.i.nease.net (10.202.42.147): icmp_seq=2 ttl=64 time=0.064 ms</span><br><span class="line">64 bytes from cld-unknown212868.i.nease.net (10.202.42.147): icmp_seq=3 ttl=64 time=0.065 ms</span><br><span class="line">64 bytes from cld-unknown212868.i.nease.net (10.202.42.147): icmp_seq=4 ttl=64 time=0.043 ms</span><br><span class="line">^C</span><br><span class="line">--- bucket.cld-unknown212868 ping statistics ---</span><br><span class="line">4 packets transmitted, 4 received, 0% packet loss, time 3075ms</span><br><span class="line">rtt min/avg/max/mdev = 0.043/0.054/0.065/0.011 ms</span><br></pre></td></tr></table></figure>
+<ul>
+<li>设置Bucket的一些配置 (对象也是一致)</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PUT /?someconfopt</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>只要不是<code>/</code>则说明都不是创建桶</p>
+</blockquote>
+<ul>
+<li>创建桶</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PUT /</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>一定是<code>/</code></p>
+</blockquote>
+<ul>
+<li>获取对象属性</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /obj?attr</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>后面有参数</p>
+</blockquote>
+<ul>
+<li>HEAD返回对象元数据信息</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HEAD /obj</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Head 标志，不是<code>/</code></p>
+</blockquote>
+<ul>
+<li>终止分段上传 （分段上传的都有<code>uploadId</code>这个参数）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DELETE /obj?uploadId=xxx</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>需要用<code>uploadId</code>来区别其他的DELETE操作，比如区别删除对象操作</p>
+</blockquote>
+<h3 id="Ceph-Admin-API-管理接口"><a href="#Ceph-Admin-API-管理接口" class="headerlink" title="Ceph Admin API 管理接口"></a>Ceph Admin API 管理接口</h3><ul>
+<li>创建用户<blockquote>
+<p>PUT /admin/user?format=json&amp;uid=<uid>&amp;display-name=<name></name></uid></p>
+</blockquote>
+</li>
+</ul>
+
           
         
       
@@ -1785,7 +1687,7 @@ vim /etc/resolv.dnsmasq.conf    【将原来resolv.conf的内容写在这个文�
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/Ceph集群使用/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/S3对象存储/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hb-lee">
@@ -1804,7 +1706,7 @@ vim /etc/resolv.dnsmasq.conf    【将原来resolv.conf的内容写在这个文�
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/07/08/Ceph集群使用/" itemprop="url">Ceph集群使用---常用命令</a></h1>
+                <a class="post-title-link" href="/2019/07/08/S3对象存储/" itemprop="url">S3（Simple Storage Service）对象存储简介及使用</a></h1>
         
 
         <div class="post-meta">
@@ -1816,7 +1718,7 @@ vim /etc/resolv.dnsmasq.conf    【将原来resolv.conf的内容写在这个文�
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-08T22:36:05+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-08T22:36:24+08:00">
                 2019-07-08
               </time>
             
@@ -1856,112 +1758,88 @@ vim /etc/resolv.dnsmasq.conf    【将原来resolv.conf的内容写在这个文�
       
         
           
-            <h1 id="Ceph集群使用—常用命令"><a href="#Ceph集群使用—常用命令" class="headerlink" title="Ceph集群使用—常用命令"></a>Ceph集群使用—常用命令</h1><h3 id="背景知识"><a href="#背景知识" class="headerlink" title="背景知识"></a>背景知识</h3><h5 id="ceph中的pool、PG、OSD的关系"><a href="#ceph中的pool、PG、OSD的关系" class="headerlink" title="ceph中的pool、PG、OSD的关系"></a>ceph中的pool、PG、OSD的关系</h5><p>Pool每个pool是逻辑上的隔离单位，不同的pool可以有完全不一样的数据处理方式，它规定了数据冗余的类型和对应的副本分布策略；支持两种类型：副本（replicated）和 纠删码（ Erasure Code）<br>PG（ placement group）是一个放置策略组，它是对象的集合，该集合里的所有对象都具有相同的放置策略；简单点说就是相同PG内的对象都会放到相同的硬盘上； PG是 ceph的核心概念， 服务端数据均衡和恢复的最小粒度就是PG；<br>OSD是负责物理存储的进程，一般配置成和磁盘一一对应，一块磁盘启动一个OSD进程；<br>关系如下：</p>
+            <h1 id="S3（Simple-Storage-Service）对象存储简介及使用"><a href="#S3（Simple-Storage-Service）对象存储简介及使用" class="headerlink" title="S3（Simple Storage Service）对象存储简介及使用"></a>S3（Simple Storage Service）对象存储简介及使用</h1><h3 id="什么是S3服务"><a href="#什么是S3服务" class="headerlink" title="什么是S3服务"></a>什么是S3服务</h3><p>S3是一套基于HTTP协议并采用RESTful风格构建起来的Web存储管理服务</p>
+<h3 id="S3的一些特点"><a href="#S3的一些特点" class="headerlink" title="S3的一些特点"></a>S3的一些特点</h3><ul>
+<li>存储桶是S3用于数据存储的基础容器</li>
+<li>存储桶中可以存储无限量的数据，每个对象最多5TB数据，使用开发人员分配的唯一密钥存储和检索每个对象</li>
+<li>身份验证机制</li>
+<li>访问接口使用基于标准的REST和SOAP接口，可以与任何Internet开发工具搭配使用</li>
+</ul>
+<h3 id="S3基本存储模型"><a href="#S3基本存储模型" class="headerlink" title="S3基本存储模型"></a>S3基本存储模型</h3><p>两种存储单元：Bucket和Object，扁平化存储结构，可以横向增加Bucket和Object，理论上可以存储无数个Object。</p>
+<p><img src="https://i.imgur.com/acPjn1t.png" alt=""></p>
 <ul>
-<li>一个Pool里有很多PG</li>
-<li>一个PG里包含一堆对象；一个对象只能属于一个PG</li>
-<li>PG有主从之分，一个PG分布在不同的OSD上（针对三副本类型）</li>
+<li>对象（Object）</li>
 </ul>
-<p>下图来区别：</p>
-<p><img src="https://i.imgur.com/xJm9ITv.png" alt=""></p>
-<h5 id="Ceph架构"><a href="#Ceph架构" class="headerlink" title="Ceph架构"></a>Ceph架构</h5><p>其架构如下；</p>
-<p><img src="https://i.imgur.com/z1J3wrD.png" alt=""></p>
-<h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><pre><code>sudo ceph health  查看健康状况
-sudo ceph -s  查看集群状况
-sudo ceph osd tree  查看OSD信息
-</code></pre><h5 id="pool"><a href="#pool" class="headerlink" title="pool"></a>pool</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ceph osd pool create lhbpool 128 128</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>创建名为<code>lhbpool</code>的pool，这个pool中的pg，pgp都为128；</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ceph osd pool get lhbpool pg_num</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>获取<code>pg_num</code>，或<code>pgp_num</code>的大小；</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ceph osd pool rename rlhbpool lhbpool</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>重命名pool</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph osd pool set-quota test-pool max_objects 100</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>设置允许最大object数量为100<br>取消配额限制只需要把对应值设为0即可。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph osd pool set-quota test-pool max_bytes $((10 * 1024 * 1024 * 1024))</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>设置允许容量限制为10GB<br>取消配额限制只需要把对应值设为0即可。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ceph osd lspools</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>打印pool列表</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph osd pool delete test-pool test-pool  --yes-i-really-really-mean-it</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>删除pool，删除一个pool会同时清空pool的所有数据，因此非常危险。(和rm -rf /类似）。因此删除pool时ceph要求必须输入两次pool名称，同时加上–yes-i-really-really-mean-it选项。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo rados df</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>查看pool状态信息</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph osd pool set/get &#123;pool-name&#125; &#123;key&#125; &#123;value&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>通过上述语法设置获取pool的元数据</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ceph osd pool set test-pool size 3</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>设置pool的冗余副本数量为3</p>
-</blockquote>
-<h5 id="Crush-MAP-相关"><a href="#Crush-MAP-相关" class="headerlink" title="Crush MAP 相关"></a>Crush MAP 相关</h5><ul>
-<li>获取现有集群的crush map</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ceph osd getcrushmap -o crush.map</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>为二进制文件，需要反编译；反编译命令为：<code>crushtool -d crush.map -o crushmap-decompile</code></p>
-</blockquote>
+<p>S3存储的最小单位，数据不透明，元数据透明，数据和元数据一起存，还可以指定自定义元数据。在存储桶中，对象将由密钥（名称）和版本 ID 进行唯一地标识。</p>
 <ul>
-<li>运用新的crush map<br>当你修改了crush map后需要编译，如下命令：</li>
+<li>存储桶（Bucket）</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crushtool -c crushmap-decompile -o crush.map</span><br></pre></td></tr></table></figure>
-<p>接着设置到集群中，用如下命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ceph osd setcrushmap -i crush.map</span><br></pre></td></tr></table></figure>
-<h5 id="Ceph-管理接口-radosgw-admin"><a href="#Ceph-管理接口-radosgw-admin" class="headerlink" title="Ceph 管理接口 (radosgw-admin)"></a>Ceph 管理接口 (radosgw-admin)</h5><ul>
-<li>列出所有用户</li>
+<p>存储对象的容器，名称要全局唯一，并且命名需要符合英文国际域名的命名规则。对象名为<code>mybucket</code>组成的URL为<code>http://mybucket.s3.cephbook.com</code>。</p>
+<h3 id="传统文件系统向S3的转变"><a href="#传统文件系统向S3的转变" class="headerlink" title="传统文件系统向S3的转变"></a>传统文件系统向S3的转变</h3><ul>
+<li>文件路径和数据存储</li>
+<li>文件元数据存储</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">radosgw-admin metadata list user</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>还可以列出桶：radosgw-admin metadata list bucket</p>
-</blockquote>
+<h5 id="解决文件路径和数据存储"><a href="#解决文件路径和数据存储" class="headerlink" title="解决文件路径和数据存储"></a>解决文件路径和数据存储</h5><p><img src="https://i.imgur.com/lhQgMNV.png" alt=""></p>
 <ul>
-<li>创建用户</li>
+<li>所有数据都存放在Bucket中，文件都是Object。</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo radosgw-admin user create --uid=&quot;lhb&quot; --display-name=&quot;First User&quot;</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>sudo radosgw-admin user create</p>
+<p>个人理解文件夹不需要管，在路径中直接用”/“区分就行了（这个分割符可以指定），因此也没有了文件夹的元数据信息。目录样式演示是模拟出来的对象的层次结构。删除目录可以理解为删除具有该前缀的所有对象。</p>
 </blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$ s3cmd ls s3://mybucket/in</span><br><span class="line">                       DIR   s3://mybucket/in/</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$ s3cmd ls s3://mybucket/in/mybucket</span><br><span class="line">                       DIR   s3://mybucket/in/mybucket/</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$ s3cmd ls s3://mybucket/in/mybucket/s3sdk.py</span><br><span class="line">2019-06-17 07:05      1094   s3://mybucket/in/mybucket/s3sdk.py</span><br></pre></td></tr></table></figure>
 <ul>
-<li>显示用户信息，以及可能存在的子用户和密钥</li>
+<li>在key name中加上”/”来区分“文件夹”。</li>
+<li>文件数据内容作为Content存储在Object内。</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo radosgw-admin user info --uid=testuser</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>sudo radosgw-admin user info</p>
-</blockquote>
+<h5 id="解决文件元数据存储"><a href="#解决文件元数据存储" class="headerlink" title="解决文件元数据存储"></a>解决文件元数据存储</h5><p><img src="https://i.imgur.com/meDxXFV.png" alt=""></p>
+<p><img src="https://i.imgur.com/oTJd9Xk.png" alt=""></p>
+<p>两种存储的元数据对应关系： </p>
 <ul>
-<li>显示配额子系统统计的用户状态</li>
+<li>key name -&gt; 文件路径  </li>
+<li>etag -&gt; 文件md5  </li>
+<li>metadata(File size, Last mode, MIME type) -&gt; 文件的size/x-time这些</li>
+<li>ACL -&gt; 文件的acl/uid/gid这些</li>
+<li>Content-Type -&gt; MIME</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo radosgw-admin user stats --uid=testuser</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>sudo radosgw-admin user stats</p>
+<p>MIME用于设定某种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，浏览器会自动使用指定应用程序来打开。</p>
 </blockquote>
-<ul>
-<li>其他功能</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">user rm  删除用户</span><br><span class="line">user suspend  暂停某用户</span><br><span class="line">user enable  重新允许暂停的用户</span><br><span class="line">user check  检查用户信息</span><br><span class="line">bucket list  罗列所有桶</span><br><span class="line">bucket rm  删除一个桶</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<h3 id="S3的使用"><a href="#S3的使用" class="headerlink" title="S3的使用"></a>S3的使用</h3><h4 id="s3cmd-命令行形式访问（连接到其他第三方S3服务为例）"><a href="#s3cmd-命令行形式访问（连接到其他第三方S3服务为例）" class="headerlink" title="s3cmd 命令行形式访问（连接到其他第三方S3服务为例）"></a>s3cmd 命令行形式访问（连接到其他第三方S3服务为例）</h4><h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><pre><code>pip install s3cmd
+</code></pre><blockquote>
+<p>默认s3cmd会读取当前用户的$HOME/.s3cfg，可以使用-c参数手工指定配置文件路径。</p>
+</blockquote>
+<h5 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[default]</span><br><span class="line">access_key = XXXXXXX <span class="comment"># 填写access_key</span></span><br><span class="line">secret_key = XXXXXXX <span class="comment"># 填写secret_key</span></span><br><span class="line">default_mime_type = binary/octet-stream</span><br><span class="line">enable_multipart = True <span class="comment"># 启动分块上传</span></span><br><span class="line">encoding = UTF-8</span><br><span class="line">encrypt = False</span><br><span class="line">host_base = s3dev.nie.netease.com <span class="comment"># 接入点</span></span><br><span class="line">host_bucket = %(bucket)s.s3dev.nie.netease.com</span><br><span class="line">multipart_chunk_size_mb = 15 <span class="comment"># 分块上传大小</span></span><br><span class="line">socket_timeout = 300 <span class="comment"># 超时时长</span></span><br><span class="line">stop_on_error = False</span><br><span class="line">use_https = False <span class="comment"># 是否使用HTTPs</span></span><br><span class="line">use_mime_magic = True</span><br><span class="line">verbosity = WARNING</span><br><span class="line">signature_v2 = True <span class="comment"># 强制使用AWS2签名认证</span></span><br></pre></td></tr></table></figure>
+<h5 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h5><blockquote>
+<p>s3cmd –help 查看帮助</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd ls</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd mb s3://mybucket</span><br><span class="line">Bucket <span class="string">'s3://mybucket/'</span> created</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd rb s3://mybucket</span><br><span class="line">Bucket <span class="string">'s3://mybucket/'</span> removed</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd mb s3://mybucket</span><br><span class="line">Bucket <span class="string">'s3://mybucket/'</span> created</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd put hello.lua s3://mybucket</span><br><span class="line">upload: <span class="string">'hello.lua'</span> -&gt; <span class="string">'s3://mybucket/hello.lua'</span>  [1 of 1]</span><br><span class="line"> 15 of 15   100% <span class="keyword">in</span>    0s   120.37 B/s  <span class="keyword">done</span></span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd rb s3://mybucket</span><br><span class="line">ERROR: S3 error: 409 (BucketNotEmpty)    <span class="comment"># rb是删除空bucket，加--force可以删除（未启用版本控制）</span></span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd del s3://mybucket</span><br><span class="line">ERROR: Parameter problem: File name required, not only the bucket name. Alternatively use --recursive</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd del s3://mybucket/hello.lua</span><br><span class="line">delete: <span class="string">'s3://mybucket/hello.lua'</span></span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$ s3cmd ls s3://mybucket</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace$</span><br></pre></td></tr></table></figure>
+<p>其他常用命令如：</p>
+<pre><code>s3cmd get s3://new_bucket/file # 下载file到本地
+s3cmd setacl s3://new_bucket/file --acl-public # 开启file的匿名访问权限,注意权限控制
+s3cmd info s3://new_bucket/file # 查看object属性信息
+s3cmd del s3://new_bucket --recursive --force # 递归删除bucket内的所有内容，慎用！
+s3cmd signurl s3://new_bucket/file +30 # 生成临时的url访问链接（30s有效时长）。
+s3cmd du s3://new_bucket # 查看bucket的信息
+s3cmd cp src dst # 复制
+s3cmd mv src dst # 移动
+</code></pre><h4 id="Python-SDK使用S3"><a href="#Python-SDK使用S3" class="headerlink" title="Python SDK使用S3"></a>Python SDK使用S3</h4><h5 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h5><pre><code>pip install boto
+</code></pre><blockquote>
+<p>boto 适用于Python 2.6 and 2.7环境，python 3.x推荐使用boto3</p>
+</blockquote>
+<p>新建、删除bucket实例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> boto.s3.connection <span class="keyword">import</span> S3Connection</span><br><span class="line"><span class="keyword">import</span> boto</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启下面则启用AWS4认证,默认使用AWS2</span></span><br><span class="line"><span class="comment"># os.environ['S3_USE_SIGV4'] = 'True'</span></span><br><span class="line"></span><br><span class="line">endpoint = <span class="string">'s3dev.nie.netease.com'</span> <span class="comment">#S3服务的endpoint地址</span></span><br><span class="line">bucket_name = <span class="string">'mk_by_python'</span> <span class="comment">#bucket名称</span></span><br><span class="line">access_key = <span class="string">'XXXXXXX'</span> <span class="comment">#access-key</span></span><br><span class="line">secret_key = <span class="string">'XXXXXXX'</span> <span class="comment">#secret key</span></span><br><span class="line"></span><br><span class="line">conn = boto.connect_s3(</span><br><span class="line">    aws_access_key_id=access_key,</span><br><span class="line">    aws_secret_access_key=secret_key,</span><br><span class="line">    host=endpoint,</span><br><span class="line">    is_secure=<span class="keyword">False</span>, <span class="comment">#不使用HTTPS</span></span><br><span class="line">    calling_format=boto.s3.connection.SubdomainCallingFormat(), <span class="comment">#使用virtual-hosted-style,推荐使用</span></span><br><span class="line">    <span class="comment"># calling_format=boto.s3.connection.OrdinaryCallingFormat(), #使用path-style</span></span><br><span class="line">    validate_certs=<span class="keyword">True</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">buckets = conn.get_all_buckets() <span class="comment">#获取当前bucket列表</span></span><br><span class="line"><span class="keyword">print</span> buckets</span><br><span class="line">bucket = conn.create_bucket(bucket_name) <span class="comment">#新建bucket</span></span><br><span class="line">buckets = conn.get_all_buckets() <span class="comment">#获取当前bucket列表</span></span><br><span class="line"><span class="keyword">print</span> buckets</span><br><span class="line">conn.delete_bucket(bucket_name) <span class="comment">#删除bucket</span></span><br><span class="line">buckets = conn.get_all_buckets()</span><br><span class="line"><span class="keyword">print</span> buckets</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>ref: <a href="http://docs.ceph.org.cn/man/8/radosgw-admin/" target="_blank" rel="noopener">http://docs.ceph.org.cn/man/8/radosgw-admin/</a></p>
+<p>输出</p>
 </blockquote>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>摘自某处的一个图，是相关命令的总结，如下：</p>
-<p><img src="https://i.imgur.com/YUAqFpZ.png" alt=""></p>
-<p>另外还有一个知识树：</p>
-<p><img src="https://i.imgur.com/LmdlKW6.jpg" alt=""></p>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$ python s3sdk.py </span><br><span class="line">[&lt;Bucket: mybucket&gt;]</span><br><span class="line">[&lt;Bucket: mk_by_python&gt;, &lt;Bucket: mybucket&gt;]</span><br><span class="line">[&lt;Bucket: mybucket&gt;]</span><br><span class="line">lihongbo01@cld-unknown212867:~/workspace/s3_workspace$</span><br></pre></td></tr></table></figure>
+<h5 id="Python接口"><a href="#Python接口" class="headerlink" title="Python接口"></a>Python接口</h5><blockquote>
+<p>bucket相关</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">conn.create_bucket(bucket_name)  <span class="comment"># 新建bucket</span></span><br><span class="line">conn.get_all_buckets()  <span class="comment"># 获取当前bucket列表</span></span><br><span class="line">conn.delete_bucket(bucket_name)  <span class="comment"># 删除bucket</span></span><br><span class="line">bucket.get_acl()  <span class="comment"># 获取bucket ACL</span></span><br><span class="line">bucket.get_xml_acl()  <span class="comment"># 获取bucket ACL的xml格式描述</span></span><br><span class="line">bucket.set_acl(<span class="string">'private'</span>)  <span class="comment"># 设置bucket ACL，可以选:private,public-read,public-read-write,authenticated-read这些</span></span><br><span class="line">bucket.set_xml_acl(xml_acl)  <span class="comment"># 以XML格式进行设置</span></span><br><span class="line">bucket.add_user_grant(<span class="string">'WRITE'</span>,<span class="string">'test1'</span>) <span class="comment"># 对‘test1’这个用户赋予‘WRITE’权限 # bucket新增用户ACL，可选:READ, WRITE, READ_ACP, WRITE_ACP, FULL_CONTROL</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>object相关</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">key_ = bucket.new_key(key_name)  <span class="comment"># 生成一个key</span></span><br><span class="line">key_.set_contents_from_filename(local_file)  <span class="comment"># 上传文件 [与上一条命令一起用]</span></span><br><span class="line"><span class="comment"># 两种删除方式</span></span><br><span class="line">key_.delete()</span><br><span class="line">bucket.delete_key(key_name)</span><br><span class="line">bucket.get_all_keys(prefix=<span class="string">'user1_23695/'</span>)  <span class="comment"># 按指定prefix查询bucket中对应的Object列表,注意默认最多返回1000条记录</span></span><br><span class="line">bucket.delete_keys(file_list)  <span class="comment"># 批量删除Object</span></span><br><span class="line">key_.get_xml_acl()  <span class="comment"># 获取XML格式的Object的ACL信息 </span></span><br><span class="line">key_.get_acl()  <span class="comment"># 获取Object的ACL</span></span><br><span class="line">key_.set_acl(<span class="string">'public-read'</span>)  <span class="comment"># 方式1，设置Object的ACL</span></span><br><span class="line">key_.set_canned_acl(<span class="string">'public-read'</span>)  <span class="comment"># 方式2，设置Object的ACL</span></span><br><span class="line">key_.set_xml_acl(acl_xml)  <span class="comment"># 方式3，设置Object的ACL</span></span><br><span class="line">key_.add_user_grant(<span class="string">'READ'</span>,<span class="string">'test1'</span>)  <span class="comment"># 对‘test1’这个用户添加READ权限。 #添加用户授权，可选权限有:READ, WRITE, READ_ACP, WRITE_ACP, FULL_CONTROL</span></span><br><span class="line">key_.set_metadata(<span class="string">'key'</span>,<span class="string">'value'</span>)  <span class="comment"># 设置Object的metadata，注意必须在上传Object之前做好初始化设置</span></span><br><span class="line"><span class="comment">#获取Object的metadata</span></span><br><span class="line">key_ = bucket.get_key(key_name)</span><br><span class="line"><span class="keyword">print</span> key_.get_metadata(<span class="string">'key'</span>)</span><br><span class="line">key_.get_contents_to_filename(down_file)  <span class="comment"># 下载Object，保存为本地的‘/tmp/download.file’</span></span><br></pre></td></tr></table></figure>
           
         
       
@@ -2046,7 +1924,7 @@ sudo ceph osd tree  查看OSD信息
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2087,7 +1965,7 @@ sudo ceph osd tree  查看OSD信息
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
