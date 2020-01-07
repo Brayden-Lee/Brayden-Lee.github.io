@@ -1093,7 +1093,7 @@ cd linux-nova-5.1
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/S3版本控制与生命周期/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/S3接口特点/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hb-lee">
@@ -1112,7 +1112,7 @@ cd linux-nova-5.1
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/07/08/S3版本控制与生命周期/" itemprop="url">S3版本控制与生命周期</a></h1>
+                <a class="post-title-link" href="/2019/07/08/S3接口特点/" itemprop="url">S3的RESTful接口特点总结</a></h1>
         
 
         <div class="post-meta">
@@ -1164,23 +1164,130 @@ cd linux-nova-5.1
       
         
           
-            <h1 id="S3版本控制与生命周期"><a href="#S3版本控制与生命周期" class="headerlink" title="S3版本控制与生命周期"></a>S3版本控制与生命周期</h1><h3 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h3><p>存储桶可以处于三种状态之一：非（无）版本化（默认），启用版本控制或暂停版本控制。通过启用了版本控制的存储桶可以恢复因意外删除或覆盖操作而失去的对象。例如：</p>
-<ul>
-<li>如果删除对象（而不是永久移除它），则 Amazon S3 会插入删除标记，该标记将成为当前对象版本。通过回滚可以恢复到以前的版本。</li>
-<li>如果覆盖对象，则会导致存储桶中出现新的对象版本。通过回滚可以恢复到以前的版本。</li>
+            <h1 id="S3的RESTful接口特点总结"><a href="#S3的RESTful接口特点总结" class="headerlink" title="S3的RESTful接口特点总结"></a>S3的RESTful接口特点总结</h1><ul>
+<li>删除桶</li>
 </ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DELETE /</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p><strong>一旦您对存储桶启用了版本控制，它将无法返回到无版本控制状态。但是，您可以在该存储桶上暂停版本控制。</strong></p>
+<p>分析：request无必要参数</p>
 </blockquote>
-<p>版本控制状态将应用到该存储桶中的所有（不是某些）对象。您第一次对存储桶启用版本控制后，该存储桶中的对象将在之后一直受版本控制，并具有唯一的版本 ID。在您设置版本控制状态之前存储在存储桶中的对象具有版本 ID null。启用版本控制时，存储桶中的现有对象不会更改。更改的是 Amazon S3 在以后的请求中处理这些对象的方式。 存储桶拥有者（或任何具有适当权限的用户）可以暂停版本控制以停止累积对象版本。暂停版本控制时，存储桶中的现有对象不会更改。更改的是 Amazon S3 在以后的请求中处理对象的方式。</p>
-<blockquote>
-<p>改变不了之前，只能影响后面的处理</p>
-</blockquote>
-<p>在启用版本控制后，简单的DELETE无法永久删除对象，只是标记一下而已，要永久删除必须制定版本。</p>
-<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><p>S3支持通过以配置的形式实现对象的生命周期管理，主要应用在以下两种场景：</p>
 <ul>
-<li>如果你需要定期清理S3中的对象数据，可以设置相应的对象生命周期策略，实现对象的定期有计划删除。</li>
-<li>如果一些对象数据在一段限定的时间内需要频繁访问，之后这些不再需要访问，可以通过指定对象的生命周期策略，实现后台存储数据从热存储向冷存储（存储成本更低）的自动迁移，从而降低存储成本。</li>
+<li>删除对象</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DELETE /obj</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>分析：request无必要参数</p>
+</blockquote>
+<ul>
+<li>列举桶中对象</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /  | GET /?xx</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>分析：request后面有可选参数</p>
+</blockquote>
+<ul>
+<li>删除多个对象（批量删）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">POST /?delete</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>分析：request参数中带delete</p>
+</blockquote>
+<ul>
+<li>上传对象</li>
+</ul>
+<p>PUT 方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PUT /obj</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>分析：request无必要参数</p>
+</blockquote>
+<p>POST 方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">POST /</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>分析：待定，暂不考虑</p>
+</blockquote>
+<p>COPY 方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PUT /obj</span><br><span class="line">Host bucket.endpoint</span><br><span class="line">x-amz-copy-source /srcbucket/srcobj</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>分析：含有x-amz-copy-source选项，mv是会多一个Delete</p>
+</blockquote>
+<ul>
+<li>下载对象</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /obj</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>分析：request无必要参数</p>
+</blockquote>
+<ul>
+<li>分块上传</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PUT /obj?partNumber=xx&amp;uploadId=xx</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>分析：可以用带有uploadId参数来进行区分</p>
+</blockquote>
+<p><hr><br>Other</p>
+<hr>
+
+<ul>
+<li>删除Bucket的一些配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DELETE /&lt;bucket-name&gt;?someconfopt</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><bucket-name>是可选的，有一些要带这个，只要不是<code>/</code>则说明都不是删除桶</bucket-name></p>
+</blockquote>
+<ul>
+<li>获取Bucket的一些配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /?someconfopt</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>需要区别于<code>列举桶中对象</code>的请求</p>
+</blockquote>
+<ul>
+<li>HEAD 判断bucket是否存在和是否有访问权限</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HEAD /</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>HEAD标志</p>
+</blockquote>
+<ul>
+<li>设置Bucket的一些配置 (对象也是一致)</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PUT /?someconfopt</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>只要不是<code>/</code>则说明都不是创建桶</p>
+</blockquote>
+<ul>
+<li>创建桶</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PUT /</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>一定是<code>/</code></p>
+</blockquote>
+<ul>
+<li>获取对象属性</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /obj?attr</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>后面有参数</p>
+</blockquote>
+<ul>
+<li>HEAD返回对象元数据信息</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HEAD /obj</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Head 标志，不是<code>/</code></p>
+</blockquote>
+<ul>
+<li>终止分段上传 （分段上传的都有<code>uploadId</code>这个参数）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DELETE /obj?uploadId=xxx</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>需要用<code>uploadId</code>来区别其他的DELETE操作，比如区别删除对象操作</p>
+</blockquote>
+<h3 id="Ceph-Admin-API-管理接口"><a href="#Ceph-Admin-API-管理接口" class="headerlink" title="Ceph Admin API 管理接口"></a>Ceph Admin API 管理接口</h3><ul>
+<li>创建用户<blockquote>
+<p>PUT /admin/user?format=json&amp;uid=<uid>&amp;display-name=<name></name></uid></p>
+</blockquote>
+</li>
 </ul>
 
           
@@ -1443,7 +1550,7 @@ cd linux-nova-5.1
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/S3接口特点/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/S3版本控制与生命周期/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hb-lee">
@@ -1462,7 +1569,7 @@ cd linux-nova-5.1
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/07/08/S3接口特点/" itemprop="url">S3的RESTful接口特点总结</a></h1>
+                <a class="post-title-link" href="/2019/07/08/S3版本控制与生命周期/" itemprop="url">S3版本控制与生命周期</a></h1>
         
 
         <div class="post-meta">
@@ -1514,130 +1621,23 @@ cd linux-nova-5.1
       
         
           
-            <h1 id="S3的RESTful接口特点总结"><a href="#S3的RESTful接口特点总结" class="headerlink" title="S3的RESTful接口特点总结"></a>S3的RESTful接口特点总结</h1><ul>
-<li>删除桶</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DELETE /</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>分析：request无必要参数</p>
-</blockquote>
+            <h1 id="S3版本控制与生命周期"><a href="#S3版本控制与生命周期" class="headerlink" title="S3版本控制与生命周期"></a>S3版本控制与生命周期</h1><h3 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h3><p>存储桶可以处于三种状态之一：非（无）版本化（默认），启用版本控制或暂停版本控制。通过启用了版本控制的存储桶可以恢复因意外删除或覆盖操作而失去的对象。例如：</p>
 <ul>
-<li>删除对象</li>
+<li>如果删除对象（而不是永久移除它），则 Amazon S3 会插入删除标记，该标记将成为当前对象版本。通过回滚可以恢复到以前的版本。</li>
+<li>如果覆盖对象，则会导致存储桶中出现新的对象版本。通过回滚可以恢复到以前的版本。</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DELETE /obj</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>分析：request无必要参数</p>
+<p><strong>一旦您对存储桶启用了版本控制，它将无法返回到无版本控制状态。但是，您可以在该存储桶上暂停版本控制。</strong></p>
 </blockquote>
+<p>版本控制状态将应用到该存储桶中的所有（不是某些）对象。您第一次对存储桶启用版本控制后，该存储桶中的对象将在之后一直受版本控制，并具有唯一的版本 ID。在您设置版本控制状态之前存储在存储桶中的对象具有版本 ID null。启用版本控制时，存储桶中的现有对象不会更改。更改的是 Amazon S3 在以后的请求中处理这些对象的方式。 存储桶拥有者（或任何具有适当权限的用户）可以暂停版本控制以停止累积对象版本。暂停版本控制时，存储桶中的现有对象不会更改。更改的是 Amazon S3 在以后的请求中处理对象的方式。</p>
+<blockquote>
+<p>改变不了之前，只能影响后面的处理</p>
+</blockquote>
+<p>在启用版本控制后，简单的DELETE无法永久删除对象，只是标记一下而已，要永久删除必须制定版本。</p>
+<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><p>S3支持通过以配置的形式实现对象的生命周期管理，主要应用在以下两种场景：</p>
 <ul>
-<li>列举桶中对象</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /  | GET /?xx</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>分析：request后面有可选参数</p>
-</blockquote>
-<ul>
-<li>删除多个对象（批量删）</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">POST /?delete</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>分析：request参数中带delete</p>
-</blockquote>
-<ul>
-<li>上传对象</li>
-</ul>
-<p>PUT 方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PUT /obj</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>分析：request无必要参数</p>
-</blockquote>
-<p>POST 方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">POST /</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>分析：待定，暂不考虑</p>
-</blockquote>
-<p>COPY 方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PUT /obj</span><br><span class="line">Host bucket.endpoint</span><br><span class="line">x-amz-copy-source /srcbucket/srcobj</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>分析：含有x-amz-copy-source选项，mv是会多一个Delete</p>
-</blockquote>
-<ul>
-<li>下载对象</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /obj</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>分析：request无必要参数</p>
-</blockquote>
-<ul>
-<li>分块上传</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PUT /obj?partNumber=xx&amp;uploadId=xx</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>分析：可以用带有uploadId参数来进行区分</p>
-</blockquote>
-<p><hr><br>Other</p>
-<hr>
-
-<ul>
-<li>删除Bucket的一些配置</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DELETE /&lt;bucket-name&gt;?someconfopt</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><bucket-name>是可选的，有一些要带这个，只要不是<code>/</code>则说明都不是删除桶</bucket-name></p>
-</blockquote>
-<ul>
-<li>获取Bucket的一些配置</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /?someconfopt</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>需要区别于<code>列举桶中对象</code>的请求</p>
-</blockquote>
-<ul>
-<li>HEAD 判断bucket是否存在和是否有访问权限</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HEAD /</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>HEAD标志</p>
-</blockquote>
-<ul>
-<li>设置Bucket的一些配置 (对象也是一致)</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PUT /?someconfopt</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>只要不是<code>/</code>则说明都不是创建桶</p>
-</blockquote>
-<ul>
-<li>创建桶</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PUT /</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>一定是<code>/</code></p>
-</blockquote>
-<ul>
-<li>获取对象属性</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /obj?attr</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>后面有参数</p>
-</blockquote>
-<ul>
-<li>HEAD返回对象元数据信息</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HEAD /obj</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>Head 标志，不是<code>/</code></p>
-</blockquote>
-<ul>
-<li>终止分段上传 （分段上传的都有<code>uploadId</code>这个参数）</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DELETE /obj?uploadId=xxx</span><br><span class="line">Host bucket.endpoint</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>需要用<code>uploadId</code>来区别其他的DELETE操作，比如区别删除对象操作</p>
-</blockquote>
-<h3 id="Ceph-Admin-API-管理接口"><a href="#Ceph-Admin-API-管理接口" class="headerlink" title="Ceph Admin API 管理接口"></a>Ceph Admin API 管理接口</h3><ul>
-<li>创建用户<blockquote>
-<p>PUT /admin/user?format=json&amp;uid=<uid>&amp;display-name=<name></name></uid></p>
-</blockquote>
-</li>
+<li>如果你需要定期清理S3中的对象数据，可以设置相应的对象生命周期策略，实现对象的定期有计划删除。</li>
+<li>如果一些对象数据在一段限定的时间内需要频繁访问，之后这些不再需要访问，可以通过指定对象的生命周期策略，实现后台存储数据从热存储向冷存储（存储成本更低）的自动迁移，从而降低存储成本。</li>
 </ul>
 
           
